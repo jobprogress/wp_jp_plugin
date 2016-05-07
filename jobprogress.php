@@ -15,10 +15,11 @@ define('API_BASE_URL', 'http://localhost:8000/api/v1');
 // add_action( 'init', array( 'JobProgress', 'init' ) );
 require_once( JOBPROGRESS_PLUGIN_DIR . 'class.base-jobprogress.php' );
 require_once( JOBPROGRESS_PLUGIN_DIR . 'class.jobprogress.php' );
+require_once( JOBPROGRESS_PLUGIN_DIR . 'class.customer.php' );
 
 register_activation_hook( __FILE__, array( 'JobProgress', 'plugin_activation' ) );
 register_deactivation_hook( __FILE__, array( 'JobProgress', 'plugin_deactivation' ) );
-$jobProgress = New JobProgress;
+$customer = New Customer;
 
 
 function ine($haystack,$needle){
