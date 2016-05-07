@@ -30,4 +30,5 @@ jQuery(function($) {
 		$(all_customer_types).prop("checked", false);
 		$(this).prop("checked", true);
 	});
+
 });

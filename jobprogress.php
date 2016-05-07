@@ -9,30 +9,17 @@ Author URI: http://w3guy.com
 */
 
 define( 'JOBPROGRESS_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
- 
+define('API_BASE_URL', 'http://localhost:8000/api/v1');
 
 // run the install scripts upon plugin activation
-register_activation_hook( __FILE__, array( 'JobProgress', 'plugin_activation' ) );
-register_deactivation_hook( __FILE__, array( 'JobProgress', 'plugin_deactivation' ) );
-add_action( 'init', array( 'JobProgress', 'init' ) );
+// add_action( 'init', array( 'JobProgress', 'init' ) );
+require_once( JOBPROGRESS_PLUGIN_DIR . 'class.base-jobprogress.php' );
 require_once( JOBPROGRESS_PLUGIN_DIR . 'class.jobprogress.php' );
 
-function get_error_wrapper($code = '') {
-	$error = null;
-	if(! $error = JobProgress::$validation_error) {
-		return false;
-	}
-	if(! $error->get_error_message($code)) {
-		return false;
-	}
-	
-	$id  = str_replace(array('.','_'), '-', $code). '-error';
-	$for = str_replace('.', '_', $code).'_error';
- 	$html = '<label id='.$id.' class="error" for='.$for.'>';
- 	$html .= $error->get_error_message($code);
- 	$html .= '</label>';
-	return $html;
-}
+register_activation_hook( __FILE__, array( 'JobProgress', 'plugin_activation' ) );
+register_deactivation_hook( __FILE__, array( 'JobProgress', 'plugin_deactivation' ) );
+$jobProgress = New JobProgress;
+
 
 function ine($haystack,$needle){
 		
