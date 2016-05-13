@@ -83,7 +83,7 @@
 		<select name="address[state_id]">
 			<option >select states</option>
 			<?php foreach ($states as $key => $state) : ?>
-			<option value="<?php echo $state['id'] ?>"><?php echo $state['name']; ?></option>
+			<option value="<?php echo $state['id'] .'_'.$state['name']; ?>"><?php echo $state['name']; ?></option>
 		<?php endforeach; ?>	
 	</select>
 	<?php echo $this->get_error_wrapper('address.state'); ?>
@@ -98,7 +98,7 @@
 	<select name="address[country_id]">
 		<option >select country</option>
 		<?php foreach ($countries as $key => $country) : ?>
-		<option value="<?php echo $country['id'] ?>"><?php echo $country['name']; ?></option>
+		<option value="<?php echo $country['id'] .'_'.$country['name']; ?>"><?php echo $country['name']; ?></option>
 	<?php endforeach; ?>	
 </select>
 
@@ -123,10 +123,10 @@
 </div>
 <div class="form-group">
 	<label>State *</label>
-	<select name="billing[state]">
+	<select name="billing[state_id]">
 		<option >select states</option>
 		<?php foreach ($states as $key => $state) : ?>
-		<option value="<?php echo $state['id'] ?>"><?php echo $state['name']; ?></option>
+		<option value="<?php echo $state['id'] .'_'.$state['name']; ?>"><?php echo $state['name']; ?></option>
 	<?php endforeach; ?>	
 </select>
 <?php echo $this->get_error_wrapper('billing.state'); ?>
@@ -138,10 +138,10 @@
 </div>
 <div class="form-group">
 	<label>country *</label>
-	<select name="billing[country]">
+	<select name="billing[country_id]">
 		<option >select country</option>
 		<?php foreach ($countries as $key => $country) : ?>
-		<option value="<?php echo $country['id'] ?>"><?php echo $country['name']; ?></option>
+		<option value="<?php echo $country['id'] .'_'.$country['name']; ?>"><?php echo $country['name']; ?></option>
 	<?php endforeach; ?>	
 </select>
 <?php echo $this->get_error_wrapper('billing.country'); ?>

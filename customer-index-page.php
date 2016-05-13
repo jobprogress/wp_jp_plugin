@@ -8,9 +8,9 @@ if($order == 'asc') {
 ?>
 <div class="wrap">
 	<h1>Customers
-		<a class="page-title-action" href="http://localhost/jobprogress/wordpress/2016/04/27/hello-world/">
+		<!-- <a class="page-title-action" href="http://localhost/jobprogress/wordpress/2016/04/27/hello-world/">
 			Add New
-		</a>
+		</a> -->
 	</h1>
 
 	<h2 class="screen-reader-text">Filter pages list</h2>
@@ -129,11 +129,25 @@ if($order == 'asc') {
 
 					<a>	<?php  
 
-					$addressArray = json_decode($customer->address, true);
-					$address = $addressArray['address'];
-					
-					echo $address['address']. ' '.$address['city'].', ';
-					echo $address['state']. ', '.$address['zip'] .', '. $address['country'];
+					$address = json_decode($customer->address, true);
+					$addressArray = $address['address'];
+					if(ine($addressArray, 'address')) {
+						echo $addressArray['address'] . ', ';
+					}
+					if(ine($addressArray, 'city')) {
+						echo $addressArray['city'].', ';
+					}
+					if(ine($addressArray, 'state_id')) {
+						$state = explode('_', $addressArray['state_id']);
+						echo $state[0] .', ';
+					}
+					if(ine($addressArray, 'zip')) {
+						echo $addressArray['zip'] .', ';
+					}
+					if(ine($addressArray, 'country_id')) {
+						$country = explode('_', $addressArray['country_id']);
+						echo $country[0] .', ';
+					}
 					?>
 				</a>
 			</td>

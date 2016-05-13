@@ -10,6 +10,7 @@ class JobProgress extends Base_JobProgress{
 	public function __construct() {
 		global $wpdb;
 		$this->wpdb = $wpdb;
+
 		$this->init();
 	}
 
@@ -40,7 +41,7 @@ class JobProgress extends Base_JobProgress{
 			'JobProgress', 
 			'manage_options', 
 			'jobprogress-admin-page', 
-			array($this, 'my_plugin_options'),
+			array($this, 'authorization'),
 			'https://staging.jobprogress.com/app/favicon.ico',
 			6
 		);
@@ -54,33 +55,37 @@ class JobProgress extends Base_JobProgress{
 		);
 
 	}
-		/** Step 3. */
-	function my_plugin_options() {
-			$url = API_BASE_URL.'/trades';
-			$args = array(
-			    'timeout'     => 5,
-			    'redirection' => 5,
-			    'httpversion' => '1.0',
-			    'user-agent'  => 'WordPress/4.5.1; ' . get_bloginfo( 'url' ),
-			    'blocking'    => true,
-			    'headers'     => array('Authorization' => "Bearer XKC7bXxCv2qa5dhG5lzlsEd5NfhHwpciiCulcRMi"),
-			    'cookies'     => array(),
-			    'body'        => null,
-			    'compress'    => false,
-			    'decompress'  => true,
-			    'sslverify'   => true,
-			    'stream'      => false,
-			    'filename'    => null
-			);
-			$response = wp_remote_get( $url, $args );
+		
+	function authorization() {
+		//get domain
+		$domain = $this->get_domain();
 
-			$response_body = wp_remote_retrieve_body( $response );
+		// $jobprogressTokenOption = get_option( 'jobprogress_token_options' );
+		if(	ine($_GET, 'access_token')
+			&& ine($_GET, 'refresh_token')
+			&& ine($_GET, 'expires_in')
+			&& ine($_GET, 'token_type')
+			&& ! $this->isConnected()
+		) {
+			$jobprogressTokenData = [
+				'access_token'  => $_GET['access_token'],
+				'refresh_token' => $_GET['refresh_token'],
+				'expires_in'    => $_GET['expires_in'],
+				'token_type'    => $_GET['token_type']
+			];
+			update_option( 'jobprogress_token_options', $jobprogressTokenData);
+			return require_once( JOBPROGRESS_PLUGIN_DIR . 'disconnect-form.php' );
+		}
 
-		?>
-		<!-- <a onclick="window.open('http://localhost:8000/connect_job_progress', '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');">Connect</a> -->
-		<a class="jobprogress-connect">Connect</a>
-		<?php
-		// echo '<a onclick="window.open('http://localhost:8000/connect_job_progress', '_blank', 'location=yes,height=570,width=520,scrollbars=yes,status=yes');">Share Page</a>";
+		if(ine($_POST, 'disconnect')) {
+			$this->disconnect();
+		}
+
+		if($this->isConnected()) {
+			return require_once( JOBPROGRESS_PLUGIN_DIR . 'disconnect-form.php' );	
+		}
+
+		return require_once( JOBPROGRESS_PLUGIN_DIR . 'connect-form.php' );
 
 	}
 
@@ -132,8 +137,8 @@ class JobProgress extends Base_JobProgress{
 		wp_enqueue_script( 'my_custom_script', plugin_dir_url( __FILE__ ) . 'js/myscript.js' );
 	}
 
-	static  function plugin_activation() {
-		$customer_query = "CREATE TABLE IF NOT EXISTS ".$wpdb->prefix."customers(
+	public  function plugin_activation() {
+			$customer_query = "CREATE TABLE IF NOT EXISTS ".$this->wpdb->prefix."customers(
 			  id int(10) unsigned NOT NULL AUTO_INCREMENT,
 			  first_name varchar(255) COLLATE utf8_unicode_ci NOT NULL,
 			  last_name varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -151,12 +156,37 @@ class JobProgress extends Base_JobProgress{
 		$this->wpdb->query($customer_query);
 	}
 
-	static  function plugin_deactivation() {
-		$customer_sql = "DROP TABLE ". $wpdb->prefix."customers";
+	public  function plugin_deactivation() {
+		$customer_sql = "DROP TABLE ". $this->wpdb->prefix."customers";
 		$this->wpdb->query($customer_sql);	
+
+		if($this->isConnected()) {
+			return $this->disconnect();
+		}
 	}
 
-	
-	
+	private function disconnect() {
+		$data = [
+			'client_id'		=> JOBPROGRESS_CLIENT_ID,
+			'client_secret' => JOBPROGRESS_CLIENT_SECRET,
+			'domain'        =>	$this->get_domain()
+		];
+		$data = $this->request(JOBPRGRESS_DISCONNECT_URL, $data, 'Delete');
+		delete_option( 'jobprogress_token_options');
+	}
 
+	private function get_domain() {
+		$domain = ((!empty($_SERVER['HTTPS']) 
+				&& $_SERVER['HTTPS'] !== 'off')
+				|| $_SERVER['SERVER_PORT'] === 443)
+				? 'https://'
+				:'http://'
+				. $_SERVER['HTTP_HOST'];
+
+		return $domain;
+	}
+	
+	private function isConnected() {
+		return get_option( 'jobprogress_token_options' ) ? true : false;
+	}
 }

@@ -32,9 +32,13 @@ class Customer extends JobProgress {
 			if($validator->is_valid()) {
 				$input = $_POST;
 				$table_name = $this->wpdb->prefix . 'customers';
+				if(ine($input, 'address') && ine($input)) {
+
+				}
 				if(ine($input, 'same_as_customer_address')) {
 					$input['billing'] = $input['address'];
 				}
+
 				$this->input = $input;
 				$api_input = $this->map_api_customer_data();
 				$response = $this->post(API_BASE_URL.'/customers/save_customer_third_party', $api_input);
@@ -52,9 +56,21 @@ class Customer extends JobProgress {
 	}
 
 	public function show_form() {
-		$trades = $this->get(API_BASE_URL.'/trades');
-		$states = $this->get(API_BASE_URL.'/states');
-		$countries = $this->get(API_BASE_URL.'/countries');
+
+		if(($trades = get_transient("jobprogress_trades")) === false) {
+			$trades = $this->get(API_BASE_URL.'/trades');
+			set_transient("trades", $trades, 120);
+		}
+
+		if(($states = get_transient("jobprogress_states")) === false ) {
+			$states = $this->get(API_BASE_URL.'/states');
+			set_transient("jobprogress_states", $states, 120);
+		}
+		if(($countries = get_transient("jobprogress_countries")) === false) {
+			$countries = $this->get(API_BASE_URL.'/countries');
+			set_transient("jobprogress_countries", $countries, 120);
+		}
+
 		return require_once( JOBPROGRESS_PLUGIN_DIR . 'customer-form-page.php' );
 	}
 
@@ -130,11 +146,32 @@ class Customer extends JobProgress {
 		$addressFields = ['address','address_line_1','city','state_id','country_id','zip'];
 		$data = $this->map_inputs($map);
 		$data['address'] = $this->mapFirstSubInputs($addressFields, 'address');
+
 		if(!ine($this->input, 'same_as_customer_address')){
 			$data['billing']	= $this->mapFirstSubInputs($addressFields, 'billing');
 		}
-		$data['referred_by_type'] = 'website';
 
+		if(ine($data['address'], 'state_id')) {
+			$state = explode('_', $data['address']['state_id']);
+			$data['address']['state_id'] = $state[0];
+		}
+
+		if(ine($data['billing'], 'state_id')) {
+			$state = explode('_', $data['billing']['state_id']);
+			$data['billing']['state_id'] = $state[0];
+		}
+
+		if(ine($data['address'], 'country_id')) {
+			$country = explode('_', $data['address']['country_id']);
+			$data['address']['country_id'] = $country[0];
+		}
+
+		if(ine($data['billing'], 'country_id')) {
+			$country = explode('_', $data['billing']['country_id']);
+			$data['billing']['country_id'] = $country[0];
+		}
+		
+		$data['referred_by_type'] = 'website';
 		if(ine($this->input, 'jobprogress_customer_type2')) {
 			$data['is_commercial'] = 1;
 			$data['company_name']  = '';
