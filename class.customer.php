@@ -4,7 +4,7 @@ class Customer extends JobProgress {
 	public $validation_error = false;
 
 	public $input = array();
-
+	
 	public function index() {
 		$input = $_GET;
 		$pagenum = isset( $input['pagenum'] ) ? absint( $input['pagenum'] ) : 1;

@@ -10,7 +10,6 @@ class JobProgress extends Base_JobProgress{
 	public function __construct() {
 		global $wpdb;
 		$this->wpdb = $wpdb;
-
 		$this->init();
 	}
 
@@ -26,10 +25,29 @@ class JobProgress extends Base_JobProgress{
 		add_shortcode( 'jobprogress_customer_form_code', array($this, 'cf_shortcode') );
 		add_action( 'admin_menu',array($this, 'jobprogress_admin_page') );
 		add_action( 'admin_enqueue_scripts', array($this, 'admin_script') );
+		$this->update_token();
 	}
 
+	private function update_token(){
+		if(! $this->is_connected()) {
+			return false;
+		}
+
+		$body = [
+			'grant_type' => JOBPRGRESS_REFRESH_TOKEN_GRANT_TYPE,
+			'client_id'  => JOBPROGRESS_CLIENT_ID,
+			'client_secret' => JOBPROGRESS_CLIENT_SECRET,
+			'refresh_token' => 	$this->get_jobprogres_token()['refresh_token']
+		];
+		$token = $this->post(JOBPRGRESS_REFRESH_TOKEN_URL, $body);
+		if(empty($token)) {
+			return false;
+		}
+		$this->update_access_token($token);
+	}
 	public  function cf_shortcode() {
 		ob_start();
+		if(!$this->is_connected()) return false;
 		$this->save_customer();
 		$this->show_form();
 		return ob_get_clean();
@@ -65,7 +83,7 @@ class JobProgress extends Base_JobProgress{
 			&& ine($_GET, 'refresh_token')
 			&& ine($_GET, 'expires_in')
 			&& ine($_GET, 'token_type')
-			&& ! $this->isConnected()
+			&& ! $this->is_connected()
 		) {
 			$jobprogressTokenData = [
 				'access_token'  => $_GET['access_token'],
@@ -81,7 +99,7 @@ class JobProgress extends Base_JobProgress{
 			$this->disconnect();
 		}
 
-		if($this->isConnected()) {
+		if($this->is_connected()) {
 			return require_once( JOBPROGRESS_PLUGIN_DIR . 'disconnect-form.php' );	
 		}
 
@@ -160,7 +178,7 @@ class JobProgress extends Base_JobProgress{
 		$customer_sql = "DROP TABLE ". $this->wpdb->prefix."customers";
 		$this->wpdb->query($customer_sql);	
 
-		if($this->isConnected()) {
+		if($this->is_connected()) {
 			return $this->disconnect();
 		}
 	}
@@ -186,7 +204,15 @@ class JobProgress extends Base_JobProgress{
 		return $domain;
 	}
 	
-	private function isConnected() {
-		return get_option( 'jobprogress_token_options' ) ? true : false;
+	private function is_connected() {
+		return (get_option( 'jobprogress_token_options' )) ? true : false;
+	}
+
+	public function get_jobprogres_token() {
+		return get_option( 'jobprogress_token_options' );
+	}
+
+	private function update_access_token($token) {
+		update_option( 'jobprogress_token_options', $token);
 	}
 }
