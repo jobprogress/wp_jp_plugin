@@ -2,7 +2,7 @@
 
 class Base_JobProgress {
 
-	public function get($url) {
+	public function get($url, $body) {
 			$args = array(
 			    // 'timeout'     => 5,
 			    // 'redirection' => 5,
@@ -57,7 +57,7 @@ class Base_JobProgress {
 		$bearerToken =  'Bearer '.$jobprogressTokenOption['access_token'];
 		return ['Authorization' => $bearerToken ];
 	}
-
+	
 }
 
 ?>

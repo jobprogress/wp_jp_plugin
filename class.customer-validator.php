@@ -1,8 +1,15 @@
 <?php 
 class Customer_Validator {
+	/**
+	 * [$validation_error validation of customer form
+	 * @var [array]
+	 */
+	public $validation_error = array();
 
-	public $validation_error;
-
+	/**
+	 * check customer form input value is valid
+	 * @return boolean [description]
+	 */
 	public function is_valid() {
 		$is_commercial = 0;
 		$hasError = false;
@@ -102,13 +109,16 @@ class Customer_Validator {
 
 			return false;
 		}
-
+		
 		return true;
 	}
 
+	/**
+	 * get validation error
+	 * @return [array] [validation errors]
+	 */
 	public function get_validation_error() {
 		return $this->validation_error;
 	}
 
-	
 }

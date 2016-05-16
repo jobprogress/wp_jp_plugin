@@ -1,19 +1,15 @@
 <?php
-class JobProgress extends Base_JobProgress{
+class JobProgress extends Base_JobProgress {
 
-	private  $initiated = false;
-
-	public  $validation_error = false;
-
+	/**
+	 * [$wpdb description]
+	 * @var [type]
+	 */
 	protected $wpdb;
 
 	public function __construct() {
 		global $wpdb;
 		$this->wpdb = $wpdb;
-		$this->init();
-	}
-
-	public  function init() {
 		$this->init_hooks();
 	}
 
@@ -22,30 +18,16 @@ class JobProgress extends Base_JobProgress{
 	 */
 	private function init_hooks() {
 		add_action('wp_footer', array($this, 'scripts'));
-		add_shortcode( 'jobprogress_customer_form_code', array($this, 'cf_shortcode') );
+		add_shortcode( 'jobprogress_customer_form_code', array($this, 'cf_short_code') );
 		add_action( 'admin_menu',array($this, 'jobprogress_admin_page') );
 		add_action( 'admin_enqueue_scripts', array($this, 'admin_script') );
-		$this->update_token();
 	}
 
-	private function update_token(){
-		if(! $this->is_connected()) {
-			return false;
-		}
-
-		$body = [
-			'grant_type' => JOBPRGRESS_REFRESH_TOKEN_GRANT_TYPE,
-			'client_id'  => JOBPROGRESS_CLIENT_ID,
-			'client_secret' => JOBPROGRESS_CLIENT_SECRET,
-			'refresh_token' => 	$this->get_jobprogres_token()['refresh_token']
-		];
-		$token = $this->post(JOBPRGRESS_REFRESH_TOKEN_URL, $body);
-		if(empty($token)) {
-			return false;
-		}
-		$this->update_access_token($token);
-	}
-	public  function cf_shortcode() {
+	/**
+	 * customer form show and save customer data
+	 * @return [type] [description]
+	 */
+	public  function cf_short_code() {
 		ob_start();
 		if(!$this->is_connected()) return false;
 		$this->save_customer();
@@ -53,6 +35,10 @@ class JobProgress extends Base_JobProgress{
 		return ob_get_clean();
 	}
 
+	/**
+	 * jobprogress admin section menus show on left side
+	 * @return [type] [description]
+	 */
 	public function jobprogress_admin_page() {
 		add_menu_page( 
 			'My Plugin Options', 
@@ -71,10 +57,13 @@ class JobProgress extends Base_JobProgress{
 			'customers', 
 			array($this, 'index')
 		);
-
 	}
-		
-	function authorization() {
+	
+	/**
+	 * 
+	 * @return [type] [description]
+	 */
+	public function authorization() {
 		//get domain
 		$domain = $this->get_domain();
 
@@ -107,13 +96,13 @@ class JobProgress extends Base_JobProgress{
 
 	}
 
-	function my_enqueue($hook) {
-	    // if ( 'edit.php' != $hook ) {
-	    //     return;
-	    // }
+	// function my_enqueue($hook) {
+	//     // if ( 'edit.php' != $hook ) {
+	//     //     return;
+	//     // }
 	    
-	    wp_enqueue_script( 'my_custom_script', plugin_dir_url( __FILE__ ) . 'js/myscript.js' );
-	}
+	//     wp_enqueue_script( 'my_custom_script', plugin_dir_url( __FILE__ ) . 'js/myscript.js' );
+	// }
 	
 
 	/**
@@ -172,6 +161,7 @@ class JobProgress extends Base_JobProgress{
 			  PRIMARY KEY (id)
 			)";
 		$this->wpdb->query($customer_query);
+		wp_clear_scheduled_hook('jobprogress_token_refresh_hook');
 	}
 
 	public  function plugin_deactivation() {
@@ -191,6 +181,7 @@ class JobProgress extends Base_JobProgress{
 		];
 		$data = $this->request(JOBPRGRESS_DISCONNECT_URL, $data, 'Delete');
 		delete_option( 'jobprogress_token_options');
+		wp_clear_scheduled_hook('jobprogress_token_refresh_hook');
 	}
 
 	private function get_domain() {
@@ -204,7 +195,7 @@ class JobProgress extends Base_JobProgress{
 		return $domain;
 	}
 	
-	private function is_connected() {
+	protected function is_connected() {
 		return (get_option( 'jobprogress_token_options' )) ? true : false;
 	}
 
@@ -212,7 +203,8 @@ class JobProgress extends Base_JobProgress{
 		return get_option( 'jobprogress_token_options' );
 	}
 
-	private function update_access_token($token) {
+	protected function update_access_token($token) {
 		update_option( 'jobprogress_token_options', $token);
 	}
+
 }

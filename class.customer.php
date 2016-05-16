@@ -1,17 +1,37 @@
 <?php 
 class Customer extends JobProgress {
 
-	public $validation_error = false;
+	/**
+	 * [$validation_error validation error
+	 * @var array
+	 */
+	public $validation_error = array();
 
+	/**
+	 * [$input description]
+	 * @var array
+	 */
 	public $input = array();
 	
+	/**
+	 * 
+	 * @return [type] [description]
+	 */
+	public function construct() {
+		parent::__construct();
+	}	
+
+	/**
+	 * listing of customer page on index page
+	 * @return [type] [description]
+	 */
 	public function index() {
 		$input = $_GET;
-		$pagenum = isset( $input['pagenum'] ) ? absint( $input['pagenum'] ) : 1;
+		$page = isset( $input['page'] ) ? absint( $input['page'] ) : 1;
 		$order   = ine($input, 'order') ? $input['order'] : 'desc';
 		$order_by = ine($input, 'order_by') ? $input['order_by'] : 'created_at';
 		$limit = 5; // number of rows in page
-		$offset = ( $pagenum - 1 ) * $limit;
+		$offset = ( $page - 1 ) * $limit;
 		$total = $this->wpdb->get_var( "SELECT COUNT(id) FROM {$this->wpdb->prefix}customers" );
 		$num_of_pages = ceil( $total / $limit );
 		$sql = "SELECT * FROM {$this->wpdb->prefix}customers";
@@ -25,6 +45,10 @@ class Customer extends JobProgress {
 		return require_once( JOBPROGRESS_PLUGIN_DIR . 'customer-index-page.php' );
 	}
 
+	/**
+	 * Save jobprogress customer 
+	 * @return [type] [description]
+	 */
 	public function save_customer() {
 		if(isset($_POST) && !empty($_POST)) {
 			require_once( JOBPROGRESS_PLUGIN_DIR . 'class.customer-validator.php' );
@@ -55,28 +79,37 @@ class Customer extends JobProgress {
 
 	}
 
+	/**
+	 * show add customer page
+	 * @return [html] [show customer page]
+	 */
 	public function show_form() {
 
 		if(($trades = get_transient("jobprogress_trades")) === false) {
 			$trades = $this->get(API_BASE_URL.'/trades');
-			set_transient("trades", $trades, 120);
+			set_transient("trades", $trades, 86400);
 		}
 
 		if(($states = get_transient("jobprogress_states")) === false ) {
 			$states = $this->get(API_BASE_URL.'/states');
-			set_transient("jobprogress_states", $states, 120);
+			set_transient("jobprogress_states", $states, 86400);
 		}
+
 		if(($countries = get_transient("jobprogress_countries")) === false) {
 			$countries = $this->get(API_BASE_URL.'/countries');
-			set_transient("jobprogress_countries", $countries, 120);
+			set_transient("jobprogress_countries", $countries, 86400);
 		}
 
 		return require_once( JOBPROGRESS_PLUGIN_DIR . 'customer-form-page.php' );
 	}
 
-	
-
-	function get_error_wrapper($code = '') {
+		
+	/**
+	 * get wrapper of error message
+	 * @param  string $code [error code]
+	 * @return [html]       [error message ]
+	 */
+	protected function get_error_wrapper($code = '') {
 		$error = null;
 		if(! $this->validation_error) {
 			return false;
@@ -94,7 +127,11 @@ class Customer extends JobProgress {
 	}
 
 
-
+	/**
+	 * Map input
+	 * @param  [array] $map [input map]
+	 * @return [array]      [mapped input]
+	 */
 	private function map_inputs($map) {
 		$ret = array();
 
@@ -114,7 +151,10 @@ class Customer extends JobProgress {
         return $ret;
 	}
 
-
+	/**
+	 * map customer data for local database storage
+	 * @return [array] [customer data]
+	 */
 	private function map_plugin_customer_data() {
 		$map = ['email', 'first_name', 'last_name', 'company_name', 'is_sync'];
 		$addressFields = ['address','address_line_1','city','state_id','country_id','zip'];
@@ -140,7 +180,10 @@ class Customer extends JobProgress {
 		return $data;
 	}
 
-
+	/**
+	 * map jobprogress customer data
+	 * @return [type] [description]
+	 */
 	private function map_api_customer_data() {
 		$map = ['email', 'first_name', 'last_name', 'company_name', 'same_as_customer_address'];
 		$addressFields = ['address','address_line_1','city','state_id','country_id','zip'];
@@ -200,6 +243,10 @@ class Customer extends JobProgress {
         return $ret;
     }
 
+    /**
+     * map phone inputs
+     * @return [array] [phones input]
+     */
     private function map_phone_inputs() {
     	$phones = $this->input['phones'];
     	$ret = [];
@@ -212,6 +259,10 @@ class Customer extends JobProgress {
     	return $ret;
     }
 
+    /**
+     * map_additional mail input
+     * @return [arrat] [additional email input]
+     */
     private function map_additional_mail_input() {
     	if(! ine($this->input, 'additional_emails')) return false;
     	$ret = [];
