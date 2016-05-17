@@ -2,21 +2,10 @@
 
 class Base_JobProgress {
 
-	public function get($url, $body) {
+	public function get($url, $body = array()) {
 			$args = array(
-			    // 'timeout'     => 5,
-			    // 'redirection' => 5,
-			    // 'httpversion' => '1.0',
-			    // 'user-agent'  => 'WordPress/4.5.1; ' . get_bloginfo( 'url' ),
-			    // 'blocking'    => true,
 			    'headers'     => $this->getHeader(),
-			    'cookies'     => array(),
-			    'body'        => null,
-			    // 'compress'    => false,
-			    // 'decompress'  => true,
-			    // 'sslverify'   => true,
-			    // 'stream'      => false,
-			    // 'filename'    => null
+			    'body'        => array(),
 			);
 		$response = wp_remote_get( $url, $args );	
 		$response_body = wp_remote_retrieve_body( $response );
