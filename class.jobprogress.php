@@ -66,8 +66,7 @@ class JobProgress extends Base_JobProgress {
 	public function authorization() {
 		//get domain
 		$domain = $this->get_domain();
-
-		// $jobprogressTokenOption = get_option( 'jobprogress_token_options' );
+		$redirect_url = $this->get_redirect_url();
 		if(	ine($_GET, 'access_token')
 			&& ine($_GET, 'refresh_token')
 			&& ine($_GET, 'expires_in')
@@ -95,15 +94,17 @@ class JobProgress extends Base_JobProgress {
 		return require_once( JOBPROGRESS_PLUGIN_DIR . 'connect-form.php' );
 
 	}
-
-	// function my_enqueue($hook) {
-	//     // if ( 'edit.php' != $hook ) {
-	//     //     return;
-	//     // }
-	    
-	//     wp_enqueue_script( 'my_custom_script', plugin_dir_url( __FILE__ ) . 'js/myscript.js' );
-	// }
-	
+	private function get_redirect_url() {
+		$url = $this->get_domain().$_SERVER['REQUEST_URI'];
+		$url_parts = parse_url($url);
+    	$url = $url_parts['scheme'] 
+    		. '://' . $url_parts['host'] 
+    		. (isset($url_parts['path'])
+    		?$url_parts['path']
+    		:'');
+    		
+    	return $url . '?page=jobprogress-admin-page';
+	}
 
 	/**
 	 * Add  jQuery Validation script on customers
