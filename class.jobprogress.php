@@ -140,11 +140,12 @@ class JobProgress extends Base_JobProgress {
 	}
 
 	public function admin_script($hook){
-		if((string)$hook != 'toplevel_page_jobprogress-admin-page') {
-			return false;
-		}
-		wp_enqueue_script( 'my_custom_script', plugin_dir_url( __FILE__ ) . 'js/myscript.js' );
-		wp_enqueue_style( 'custom', plugin_dir_url( __FILE__ ) . 'css/admin-style.css'  );
+
+		if((string)$hook === 'toplevel_page_jobprogress-admin-page'
+			|| (string)$hook === 'jobprogress_page_customers' ) {
+			wp_enqueue_script( 'my_custom_script', plugin_dir_url( __FILE__ ) . 'js/myscript.js' );
+			wp_enqueue_style( 'custom', plugin_dir_url( __FILE__ ) . 'css/admin-style.css'  );
+		} 
 	}
 
 	public  function plugin_activation() {
