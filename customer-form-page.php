@@ -8,14 +8,14 @@
 	</div>
 	<div class="form-group jobprogress-residential-type">
 		<label>Name *</label>
-		<input type="text" name="first_name" placeholder="First Name" >
+		<input type="text" name="first_name" placeholder="First Name" required>
 		<?php echo $this->get_error_wrapper('first_name'); ?>
 		<input type="text" name="last_name"  placeholder="Last Name"  >
 		<?php echo $this->get_error_wrapper('last_name'); ?>
 	</div>
 	<div class="form-group jobprogress-commercial-type" style="display:none;">
 		<label>Company name *</label>
-		<input type="text" name="company_name_commercial" placeholder="Company Name" >
+		<input type="text" name="company_name_commercial" placeholder="Company Name" required>
 		<?php echo $this->get_error_wrapper('company_name_commercial'); ?>
 	</div>
 	<div class="form-group jobprogress-residential-type">
@@ -26,7 +26,7 @@
 	<div class="form-group jobprogress-customer-phone">
 		<label>Phone *</label>
 
-		<select class="phone-label" name="phones[0][label]">
+		<select class="phone-label" name="phones[0][label]" required>
 			<option value="home">Home</option>
 			<option value="cell">Cell</option>
 			<option value="phone">Phone</option>
@@ -34,15 +34,15 @@
 			<option value="fax">Fax</option>
 			<option value="other">Other</option>
 		</select> 
-		<input type="text" maxlength= "10" class="phones number" name="phones[0][number]" placeholder="Phone" > 
-		<input type="text" maxlength= "8" class="number" name="phones[0][ext]" placeholder="Extension" >
+		<input type="text" maxlength= "10" class="phones number" name="phones[0][number]" placeholder="Phone" required > 
+		<input type="text" maxlength= "8" class="number" name="phones[0][ext]" placeholder="Extension" required >
 		<?php echo $this->get_error_wrapper('phones.0.label'); ?>
 		<?php echo $this->get_error_wrapper('phones.0.number'); ?>
 	</div>
 
 	<div class="form-group jobprogress-customer-phone">
 		<label>Phone *</label>
-		<select class="phone-label" name="phones[1][label]">
+		<select class="phone-label" name="phones[1][label]" required>
 			<option value="home">Home</option>
 			<option value="cell">Cell</option>
 			<option value="phone">Phone</option>
@@ -51,7 +51,7 @@
 			<option value="other">Other</option>
 		</select> 
 
-		<input type="text" maxlength= "10" class="phones number" name="phones[1][number]" placeholder="Phone" >
+		<input type="text" maxlength= "10" class="phones number" name="phones[1][number]" placeholder="Phone" required>
 		<input type="text" maxlength= "8" class="number" name="phones[1][ext]" placeholder="Extension"/>
 		<?php echo $this->get_error_wrapper('phones.1.label'); ?>
 		<?php echo $this->get_error_wrapper('phones.1.number'); ?>
@@ -59,7 +59,7 @@
 
 	<div class="form-group">
 		<label>Email *</label>
-		<input type="text" placeholder="Email" name="email" / >
+		<input type="text" placeholder="Email" name="email" required/ >
 		<?php echo $this->get_error_wrapper('email'); ?>
 	</div>
 
@@ -68,17 +68,17 @@
 		<?php echo $this->get_error_wrapper('additional_emails.0'); ?>
 	</div>
 	<div class="form-group">
-		<label>Address *</label>
+		<label>Address </label>
 		<input type="text" placeholder="Address" name="address[address]" / >
 		<?php echo $this->get_error_wrapper('address.address'); ?>
 	</div>
 	<div class="form-group">
-		<label>City *</label>
+		<label>City </label>
 		<input type="text" placeholder="city" name="address[city]" / >
 		<?php echo $this->get_error_wrapper('address.city'); ?>
 	</div>
 	<div class="form-group">
-		<label>State *</label>
+		<label>State </label>
 		<!-- <input type="text" placeholder="State" name="address[state]" / > -->
 		<select name="address[state_id]">
 			<option >select states</option>
@@ -89,12 +89,12 @@
 	<?php echo $this->get_error_wrapper('address.state'); ?>
 </div>
 <div class="form-group">
-	<label>zip *</label>
+	<label>zip </label>
 	<input type="text" placeholder="zip" name="address[zip]" / >
 	<?php echo $this->get_error_wrapper('address.zip'); ?>
 </div>
 <div class="form-group">
-	<label>Country *</label>
+	<label>Country </label>
 	<select name="address[country_id]">
 		<option >select country</option>
 		<?php foreach ($countries as $key => $country) : ?>
@@ -112,17 +112,17 @@
 </div>
 
 <div class="form-group">
-	<label>Address *</label>
+	<label>Address </label>
 	<input type="text" placeholder="Address" name="billing[address]" / >
 	<?php echo $this->get_error_wrapper('billing.address'); ?>
 </div>
 <div class="form-group">
-	<label>City *</label>
+	<label>City </label>
 	<input type="text" placeholder="city" name="billing[city]" / >
 	<?php echo $this->get_error_wrapper('billing.city'); ?>
 </div>
 <div class="form-group">
-	<label>State *</label>
+	<label>State </label>
 	<select name="billing[state_id]">
 		<option >select states</option>
 		<?php foreach ($states as $key => $state) : ?>
@@ -132,12 +132,12 @@
 <?php echo $this->get_error_wrapper('billing.state'); ?>
 </div>
 <div class="form-group">
-	<label>zip *</label>
+	<label>zip </label>
 	<input type="text" placeholder="zip code" name="billing[zip]" / >
 	<?php echo $this->get_error_wrapper('billing.zip'); ?>
 </div>
 <div class="form-group">
-	<label>country *</label>
+	<label>country </label>
 	<select name="billing[country_id]">
 		<option >select country</option>
 		<?php foreach ($countries as $key => $country) : ?>
@@ -156,7 +156,7 @@
 		<?php endif; ?>
 		<?php echo $this->get_error_wrapper('job_trades'); ?>
 </div>
-<input type="text" name="job[description]" placeholder="Description"/>
+<input type="text" name="job[description]" placeholder="Description" required/>
 <?php echo $this->get_error_wrapper('job_description'); ?>
 </div>
 <button type="submit" class="btn btn-default">Save</button>

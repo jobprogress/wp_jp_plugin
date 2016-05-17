@@ -27,11 +27,11 @@ class Customer extends JobProgress {
 	 */
 	public function index() {
 		$input = $_GET;
-		$page = isset( $input['page'] ) ? absint( $input['page'] ) : 1;
+		$page_num = isset( $input['page_num'] ) ? absint( $input['page_num'] ) : 1;
 		$order   = ine($input, 'order') ? $input['order'] : 'desc';
 		$order_by = ine($input, 'order_by') ? $input['order_by'] : 'created_at';
-		$limit = 5; // number of rows in page
-		$offset = ( $page - 1 ) * $limit;
+		$limit = 5; // number of rows in page_num
+		$offset = ( $page_num - 1 ) * $limit;
 		$total = $this->wpdb->get_var( "SELECT COUNT(id) FROM {$this->wpdb->prefix}customers" );
 		$num_of_pages = ceil( $total / $limit );
 		$sql = "SELECT * FROM {$this->wpdb->prefix}customers";
@@ -41,7 +41,7 @@ class Customer extends JobProgress {
 		}
 		$sql .= " ORDER BY $order_by $order";
 		$sql .= " LIMIT $offset, $limit";
-		$entries = $this->wpdb->get_results( $sql );
+		$customers = $this->wpdb->get_results( $sql );
 		return require_once( JOBPROGRESS_PLUGIN_DIR . 'customer-index-page.php' );
 	}
 
@@ -56,9 +56,7 @@ class Customer extends JobProgress {
 			if($validator->is_valid()) {
 				$input = $_POST;
 				$table_name = $this->wpdb->prefix . 'customers';
-				if(ine($input, 'address') && ine($input)) {
-
-				}
+				
 				if(ine($input, 'same_as_customer_address')) {
 					$input['billing'] = $input['address'];
 				}
@@ -185,15 +183,17 @@ class Customer extends JobProgress {
 	 * @return [type] [description]
 	 */
 	private function map_api_customer_data() {
-		$map = ['email', 'first_name', 'last_name', 'company_name', 'same_as_customer_address'];
+		$map = ['email', 'first_name', 'last_name', 'company_name'];
 		$addressFields = ['address','address_line_1','city','state_id','country_id','zip'];
 		$data = $this->map_inputs($map);
 		$data['address'] = $this->mapFirstSubInputs($addressFields, 'address');
 
 		if(!ine($this->input, 'same_as_customer_address')){
-			$data['billing']	= $this->mapFirstSubInputs($addressFields, 'billing');
+			$data['billing']['same_as_customer_address'] = 0;
+			$data['billing'] = $this->mapFirstSubInputs($addressFields, 'billing');
+		}else {
+			$data['billing']['same_as_customer_address'] = 1;
 		}
-
 		if(ine($data['address'], 'state_id')) {
 			$state = explode('_', $data['address']['state_id']);
 			$data['address']['state_id'] = $state[0];
@@ -209,6 +209,7 @@ class Customer extends JobProgress {
 			$data['address']['country_id'] = $country[0];
 		}
 
+
 		if(ine($data['billing'], 'country_id')) {
 			$country = explode('_', $data['billing']['country_id']);
 			$data['billing']['country_id'] = $country[0];
@@ -223,7 +224,6 @@ class Customer extends JobProgress {
 		}
 		$data['phones'] = $this->map_phone_inputs();
 		$data['additional_emails'] = $this->map_additional_mail_input();
-
 		return $data;
 	}
 

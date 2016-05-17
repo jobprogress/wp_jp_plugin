@@ -37,10 +37,10 @@ if($order == 'asc') {
 				</select>
 				<input type="submit" value="Filter" class="button" id="post-query-submit" name="filter_action">
 				<?php $args = array(
-					'base'               =>  add_query_arg( 'pagenum', '%#%' ),
+					'base'               =>  add_query_arg( 'page_num', '%#%' ),
 					'format'             => '',
 					'total'              => $num_of_pages,
-					'current'            => $pagenum,
+					'current'            => $page_num,
 					'show_all'           => false,
 					'end_size'           => 2,
 					'mid_size'           => 2,
@@ -108,12 +108,12 @@ if($order == 'asc') {
 			</thead>
 
 			<tbody id="the-list">
-				<?php if(empty($entries)): ?>
+				<?php if(empty($customers)): ?>
 				<tr>
 					<td colspan="6"><center>No Customer Found.</center></td>
 				</tr>
 			<?php endif; ?>
-			<?php foreach ($entries as $key => $customer) :?>
+			<?php foreach ($customers as $key => $customer) :?>
 			<tr class="iedit author-self level-0 post-2 type-page status-publish hentry" id="post-2">
 				<td data-colname="Title" class="title column-title has-row-actions column-primary page-title">
 					<strong>
