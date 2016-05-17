@@ -94,6 +94,7 @@ class JobProgress extends Base_JobProgress {
 		return require_once( JOBPROGRESS_PLUGIN_DIR . 'connect-form.php' );
 
 	}
+
 	private function get_redirect_url() {
 		$url = $this->get_domain().$_SERVER['REQUEST_URI'];
 		$url_parts = parse_url($url);
@@ -143,6 +144,7 @@ class JobProgress extends Base_JobProgress {
 			return false;
 		}
 		wp_enqueue_script( 'my_custom_script', plugin_dir_url( __FILE__ ) . 'js/myscript.js' );
+		wp_enqueue_style( 'custom', plugin_dir_url( __FILE__ ) . 'css/admin-style.css'  );
 	}
 
 	public  function plugin_activation() {
