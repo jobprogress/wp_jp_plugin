@@ -3,14 +3,18 @@ class Scheduler extends JobProgress {
 
 	public function __construct() {
 		parent::__construct();
-		$this->crone();
+		$this->cron_schedules();
 	}
 
-	private function crone(){
+	/**
+	 * schduler
+	 * @return [boolean] [description]
+	 */
+	private function cron_schedules(){
 		if(! $this->is_connected()) {
 			return false;
 		}
-		add_filter('cron_schedules',array($this, 'my_cron_schedules'));
+		add_filter('cron_schedules',array($this, 'custom_schedules'));
 		if (!wp_next_scheduled('jobprogress_token_refresh_hook')) {
 			wp_schedule_event( time(), '1min', 'jobprogress_token_refresh_hook' );
 		}
@@ -20,9 +24,15 @@ class Scheduler extends JobProgress {
 		add_action( 'jobprogress_token_refresh_hook', array( $this, 'update_token'));
 		add_action( 'jobprogress_customer_sync_hook', array( $this, 'sync_jobprogrss_customer'));
 
+		return true;
 	}
 
-	public function my_cron_schedules($schedules){
+	/**
+	 * custom schedules
+	 * @param  [type] $schedules [description]
+	 * @return [array]            [custom_schdules]
+	 */
+	public function custom_schedules($schedules){
 	    if(!isset($schedules["1sec"])) {
 	    	$schedules = [
 	    		'1min' => [
@@ -39,13 +49,17 @@ class Scheduler extends JobProgress {
 	    return $schedules;
 	}
 
+	/**
+	 * refresh the access token
+	 * @return [type] [description]
+	 */
 	public function update_token() {
 		// fopen( JOBPROGRESS_PLUGIN_DIR . current_time('timestamp').'token.txt' , "w");
 		$body = [
 			'grant_type'    => JOBPRGRESS_REFRESH_TOKEN_GRANT_TYPE,
 			'client_id'     => JOBPROGRESS_CLIENT_ID,
 			'client_secret' => JOBPROGRESS_CLIENT_SECRET,
-			'refresh_token' => 	$this->get_jobprogres_token()['refresh_token']
+			'refresh_token' => 	$this->get_access_token()['refresh_token']
 		];
 		$token = $this->post(JOBPRGRESS_REFRESH_TOKEN_URL, $body);
 		if(empty($token)) {
@@ -54,6 +68,10 @@ class Scheduler extends JobProgress {
 		$this->update_access_token($token);
 	}
 
+	/**
+	 * sync jp customer
+	 * @return [type] [description]
+	 */
 	public function sync_jobprogrss_customer() {
 		// fopen( JOBPROGRESS_PLUGIN_DIR . current_time('timestamp').'customer.txt' , "w");
 		$table_name = $this->wpdb->prefix.'customers';
@@ -81,6 +99,11 @@ class Scheduler extends JobProgress {
 		}
 	}
 
+	/**
+	 * Map data for api request
+	 * @param  [object] $customer [description]
+	 * @return [array]           [description]
+	 */
 	private function map_api_data($customer) {
 		$input['first_name'] = $customer->first_name;
 		$input['last_name']  = $customer->last_name;

@@ -3,7 +3,7 @@ class JobProgress extends JP_Request {
 
 	/**
 	 * [$wpdb description]
-	 * @var [type]
+	 * @var [object]
 	 */
 	protected $wpdb;
 
@@ -157,7 +157,7 @@ class JobProgress extends JP_Request {
 			  PRIMARY KEY (id)
 			)";
 		$this->wpdb->query($customer_query);
-		wp_clear_scheduled_hook('jobprogress_token_refresh_hook');
+		
 	}
 
 	public  function plugin_deactivation() {
@@ -198,7 +198,7 @@ class JobProgress extends JP_Request {
 		return (get_option('jobprogress_token_options')) ? true : false;
 	}
 
-	public function get_jobprogres_token() {
+	public function get_access_token() {
 		return get_option( 'jobprogress_token_options' );
 	}
 

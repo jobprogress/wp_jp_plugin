@@ -41,7 +41,7 @@ class Customer extends JobProgress {
 	 * @return [type] [description]
 	 */
 	public function jobprogress_admin_page() {
-		
+		// show customer label on menu list
 		add_submenu_page( 
 			'jobprogress-admin-page', 
 			'Customer Manager', 
@@ -107,6 +107,7 @@ class Customer extends JobProgress {
 	 * @return [html] [show customer page]
 	 */
 	public function show_form() {
+		
 		if(($trades = get_transient("jobprogress_trades")) === false) {
 			$trades = $this->get(JOBPRGRESS_TRADE_URL);
 			set_transient("jobprogress_trades", $trades, 86400);

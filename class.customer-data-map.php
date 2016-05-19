@@ -13,9 +13,13 @@ class Customer_Data_Map {
 	 */
 	public function get_plugin_input() {
 		$map = ['email', 'first_name', 'last_name', 'company_name', 'is_sync'];
+
 		$addressFields = ['address','address_line_1','city','state_id','country_id','zip'];
+
 		$data = $this->map_inputs($map);
 		$address['address'] = $this->mapFirstSubInputs($addressFields, 'address');
+
+
 		if(ine($this->input, 'same_as_customer_address')){
 			$address['same_as_customer_address'] = true;
 			$address['billing'] = $address['address'];
@@ -24,19 +28,22 @@ class Customer_Data_Map {
 			$address['same_as_customer_address'] = false;
 		}
 		$data['address'] = json_encode($address, true);
+
 		$data['is_commercial'] = false ;
 		if(ine($this->input, 'jobprogress_customer_type2')) {
+			//in commercial case company name and last name should be null
 			$data['is_commercial']  = true;
 			$data['first_name']   = htmlentities($this->input['company_name_commercial']);
-			//in commercial case company name and last name should be null
 			$data['company_name']    = '';
 			$data['last_name']     = '';
 		}
+		
 		$data['phones'] = json_encode($this->map_phone_inputs(), true);
 		$data['additional_emails'] = json_encode($this->map_additional_mail_input(), true);
 		$data['created_at'] = current_time('mysql');
 		$job = $this->map_job_input();
 		$data['job'] = json_encode($job, true);
+
 		return $data;
 	}
 
@@ -78,19 +85,18 @@ class Customer_Data_Map {
      * @return [arrat] [additional email input]
      */
     private function map_additional_mail_input() {
-    	if(! ine($this->input, 'additional_emails')) return false;
-    	$ret = [];
+    	if(! ine($this->input, 'additional_emails')) return [];
     	$additional_emails = $this->input['additional_emails'];
-    	foreach ($additional_emails as $key => $value) {
-    		$ret[] = htmlentities($value);
-    	}
-
-    	return $ret;
+    	return $this->map_numeric_array_inputs($additional_emails);
     }
 
+    /**
+     * map job input
+     * @return [array] [job input]
+     */
     private function map_job_input() {
     	$job = $this->input['job'];
-    	$job['trades'] = $this->map_trade_inputs($job['trades']);
+    	$job['trades'] = $this->map_numeric_array_inputs($job['trades']);
     	$job['description'] = htmlentities($job['description']);
 
     	return $job;
@@ -121,10 +127,14 @@ class Customer_Data_Map {
         return $ret;
 	}
 
-	private function map_trade_inputs() {
-		$trades = $this->input['job']['trades'];
+	/**
+	 * map numeric array input like []
+	 * @param  [type] $array_input [description]
+	 * @return [type]              [description]
+	 */
+	private function map_numeric_array_inputs($array_input) {
 		$ret = [];
-    	foreach ($trades as $key => $value) {
+    	foreach ($array_input as $key => $value) {
     		$ret[] = htmlentities($value);
     	}
     	return $ret;
