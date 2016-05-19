@@ -84,6 +84,13 @@ if($order == 'asc') {
 						</a>
 					</th>
 
+					<th class="manage-column column-company-name column-primary" id="company-name" scope="col">
+						<a href="">
+							<span>Comany Name</span>
+							<span class="sorting-indicator"></span>
+						</a>
+					</th>
+
 					<th class="manage-column column-address column-primary" id="address" scope="col">
 						<a href="">
 							<span>Address</span>
@@ -91,9 +98,9 @@ if($order == 'asc') {
 						</a>
 					</th>
 
-					<th class="manage-column column-is-sync column-primary" id="is-sync" scope="col">
+					<th class="manage-column column-is-commercial column-primary" id="is-commercial" scope="col">
 						<a href="">
-							<span>Sync</span>
+							<span>Commercial</span>
 							<span class="sorting-indicator"></span>
 						</a>
 					</th>
@@ -118,12 +125,29 @@ if($order == 'asc') {
 				<td data-colname="Title" class="title column-title has-row-actions column-primary page-title">
 					<strong>
 						<a class="row-title">
-							<?php echo $customer->first_name . ' '. $customer->last_name; ?>
+
+							<?php if(! $customer->is_commercial) {
+								echo $customer->first_name . ' '. $customer->last_name; 
+							}
+							?>
 						</a>
 					</strong>
 				</td>
 				<td data-colname="Email" class="email column-email">
 					<a><?php echo $customer->email; ?></a>
+				</td>
+				<td data-colname="company-name" class="company-name column-company-name has-row-actions column-primary">
+					<strong>
+						<a class="row-title">
+							<?php
+							if(! $customer->is_commercial) {
+								echo $customer->company_name; 
+							} else{
+								echo $customer->first_name; 
+							}
+							?>
+						</a>
+					</strong>
 				</td>
 				<td data-colname="Address" class="address column-address">
 
@@ -139,26 +163,22 @@ if($order == 'asc') {
 					}
 					if(ine($addressArray, 'state_id')) {
 						$state = explode('_', $addressArray['state_id']);
-						echo $state[0] .', ';
+						echo $state[1] .', ';
 					}
 					if(ine($addressArray, 'zip')) {
 						echo $addressArray['zip'] .', ';
 					}
 					if(ine($addressArray, 'country_id')) {
 						$country = explode('_', $addressArray['country_id']);
-						echo $country[0] .', ';
+						echo $country[1] .', ';
 					}
 					?>
 				</a>
 			</td>
-			<td data-colname="Date" class="date column-date">
+			<td class="date column-is-commercial">
 				<a>
 					<?php 
-					if($customer->is_sync == 1) {
-						echo 'Yes';
-					} else {
-						echo 'No';
-					}
+					echo $customer->is_commercial;
 					?>
 				</a>
 			</td>
@@ -187,6 +207,13 @@ if($order == 'asc') {
 			</a>
 		</th>
 
+		<th class="manage-column column-company-name column-primary" id="company-name" scope="col">
+			<a href="">
+				<span>Comany Name</span>
+				<span class="sorting-indicator"></span>
+			</a>
+		</th>
+
 		<th class="manage-column column-address column-primary" id="address" scope="col">
 			<a href="">
 				<span>Address</span>
@@ -194,12 +221,12 @@ if($order == 'asc') {
 			</a>
 		</th>
 
-		<th class="manage-column column-is-sync column-primary" id="is-sync" scope="col">
-			<a href="">
-				<span>Sync</span>
-				<span class="sorting-indicator"></span>
-			</a>
-		</th>
+		<th class="manage-column column-is-commercial column-primary" id="is-commercial" scope="col">
+						<a href="">
+							<span>Commercial</span>
+							<span class="sorting-indicator"></span>
+						</a>
+					</th>
 
 		<th class="manage-column column-creation-date column-primary" id="creation-date" scope="col">
 			<a href="<?php echo $_SERVER['PHP_SELF'] . "?order=$order&order_by=created_at&page=customers" ?>">
