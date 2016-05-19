@@ -9,16 +9,17 @@ Author URI: http://w3guy.com
 */
 
 define( 'JOBPROGRESS_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
-define('API_BASE_URL', 'http://jobprogress.dev/api/v1');
+define('API_BASE_URL', 'http://jobprogress.dev/api/v1/');
 define('JOBPROGRESS_CLIENT_ID', '123457');
 define('JOBPROGRESS_CLIENT_SECRET', 'schs1EKRpLaS1auhTIc25JrlWSjkry1P');
-define('JOBPRGRESS_AUTHORIZATION_URL', API_BASE_URL.'/login_form');
-define('JOBPRGRESS_DISCONNECT_URL', API_BASE_URL.'/logout');
-define('JOBPRGRESS_REFRESH_TOKEN_URL', API_BASE_URL.'/oauth2/renew_access_token');
-define('JOBPRGRESS_TRADE_URL', API_BASE_URL.'/trades');
-define('JOBPRGRESS_STATE_URL', API_BASE_URL.'/states');
-define('JOBPRGRESS_COUNTRY_URL', API_BASE_URL.'/countries');
-define('JOBPRGRESS_CUSTOMER_URL', API_BASE_URL.'/customers/save_customer_third_party');
+define('JOBPRGRESS_AUTHORIZATION_URL', API_BASE_URL.'login_form');
+define('JOBPRGRESS_DISCONNECT_URL', API_BASE_URL.'logout');
+define('JOBPRGRESS_REFRESH_TOKEN_URL', API_BASE_URL.'oauth2/renew_access_token');
+define('JOBPRGRESS_TRADE_URL', API_BASE_URL.'trades');
+define('JOBPRGRESS_STATE_URL', API_BASE_URL.'states');
+define('JOBPRGRESS_COUNTRY_URL', API_BASE_URL.'countries');
+define('JOBPRGRESS_CUSTOMER_URL', API_BASE_URL.'customers/save_customer_third_party');
+define('JOBPRGRESS_USER_URL', API_BASE_URL.'company/users/');
 
 require_once( JOBPROGRESS_PLUGIN_DIR . 'class.jp-request.php' );
 require_once( JOBPROGRESS_PLUGIN_DIR . 'class.jobprogress.php' );
