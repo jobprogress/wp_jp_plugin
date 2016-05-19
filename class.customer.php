@@ -3,9 +3,9 @@ class Customer extends JobProgress {
 
 	/**
 	 * [$validation_error validation error
-	 * @var array
+	 * @var null
 	 */
-	public $validation_error = array();
+	public $validation_error = null;
 
 	/**
 	 * [$input description]
@@ -17,9 +17,40 @@ class Customer extends JobProgress {
 	 * 
 	 * @return [type] [description]
 	 */
-	public function construct() {
+	public function __construct() {
 		parent::__construct();
-	}	
+		add_shortcode( 'jobprogress_customer_form_code', array($this, 'cf_short_code') );
+		add_action( 'admin_menu',array($this, 'jobprogress_admin_page') );
+		// $this->apiData();
+	}
+
+	/**
+	 * customer form show and save customer data
+	 * @return [type] [description]
+	 */
+	public  function cf_short_code() {
+		ob_start();
+		if(!$this->is_connected()) return false;
+		$this->save_customer();
+		$this->show_form();
+		return ob_get_clean();
+	}
+
+	/**
+	 * jobprogress admin section menus show on left side
+	 * @return [type] [description]
+	 */
+	public function jobprogress_admin_page() {
+		
+		add_submenu_page( 
+			'jobprogress-admin-page', 
+			'Customer Manager', 
+			'Customers', 
+			'manage_options', 
+			'customers', 
+			array($this, 'index')
+		);
+	}
 
 	/**
 	 * listing of customer page on index page
@@ -37,7 +68,7 @@ class Customer extends JobProgress {
 		$sql = "SELECT * FROM {$this->wpdb->prefix}customers";
 
 		if(ine($input, 'date')) {
-			$sql .= " where DATE_FORMAT(created_at, '%Y-%m-%d') = '". $input['date'] . "'";
+			$sql .= " where DATE_FORMAT(created_at, '%Y-%m-%d') = '". sanitize_text_field($input['date']) . "'";
 		}
 		$sql .= " ORDER BY $order_by $order";
 		$sql .= " LIMIT $offset, $limit";
@@ -50,25 +81,19 @@ class Customer extends JobProgress {
 	 * @return [type] [description]
 	 */
 	public function save_customer() {
+		$nonce = $_POST['_wpnonce'];
+		if ( ! wp_verify_nonce( $nonce, 'submit_jobprogress_customer_form' ) ) {
+		  return false;
+		}
 		if(isset($_POST) && !empty($_POST)) {
 			require_once( JOBPROGRESS_PLUGIN_DIR . 'class.customer-validator.php' );
 			$validator = new Customer_Validator;
 			if($validator->is_valid()) {
 				$input = $_POST;
 				$table_name = $this->wpdb->prefix . 'customers';
-				
-				if(ine($input, 'same_as_customer_address')) {
-					$input['billing'] = $input['address'];
-				}
-
-				$this->input = $input;
-				$api_input = $this->map_api_customer_data();
-				$response = $this->post(API_BASE_URL.'/customers/save_customer_third_party', $api_input);
-				$this->input['is_sync']  = 0;
-				if(ine($response, 'customer'))  {
-					$this->input['is_sync'] = 1;
-				}
-				$plugin_input = $this->map_plugin_customer_data($input);
+				require_once( JOBPROGRESS_PLUGIN_DIR . 'class.customer-data-map.php' );
+				$customer =  new Customer_Data_Map($input);
+				$plugin_input = $customer->get_plugin_input();
 				$this->wpdb->insert($table_name, $plugin_input);
 				return true;
 			}
@@ -82,19 +107,18 @@ class Customer extends JobProgress {
 	 * @return [html] [show customer page]
 	 */
 	public function show_form() {
-
 		if(($trades = get_transient("jobprogress_trades")) === false) {
-			$trades = $this->get(API_BASE_URL.'/trades');
-			set_transient("trades", $trades, 86400);
+			$trades = $this->get(JOBPRGRESS_TRADE_URL);
+			set_transient("jobprogress_trades", $trades, 86400);
 		}
-
+		$states = $this->get(JOBPRGRESS_STATE_URL);
 		if(($states = get_transient("jobprogress_states")) === false ) {
-			$states = $this->get(API_BASE_URL.'/states');
+			$states = $this->get(JOBPRGRESS_STATE_URL);
 			set_transient("jobprogress_states", $states, 86400);
 		}
 
 		if(($countries = get_transient("jobprogress_countries")) === false) {
-			$countries = $this->get(API_BASE_URL.'/countries');
+			$countries = $this->get(JOBPRGRESS_COUNTRY_URL);
 			set_transient("jobprogress_countries", $countries, 86400);
 		}
 
@@ -123,155 +147,6 @@ class Customer extends JobProgress {
 	 	$html .= '</label>';
 		return $html;
 	}
-
-
-	/**
-	 * Map input
-	 * @param  [array] $map [input map]
-	 * @return [array]      [mapped input]
-	 */
-	private function map_inputs($map) {
-		$ret = array();
-
-    	// empty the set default.
-    	if(empty($input)) {
-    		$input = $this->input;
-    	}
-
-    	foreach ($map as $key => $value) {
-			if(is_numeric($key)){
-				$ret[$value] = isset($input[$value]) ? htmlentities($input[$value]) : "";
-			}else{
-				$ret[$key] = isset($input[$value]) ? htmlentities($input[$value]) : "";
-			}
-		}
-
-        return $ret;
-	}
-
-	/**
-	 * map customer data for local database storage
-	 * @return [array] [customer data]
-	 */
-	private function map_plugin_customer_data() {
-		$map = ['email', 'first_name', 'last_name', 'company_name', 'is_sync'];
-		$addressFields = ['address','address_line_1','city','state_id','country_id','zip'];
-		$data = $this->map_inputs($map);
-		$address['address'] = $this->mapFirstSubInputs($addressFields, 'address');
-		if(ine($this->input, 'same_as_customer_address')){
-			$address['same_as_customer_address'] = 1;
-		} else {
-			$address['billing']	= $this->mapFirstSubInputs($addressFields, 'billing');
-			$address['same_as_customer_address'] = 0;
-		}
-		$data['address'] = json_encode($address, true);
-		$data['is_commercial'] = 0 ;
-		if(ine($this->input, 'jobprogress_customer_type2')) {
-			$data['is_commercial']  = 1;
-			$data['company_name']   = htmlentities($this->input['company_name_commercial']);
-			$data['first_name']    = '';
-			$data['last_name']     = '';
-		}
-		$data['phones'] = json_encode($this->map_phone_inputs(), true);
-		$data['additional_emails'] = json_encode($this->map_additional_mail_input(), true);
-		$data['created_at'] = current_time('mysql');
-		return $data;
-	}
-
-	/**
-	 * map jobprogress customer data
-	 * @return [type] [description]
-	 */
-	private function map_api_customer_data() {
-		$map = ['email', 'first_name', 'last_name', 'company_name'];
-		$addressFields = ['address','address_line_1','city','state_id','country_id','zip'];
-		$data = $this->map_inputs($map);
-		$data['address'] = $this->mapFirstSubInputs($addressFields, 'address');
-
-		if(!ine($this->input, 'same_as_customer_address')){
-			$data['billing']['same_as_customer_address'] = 0;
-			$data['billing'] = $this->mapFirstSubInputs($addressFields, 'billing');
-		}else {
-			$data['billing']['same_as_customer_address'] = 1;
-		}
-		if(ine($data['address'], 'state_id')) {
-			$state = explode('_', $data['address']['state_id']);
-			$data['address']['state_id'] = $state[0];
-		}
-
-		if(ine($data['billing'], 'state_id')) {
-			$state = explode('_', $data['billing']['state_id']);
-			$data['billing']['state_id'] = $state[0];
-		}
-
-		if(ine($data['address'], 'country_id')) {
-			$country = explode('_', $data['address']['country_id']);
-			$data['address']['country_id'] = $country[0];
-		}
-
-
-		if(ine($data['billing'], 'country_id')) {
-			$country = explode('_', $data['billing']['country_id']);
-			$data['billing']['country_id'] = $country[0];
-		}
-		
-		$data['referred_by_type'] = 'website';
-		if(ine($this->input, 'jobprogress_customer_type2')) {
-			$data['is_commercial'] = 1;
-			$data['company_name']  = '';
-			$data['first_name']    = htmlentities($this->input['company_name_commercial']);
-			$data['last_name']     = '';
-		}
-		$data['phones'] = $this->map_phone_inputs();
-		$data['additional_emails'] = $this->map_additional_mail_input();
-		return $data;
-	}
-
-	/**
-     *  Map  Model fields to inputs
-     *  @return array of mapped array fields.
-     */
-    private function mapFirstSubInputs($map, $inputKey){
-    	$ret = array();
-    	foreach ($map as $key => $value) {
-			if(is_numeric($key)){
-				$ret[$value] = isset($this->input[$inputKey][$value]) ? htmlentities($this->input[$inputKey][$value]) : "";
-			}else{
-				$ret[$key] = isset($this->input[$inputKey][$value]) ? htmlentities($this->input[$inputKey][$value]) : "";
-			}
-		}
-        return $ret;
-    }
-
-    /**
-     * map phone inputs
-     * @return [array] [phones input]
-     */
-    private function map_phone_inputs() {
-    	$phones = $this->input['phones'];
-    	$ret = [];
-    	foreach ($phones as $key => $phone) {
-    		$ret[$key]['label'] = isset($phone['label']) ? htmlentities($phone['label']) : '';
-    		$ret[$key]['number'] = isset($phone['number']) ? htmlentities($phone['number']) : '';
-    		$ret[$key]['ext'] = isset($phone['ext']) ? htmlentities($phone['ext']) : '';
-    	}
-
-    	return $ret;
-    }
-
-    /**
-     * map_additional mail input
-     * @return [arrat] [additional email input]
-     */
-    private function map_additional_mail_input() {
-    	if(! ine($this->input, 'additional_emails')) return false;
-    	$ret = [];
-    	$additional_emails = $this->input['additional_emails'];
-    	foreach ($additional_emails as $key => $value) {
-    		$ret[] = htmlentities($value);
-    	}
-
-    	return $ret;
-    }
+	
 }
  ?>
