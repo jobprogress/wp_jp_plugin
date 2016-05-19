@@ -1,7 +1,8 @@
 <?php 
-	if(ine($_GET, 'error_message')) {
-		echo $_GET['error_message'];
+	if(ine($_GET, 'error')) {
+		echo $_GET['error']['message'];
 	} 
+	
 ?>
 <form method="get" action="<?php echo JOBPRGRESS_AUTHORIZATION_URL ?>">
 <input type="hidden" name="domain" value="<?php echo $domain; ?>">
