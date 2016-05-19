@@ -159,11 +159,12 @@ class JobProgress extends JP_Request {
 
 	private function disconnect() {
 		$data = [
-			'client_id'		=> JOBPROGRESS_CLIENT_ID,
-			'client_secret' => JOBPROGRESS_CLIENT_SECRET,
-			'domain'        =>	$this->get_domain()
+			'domain' =>	$this->get_domain()
 		];
-		$data = $this->request(JOBPRGRESS_DISCONNECT_URL, $data, 'Delete');
+		$response = $this->request(JOBPRGRESS_DISCONNECT_URL, $data, 'Delete');
+		if(ine($response, 'status') && (int)$response['status'] != 200) {
+			return false;
+		}
 		delete_option( 'jobprogress_token_options');
 		wp_clear_scheduled_hook('jobprogress_token_refresh_hook');
 		wp_clear_scheduled_hook('jobprogress_customer_sync_hook');
