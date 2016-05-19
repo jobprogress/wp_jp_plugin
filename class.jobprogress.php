@@ -70,15 +70,14 @@ class JobProgress extends JP_Request {
 
 			// get user detail from jobprogress
 			$user = $this->get(JOBPRGRESS_USER_URL.$_GET['user_id'] .'?'. http_build_query($body));
-			if(ine($user, 'status') && (int)$user['status'] === 200) {
-				update_option('jobprogress_connected_user', $user);
-			}
+			if(ine($user, 'id')) {
+				update_option('jobprogress_connected_user', $user);			}
 		}
 
 		if(ine($_POST, 'disconnect')) {
 			$this->disconnect();
 		}
-
+		$jp_user = get_option( 'jobprogress_connected_user' );
 		if($this->is_connected()) {
 			return require_once( JOBPROGRESS_PLUGIN_DIR . 'disconnect-form.php' );	
 		}
@@ -196,7 +195,7 @@ class JobProgress extends JP_Request {
 	}
 	
 	protected function is_connected() {
-		return (get_option( 'jobprogress_token_options' )) ? true : false;
+		return (get_option('jobprogress_token_options')) ? true : false;
 	}
 
 	public function get_jobprogres_token() {
