@@ -46,10 +46,13 @@ class JobProgress extends JP_Request {
 		//get domain
 		$domain = $this->get_domain();
 		$redirect_url = $this->get_redirect_url();
+
 		if(	ine($_GET, 'access_token')
 			&& ine($_GET, 'refresh_token')
 			&& ine($_GET, 'expires_in')
 			&& ine($_GET, 'token_type')
+			&& ine($_GET, 'user_id')
+			&& wp_verify_nonce( $_GET['_wpnonce'], 'jobprogress_connect_form' )
 			&& ! $this->is_connected()
 		) {
 			$jobprogressTokenData = [
@@ -58,8 +61,18 @@ class JobProgress extends JP_Request {
 				'expires_in'    => $_GET['expires_in'],
 				'token_type'    => $_GET['token_type']
 			];
-			update_option( 'jobprogress_token_options', $jobprogressTokenData);
-			return require_once( JOBPROGRESS_PLUGIN_DIR . 'disconnect-form.php' );
+
+			update_option('jobprogress_token_options', $jobprogressTokenData);
+
+			$body = [
+				'includes[]' => 'company_details'
+			];
+
+			// get user detail from jobprogress
+			$user = $this->get(JOBPRGRESS_USER_URL.$_GET['user_id'] .'?'. http_build_query($body));
+			if(ine($user, 'status') && (int)$user['status'] === 200) {
+				update_option('jobprogress_connected_user', $user);
+			}
 		}
 
 		if(ine($_POST, 'disconnect')) {
@@ -166,6 +179,7 @@ class JobProgress extends JP_Request {
 			return false;
 		}
 		delete_option( 'jobprogress_token_options');
+		delete_option('jobprogress_connected_user');
 		wp_clear_scheduled_hook('jobprogress_token_refresh_hook');
 		wp_clear_scheduled_hook('jobprogress_customer_sync_hook');
 	}

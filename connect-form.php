@@ -9,6 +9,7 @@
 <input type="hidden" name="redirect_uri" value="<?php echo $redirect_url; ?>">
 <input type="hidden" name="client_id" value="<?php echo JOBPROGRESS_CLIENT_ID ?>"/>
 <input type="hidden" name="client_secret" value="<?php echo JOBPROGRESS_CLIENT_SECRET ?>"/>
+<?php wp_nonce_field('jobprogress_connect_form'); ?>
 <input type="hidden" name="grant_type" value="password"/>
 <input type="submit" value="Connect">
 </form>
