@@ -1,5 +1,5 @@
 <?php
-class JobProgress extends Base_JobProgress {
+class JobProgress extends JP_Request {
 
 	/**
 	 * [$wpdb description]
@@ -18,21 +18,8 @@ class JobProgress extends Base_JobProgress {
 	 */
 	private function init_hooks() {
 		add_action('wp_footer', array($this, 'scripts'));
-		add_shortcode( 'jobprogress_customer_form_code', array($this, 'cf_short_code') );
 		add_action( 'admin_menu',array($this, 'jobprogress_admin_page') );
 		add_action( 'admin_enqueue_scripts', array($this, 'admin_script') );
-	}
-
-	/**
-	 * customer form show and save customer data
-	 * @return [type] [description]
-	 */
-	public  function cf_short_code() {
-		ob_start();
-		if(!$this->is_connected()) return false;
-		$this->save_customer();
-		$this->show_form();
-		return ob_get_clean();
 	}
 
 	/**
@@ -48,14 +35,6 @@ class JobProgress extends Base_JobProgress {
 			array($this, 'authorization'),
 			'https://staging.jobprogress.com/app/favicon.ico',
 			6
-		);
-		add_submenu_page( 
-			'jobprogress-admin-page', 
-			'Customer Manager', 
-			'Customers', 
-			'manage_options', 
-			'customers', 
-			array($this, 'index')
 		);
 	}
 	
@@ -162,6 +141,7 @@ class JobProgress extends Base_JobProgress {
 			  is_commercial tinyint(1) NOT NULL DEFAULT '0',
 			  created_at timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
 			  job text NULL,
+			  customer_id int(10) DEFAULT NULL,
 			  PRIMARY KEY (id)
 			)";
 		$this->wpdb->query($customer_query);
@@ -169,8 +149,8 @@ class JobProgress extends Base_JobProgress {
 	}
 
 	public  function plugin_deactivation() {
-		$customer_sql = "DROP TABLE ". $this->wpdb->prefix."customers";
-		$this->wpdb->query($customer_sql);	
+		// $customer_sql = "DROP TABLE ". $this->wpdb->prefix."customers";
+		// $this->wpdb->query($customer_sql);	
 
 		if($this->is_connected()) {
 			return $this->disconnect();
@@ -186,6 +166,7 @@ class JobProgress extends Base_JobProgress {
 		$data = $this->request(JOBPRGRESS_DISCONNECT_URL, $data, 'Delete');
 		delete_option( 'jobprogress_token_options');
 		wp_clear_scheduled_hook('jobprogress_token_refresh_hook');
+		wp_clear_scheduled_hook('jobprogress_customer_sync_hook');
 	}
 
 	private function get_domain() {
