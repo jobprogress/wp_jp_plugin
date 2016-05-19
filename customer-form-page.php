@@ -159,6 +159,9 @@
 <input type="text" name="job[description]" placeholder="Description" required/>
 <?php echo $this->get_error_wrapper('job_description'); ?>
 </div>
+
 <button type="submit" class="btn btn-default">Save</button>
+<?php wp_nonce_field( 'submit_jobprogress_customer_form' ); ?>
+
 <button class="btn btn-default">Cancel</button>
 </form>
