@@ -209,7 +209,10 @@ class JobProgress extends JP_Request {
 		if(ine($response, 'status') && (int)$response['status'] != 200) {
 			return false;
 		}
-		delete_option( 'jp_token_options');
+		delete_transient('jp_trades');
+		delete_transient('jp_states');
+		delete_transient('jp_countries');
+		delete_option('jp_token_options');
 		delete_option('jp_connected_user');
 		wp_clear_scheduled_hook('jp_token_refresh_hook');
 		wp_clear_scheduled_hook('jp_customer_sync_hook');
