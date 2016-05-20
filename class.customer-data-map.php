@@ -30,7 +30,7 @@ class Customer_Data_Map {
 		$data['address'] = json_encode($address, true);
 
 		$data['is_commercial'] = false ;
-		if(ine($this->input, 'jobprogress_customer_type2')) {
+		if(ine($this->input, 'jp_customer_type2')) {
 			//in commercial case company name and last name should be null
 			$data['is_commercial']  = true;
 			$data['first_name']   = htmlentities($this->input['company_name_commercial']);
