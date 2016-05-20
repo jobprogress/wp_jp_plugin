@@ -63,11 +63,10 @@ class JP_Request {
 	 * @return [array] [header]
 	 */
 	public function get_header() {
-		$jobprogressTokenOption = get_option( 'jobprogress_token_options' );
-		$bearerToken =  'Bearer '.$jobprogressTokenOption['access_token'];
-		return ['Authorization' => $bearerToken ];
+		$jp_token_option = get_option( 'jp_token_options' );
+		$bearer_token =  'Bearer '.$jp_token_option['access_token'];
+		return ['Authorization' => $bearer_token ];
 	}
-	
 }
 
 ?>
