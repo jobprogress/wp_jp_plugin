@@ -2,8 +2,8 @@
 <form method="post" id = "jobprogrssCustomerSignupForm" action="<?php echo esc_url( $_SERVER['REQUEST_URI'] ) ?>">
 	<div class="form-group customer">
 		Customer Type
-		<input class= "jobprogress-customer-type" type="checkbox" value="0" name="jobprogress_customer_type1" checked/> Residential
-		<input class= "jobprogress-customer-type" type="checkbox" value="1" name="jobprogress_customer_type2" /> Commercial
+		<input class= "jobprogress-customer-type" type="checkbox" value="0" name="jp_customer_type1" checked/> Residential
+		<input class= "jobprogress-customer-type" type="checkbox" value="1" name="jp_customer_type2" /> Commercial
 		<?php echo $this->get_error_wrapper('customer_type'); ?>
 	</div>
 	<div class="form-group jobprogress-residential-type">
@@ -161,7 +161,7 @@
 </div>
 
 <button type="submit" class="btn btn-default">Save</button>
-<?php wp_nonce_field( 'submit_jobprogress_customer_form' ); ?>
+<?php wp_nonce_field( 'submit_jp_customer_form' ); ?>
 
 <button class="btn btn-default">Cancel</button>
 </form>
