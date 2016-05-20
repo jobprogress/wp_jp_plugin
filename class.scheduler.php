@@ -16,7 +16,7 @@ class Scheduler extends JobProgress {
 		}
 		add_filter('cron_schedules',array($this, 'custom_schedules'));
 		if (!wp_next_scheduled('jp_token_refresh_hook')) {
-			wp_schedule_event( time(), '1min', 'jp_token_refresh_hook' );
+			wp_schedule_event( time(), '10min', 'jp_token_refresh_hook' );
 		}
 		if(!wp_next_scheduled('jb_customer_sync_hook')) {
 			wp_schedule_event( time(), '5min', 'jb_customer_sync_hook' );	
@@ -33,11 +33,11 @@ class Scheduler extends JobProgress {
 	 * @return [array]            [custom_schdules]
 	 */
 	public function custom_schedules($schedules){
-	    if(!isset($schedules["1sec"])) {
+	    if(!isset($schedules["10min"])) {
 	    	$schedules = [
 	    		'1min' => [
-		            'interval' => 60,
-		            'display' => __('Once every 1 min')
+		            'interval' => 600,
+		            'display' => __('Once every 10 min')
 	    		],
 	    		'5min' => [
 	    			'interval' => 300,
