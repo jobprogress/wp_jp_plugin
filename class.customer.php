@@ -46,7 +46,7 @@ class Customer extends JobProgress {
 			'Customer Manager', 
 			'Customers', 
 			'manage_options', 
-			'jp_customers-page', 
+			'jp_customer-page', 
 			array($this, 'index')
 		);
 	}

@@ -126,7 +126,7 @@ class JobProgress extends JP_Request {
 	 */
 	public function admin_script($hook){
 		if((string)$hook === 'toplevel_page_jp-admin-page'
-			|| (string)$hook === 'jobprogress_page_jp_customers-page' ) {
+			|| (string)$hook === 'jobprogress_page_jp_customer-page' ) {
 			wp_enqueue_script( 'my_custom_script', plugin_dir_url( __FILE__ ) . 'js/myscript.js' );
 			wp_enqueue_style( 'custom', plugin_dir_url( __FILE__ ) . 'css/admin-style.css'  );
 		} 
