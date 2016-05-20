@@ -15,11 +15,11 @@ class Customer_Validator {
 		$has_error = false;
 		$error = new WP_Error;
 
-		if(ine($_POST, 'jobprogress_customer_type2')) {
+		if(ine($_POST, 'jp_customer_type2')) {
 			$is_commercial = true;
 		}
 
-		if(!isset($_POST['jobprogress_customer_type1']) && !isset($_POST['jobprogress_customer_type2'])) {
+		if(!isset($_POST['jp_customer_type1']) && !isset($_POST['jp_customer_type2'])) {
 			$error->add('customer_type', 'This field is required.');
 			$has_error = true;
 		}
