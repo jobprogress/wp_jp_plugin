@@ -8,23 +8,26 @@ Author: Logiciel solutions
 Author URI: http://w3guy.com
 */
 
-define( 'JOBPROGRESS_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+define( 'JP_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define('API_BASE_URL', 'http://jobprogress.dev/api/v1/');
-define('JOBPROGRESS_CLIENT_ID', '123457');
-define('JOBPROGRESS_CLIENT_SECRET', 'schs1EKRpLaS1auhTIc25JrlWSjkry1P');
-define('JOBPRGRESS_AUTHORIZATION_URL', API_BASE_URL.'login_form');
-define('JOBPRGRESS_DISCONNECT_URL', API_BASE_URL.'logout');
-define('JOBPRGRESS_REFRESH_TOKEN_URL', API_BASE_URL.'oauth2/renew_access_token');
-define('JOBPRGRESS_TRADE_URL', API_BASE_URL.'trades');
-define('JOBPRGRESS_STATE_URL', API_BASE_URL.'states');
-define('JOBPRGRESS_COUNTRY_URL', API_BASE_URL.'countries');
-define('JOBPRGRESS_CUSTOMER_URL', API_BASE_URL.'customers/save_customer_third_party');
-define('JOBPRGRESS_USER_URL', API_BASE_URL.'company/users/');
+define('JP_CLIENT_ID', '123457');
+define('JP_CLIENT_SECRET', 'schs1EKRpLaS1auhTIc25JrlWSjkry1P');
+define('JP_AUTHORIZATION_URL', API_BASE_URL.'login_form');
+define('JP_DISCONNECT_URL', API_BASE_URL.'logout');
+define('JP_REFRESH_TOKEN_URL', API_BASE_URL.'oauth2/renew_access_token');
+define('JP_TRADE_URL', API_BASE_URL.'trades');
+define('JP_STATE_URL', API_BASE_URL.'states');
+define('JP_COUNTRY_URL', API_BASE_URL.'countries');
+define('JP_ADD_CUSTOMER_URL', API_BASE_URL.'customers/save_customer_third_party');
+define('JP_USER_URL', API_BASE_URL.'company/users/');
+define('JP_REFRESH_TOKEN_GRANT_TYPE', 'refresh_token');
+define('JP_CUSTOMER_LIMIT_PAGINATION', 10);
+define('JP_DELETE_REQUEST', 'Delete');
 
-require_once( JOBPROGRESS_PLUGIN_DIR . 'class.jp-request.php' );
-require_once( JOBPROGRESS_PLUGIN_DIR . 'class.jobprogress.php' );
-require_once( JOBPROGRESS_PLUGIN_DIR . 'class.customer.php' );
-require_once( JOBPROGRESS_PLUGIN_DIR . 'class.scheduler.php' );
+require_once( JP_PLUGIN_DIR . 'class.jp-request.php' );
+require_once( JP_PLUGIN_DIR . 'class.jobprogress.php' );
+require_once( JP_PLUGIN_DIR . 'class.customer.php' );
+require_once( JP_PLUGIN_DIR . 'class.scheduler.php' );
 
 $scheduler = New Scheduler;
 $customer  = New Customer;
