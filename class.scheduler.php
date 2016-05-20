@@ -15,14 +15,14 @@ class Scheduler extends JobProgress {
 			return false;
 		}
 		add_filter('cron_schedules',array($this, 'custom_schedules'));
-		if (!wp_next_scheduled('jobprogress_token_refresh_hook')) {
-			wp_schedule_event( time(), '1min', 'jobprogress_token_refresh_hook' );
+		if (!wp_next_scheduled('jp_token_refresh_hook')) {
+			wp_schedule_event( time(), '1min', 'jp_token_refresh_hook' );
 		}
-		if(!wp_next_scheduled('jobprogress_customer_sync_hook')) {
-			wp_schedule_event( time(), '5min', 'jobprogress_customer_sync_hook' );	
+		if(!wp_next_scheduled('jb_customer_sync_hook')) {
+			wp_schedule_event( time(), '5min', 'jb_customer_sync_hook' );	
 		}
-		add_action( 'jobprogress_token_refresh_hook', array( $this, 'update_token'));
-		add_action( 'jobprogress_customer_sync_hook', array( $this, 'sync_jobprogrss_customer'));
+		add_action( 'jp_token_refresh_hook', array( $this, 'update_token'));
+		add_action( 'jb_customer_sync_hook', array( $this, 'sync_jp_customer'));
 
 		return true;
 	}
@@ -54,17 +54,19 @@ class Scheduler extends JobProgress {
 	 * @return [type] [description]
 	 */
 	public function update_token() {
-		// fopen( JOBPROGRESS_PLUGIN_DIR . current_time('timestamp').'token.txt' , "w");
+		fopen( JP_PLUGIN_DIR . current_time('timestamp').'token.txt' , "w");
 		$body = [
-			'grant_type'    => JOBPRGRESS_REFRESH_TOKEN_GRANT_TYPE,
-			'client_id'     => JOBPROGRESS_CLIENT_ID,
-			'client_secret' => JOBPROGRESS_CLIENT_SECRET,
+			'grant_type'    => JP_REFRESH_TOKEN_GRANT_TYPE,
+			'client_id'     => JP_CLIENT_ID,
+			'client_secret' => JP_CLIENT_SECRET,
 			'refresh_token' => 	$this->get_access_token()['refresh_token']
 		];
-		$token = $this->post(JOBPRGRESS_REFRESH_TOKEN_URL, $body);
-		if(empty($token)) {
+		$response = $this->post(JP_REFRESH_TOKEN_URL, $body);
+		if(ine($response, 'status') && (int)$response['status'] != 200) {
 			return false;
 		}
+		$token = $response['token'];
+
 		$this->update_access_token($token);
 	}
 
@@ -72,8 +74,8 @@ class Scheduler extends JobProgress {
 	 * sync jp customer
 	 * @return [type] [description]
 	 */
-	public function sync_jobprogrss_customer() {
-		// fopen( JOBPROGRESS_PLUGIN_DIR . current_time('timestamp').'customer.txt' , "w");
+	public function sync_jp_customer() {
+		fopen( JP_PLUGIN_DIR . current_time('timestamp').'customer.txt' , "w");
 		$table_name = $this->wpdb->prefix.'customers';
 		$sql = "SELECT * FROM $table_name";
 		$sql .= " where is_sync = 0";
@@ -84,7 +86,7 @@ class Scheduler extends JobProgress {
 		}
 		foreach ($customers as $key => $customer) {
 			$customer_data =  $this->map_api_data($customer);
-			$response = $this->post(JOBPRGRESS_CUSTOMER_URL, $customer_data);
+			$response = $this->post(JP_ADD_CUSTOMER_URL, $customer_data);
 			if(ine($response, 'status') && (int)$response['status'] === 200) {
 				$this->wpdb->update( $table_name, 
 					[
