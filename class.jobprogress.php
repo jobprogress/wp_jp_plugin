@@ -33,7 +33,7 @@ class JobProgress extends JP_Request {
 			'manage_options', 
 			'jp-admin-page', 
 			array($this, 'authorization'),
-			'https://staging.jobprogress.com/app/favicon.ico',
+			JP_MENU_ICON,
 			6
 		);
 	}

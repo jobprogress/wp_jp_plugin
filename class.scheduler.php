@@ -54,6 +54,7 @@ class Scheduler extends JobProgress {
 	 * @return [type] [description]
 	 */
 	public function update_token() {
+		//file create code is temporary only for scheduler testing
 		fopen( JP_PLUGIN_DIR . current_time('timestamp').'token.txt' , "w");
 		$body = [
 			'grant_type'    => JP_REFRESH_TOKEN_GRANT_TYPE,
@@ -75,7 +76,9 @@ class Scheduler extends JobProgress {
 	 * @return [type] [description]
 	 */
 	public function sync_jp_customer() {
+		//file create code is temporary only for scheduler testing
 		fopen( JP_PLUGIN_DIR . current_time('timestamp').'customer.txt' , "w");
+
 		$table_name = $this->wpdb->prefix.'customers';
 		$sql = "SELECT * FROM $table_name";
 		$sql .= " where is_sync = 0";

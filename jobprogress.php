@@ -23,6 +23,7 @@ define('JP_USER_URL', API_BASE_URL.'company/users/');
 define('JP_REFRESH_TOKEN_GRANT_TYPE', 'refresh_token');
 define('JP_CUSTOMER_LIMIT_PAGINATION', 10);
 define('JP_DELETE_REQUEST', 'Delete');
+define('JP_MENU_ICON', 'https://staging.jobprogress.com/app/favicon.ico');
 
 require_once( JP_PLUGIN_DIR . 'class.jp-request.php' );
 require_once( JP_PLUGIN_DIR . 'class.jobprogress.php' );
