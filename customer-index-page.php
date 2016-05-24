@@ -110,7 +110,7 @@ if($order == 'asc') {
 			<tbody id="the-list">
 				<?php if(empty($customers)): ?>
 				<tr>
-					<td colspan="6"><center>No Customer Found.</center></td>
+					<td colspan="5"><center><b>No Customer Found.</b></center></td>
 				</tr>
 			<?php endif; ?>
 			<?php foreach ($customers as $key => $customer) :?>

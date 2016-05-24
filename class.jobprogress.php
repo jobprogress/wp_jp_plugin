@@ -131,8 +131,27 @@ class JobProgress extends Base_JobProgress {
 			array('jquery-validate')
 		);
 
+		wp_enqueue_script(
+			'select2',
+			plugin_dir_url( __FILE__ ) . 'js/select2.min.js',
+			array('jquery-validate')
+		);
+
+		wp_enqueue_script(
+			'mask',
+			plugin_dir_url( __FILE__ ) . 'js/jquery.mask.min.js',
+			array('jquery-validate')
+		);
+
 		wp_enqueue_style(
-			'jquery-validate',
+			'select2',
+			plugin_dir_url( __FILE__ ) . 'css/select2.min.css',
+			array(),
+			'1.0'
+		);
+
+		wp_enqueue_style(
+			'style',
 			plugin_dir_url( __FILE__ ) . 'css/style.css',
 			array(),
 			'1.0'
