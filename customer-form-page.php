@@ -32,6 +32,9 @@
 
 	<div class="form-group jobprogress-customer-phone">
 		<label>Phone <span class="required-sign">*</span></label>
+		<a class="additional-val jp-tooltip remove" title="Remove Additional Phone">
+			<span></span>
+		</a>
 		<a class="additional-val jp-tooltip" title="Add Additional Phone">
 			<span>+</span>
 		</a>
@@ -76,6 +79,12 @@
 			<input type="text" placeholder="Email" name="email" required/ >
 			<?php echo $this->get_error_wrapper('email'); ?>
 		</span>
+		<a class="additional-val jp-tooltip remove" title="Remove Additional Phone">
+			<span></span>
+		</a>
+		<a class="additional-val jp-tooltip" title="Add Additional Phone">
+			<span>+</span>
+		</a>
 	</div>
 
 	<div class="form-group additional-email">
@@ -99,7 +108,7 @@
 		</span>
 	</div>
 	<div class="form-group col-5">
-		<label>State </label>
+		<label class="state">State </label>
 		<!-- <input type="text" placeholder="State" name="address[state]" / > -->
 		<span>
 			<select name="address[state_id]" class="select2">
@@ -120,7 +129,7 @@
 		</span>
 	</div>
 	<div class="form-group col-5">
-		<label>Country </label>
+		<label class="country">Country </label>
 		<span>
 			<select name="address[country_id]" class="select2">
 				<option >Select Country</option>
@@ -155,7 +164,7 @@
 		</span>
 	</div>
 	<div class="form-group col-5">
-		<label>State </label>
+		<label class="state">State </label>
 		<span>
 			<select name="billing[state_id]" class="select2">
 				<option >Select States</option>
@@ -174,7 +183,7 @@
 		</span>
 	</div>
 	<div class="form-group col-5">
-		<label>country </label>
+		<label class="country">country </label>
 		<span>
 			<select name="billing[country_id]" class="select2">
 				<option >Select Country</option>

@@ -1,6 +1,7 @@
 .customer-page {
 	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     font-size: 14px;
+    padding: 20px 0;
 }
 .customer-page textarea, .customer-page input[type="text"], .customer-page input[type="password"], .customer-page input[type="datetime"], .customer-page input[type="datetime-local"], .customer-page input[type="date"], .customer-page input[type="month"], .customer-page input[type="time"], .customer-page input[type="week"], .customer-page input[type="number"], .customer-page input[type="email"], .customer-page input[type="url"], .customer-page input[type="search"], .customer-page input[type="tel"], .customer-page input[type="color"], .customer-page .uneditable-input {
     height: 30px;
@@ -39,12 +40,15 @@
     margin-bottom: 0;
     margin-right: 7px;
     vertical-align: middle;
-    width: 75%;
+    width: 70%;
     margin-top: 0;
     outline: none;
 }
+.customer-page .form-group input:focus, .customer-page .form-group textarea:focus { 
+    border-color: #66afe9;
+}
 .customer-page .form-group.jobprogress-residential-type input {
-    width: 37%;
+    width: 34.5%;
 }
 .customer-page .form-group .jobprogress-customer-type {
 	width: auto;
@@ -52,16 +56,19 @@
 .customer-page .form-combine-select {
     border: 1px solid #dadada;
     height: 32px;
-    width: 75%;
+    width: 70%;
     display: inline-block;
     vertical-align: middle;
     position: relative;
 }
+.customer-page .form-combine-select.active {
+    border-color: #66afe9; 
+}
 .customer-page .select2-container { 
-    width: 75% !important;
+    width: 70% !important;
 }
 .customer-page textarea {
-    width: 75%;
+    width: 70%;
     min-height: 100px;
 }
 .customer-page .form-combine-select .select2-container {
@@ -107,11 +114,14 @@
 .customer-page .col-5 label {
     width: 40.5%;
 }
+.customer-page .col-5 label.state, .customer-page .col-5 label.country {
+    width: 27%;
+}
 .customer-page .form-group input[type= "checkbox"] {
     width: auto;
 }
 .customer-page .form-group.col-5 .select2-container {
-    width: 50.5% !important;
+    width: 54% !important;
 }
 .customer-page .form-group span {
     position: relative;
@@ -135,6 +145,7 @@
     height: 30px;
     width: 30px;
     cursor: pointer;
+    margin-right: 5px;
 }
 .customer-page .additional-val span {
     display: inline-block;
@@ -143,7 +154,19 @@
     line-height: 28px;
     text-align: center;
     vertical-align: middle;
-    width: 30px;
+    width: 28px;
+    position: relative;
+}
+.customer-page .additional-val.remove span:after {
+    background: #357ebd none repeat scroll 0 0;
+    content: "";
+    height: 3px;
+    left: 0;
+    margin: auto;
+    position: absolute;
+    right: 0;
+    top: 2px;
+    width: 12px;
 }
 .customer-page .form-group label.has-outer-label {
     text-align: left;
@@ -211,13 +234,13 @@
     margin-left: 22.1%;
 }
 .customer-page .additional-email input { 
-    width: 96.2%;
+    width: 90%;
 }
 .text-center {
     text-align: center;
 }
 @media(max-width: 768px) {
-    .customer-page .form-group label {
+    .customer-page .form-group label, .customer-page .col-5 label.state, .customer-page .col-5 label.country {
         width: 100%;
         text-align: left;
         margin-bottom: 5px;
@@ -228,6 +251,18 @@
     }
     .customer-page .additional-email {
        margin-left: 0;
+    }
+    .customer-page .additional-email input { 
+        width: 70%;
+    }   
+    .customer-page .col-5 {
+        width: 39.5%;
+    }
+    .customer-page .form-group.col-5 input {
+        width: 75%;
+    }
+    .customer-page .form-group.col-5 .select2-container {
+        width: 75% !important;
     }
 }
 @media(max-width: 480px) {

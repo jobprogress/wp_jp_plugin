@@ -36,5 +36,10 @@ jQuery(function($) {
 	});
 	//$('.mask-select').mask("(xxx) xxx-xxxx", {selectOnFocus: true});
 	$('.mask-select').mask("(000) 000-0000", {placeholder: "(xxx) xxx-xxxx"});
+	$('.form-combine-select input').focus(function(){
+		$(this).parent().addClass('active');
+	}).focusout(function(){
+	  $(this).parent().removeClass('active');
+	});
 
 });
