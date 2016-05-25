@@ -239,6 +239,25 @@
 .text-center {
     text-align: center;
 }
+.alert-msg {
+    border: 1px solid transparent;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    padding: 15px;
+}
+.alert-msg strong { 
+    color: inherit;
+}
+.alert-msg-danger {
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    color: #a94442;
+}
+.alert-msg-success {
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    color: #3c763d;
+}
 @media(max-width: 768px) {
     .customer-page .form-group label, .customer-page .col-5 label.state, .customer-page .col-5 label.country {
         width: 100%;

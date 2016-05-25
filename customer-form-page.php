@@ -1,3 +1,5 @@
+<div class="alert-msg alert-msg-success">Well done! You successfully read this important alert message. </div>
+<div class="alert-msg alert-msg-danger">Oh snap! Change a few things up and try submitting again. </div>
 <form class="customer-page" method="post" id = "jobprogrssCustomerSignupForm" action="<?php echo esc_url( $_SERVER['REQUEST_URI'] ) ?>">
 	<div class="form-group customer">
 		<label>Customer Type</label>
