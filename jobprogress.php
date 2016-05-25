@@ -7,7 +7,6 @@ Version: 1.0
 Author: Logiciel solutions
 Author URI: http://w3guy.com
 */
-
 define( 'JP_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define('API_BASE_URL', 'http://jobprogress.dev/api/v1/');
 define('JP_CLIENT_ID', '123457');
