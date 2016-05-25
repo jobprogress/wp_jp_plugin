@@ -15,12 +15,13 @@ jQuery(function($) {
 	});
 
 	// default customer type 1 selected first type is commercial
-	$("input:checkbox[class='jobprogress-customer-type1']").prop("checked", true);
+	$("input:checkbox[name='jp_customer_type1']").prop("checked", true);
 	$(this).prop("checked", true);
 	
 	$(".jobprogress-customer-type").on('change',function(){
+
 		var all_customer_types = "input:checkbox[class='jobprogress-customer-type']";
-		if($(this).attr('name') === 'jobprogress_customer_type2') {
+		if($(this).attr('name') === 'jp_customer_type2') {
 			$('.jobprogress-residential-type').hide();
 			$('.jobprogress-commercial-type').show();
 		} else {

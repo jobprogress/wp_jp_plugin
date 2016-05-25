@@ -3,8 +3,9 @@
 <form class="customer-page" method="post" id = "jobprogrssCustomerSignupForm" action="<?php echo esc_url( $_SERVER['REQUEST_URI'] ) ?>">
 	<div class="form-group customer">
 		<label>Customer Type</label>
-		<input id="res" class= "jobprogress-customer-type" type="checkbox" value="0" name="jobprogress_customer_type1" checked/> <label class="has-outer-label css-label checkbox-label radGroup1" for="res">Residential</label>
-		<input id="com" class= "jobprogress-customer-type" type="checkbox" value="1" name="jobprogress_customer_type2" /> <label class="has-outer-label css-label checkbox-label radGroup1" for="com">Commercial</label>
+		<input id="res" class= "jobprogress-customer-type" type="checkbox" value="0" name="jp_customer_type1" checked/> <label class="has-outer-label css-label checkbox-label radGroup1" for="res">Residential</label>
+		<input id="com" class= "jobprogress-customer-type" type="checkbox" value="1" name="jp_customer_type2" /> <label class="has-outer-label css-label checkbox-label radGroup1" for="com">Commercial</label>
+		
 		<?php echo $this->get_error_wrapper('customer_type'); ?>
 	</div>
 	<div class="form-group jobprogress-residential-type">
@@ -211,6 +212,7 @@
 			<?php echo $this->get_error_wrapper('job_description'); ?>
 		</span>
 	</div>
+	<?php wp_nonce_field( 'submit_jp_customer_form' ); ?>
 	<div class="form-group">
 		<label>Description</label>
 		<span>
@@ -221,4 +223,5 @@
 		<button type="submit" class="btn btn-blue">Save</button>
 		<button class="btn btn-grey">Cancel</button>
 	</div>
+
 </form>
