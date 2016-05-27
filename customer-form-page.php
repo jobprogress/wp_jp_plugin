@@ -76,7 +76,7 @@
 
 	</div>
 
-	<div class="form-group">
+	<div class="form-group email-section">
 		<label>Email <span class="required-sign">*</span></label>
 		<span>
 			<input type="text" placeholder="Email" name="email" required/ >
@@ -90,7 +90,8 @@
 		</a>
 	</div>
 
-	<div class="form-group additional-email">
+	<div class="form-group additional-email email-section">
+		<label></label>
 		<span>
 			<input type="text" placeholder="Additional Email" name="additional_emails[0]" / >
 			<?php echo $this->get_error_wrapper('additional_emails.0'); ?>
