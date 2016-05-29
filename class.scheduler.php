@@ -77,7 +77,7 @@ class Scheduler extends JobProgress {
 	 */
 	public function sync_jp_customer() {
 		//file create code is temporary only for scheduler testing
-		fopen( JP_PLUGIN_DIR . current_time('timestamp').'customer.txt' , "w");
+		// fopen( JP_PLUGIN_DIR . current_time('timestamp').'customer.txt' , "w");
 
 		$table_name = $this->wpdb->prefix.'customers';
 		$sql = "SELECT * FROM $table_name";
