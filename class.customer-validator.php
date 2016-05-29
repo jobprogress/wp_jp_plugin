@@ -4,7 +4,7 @@ class Customer_Validator {
 	 * [$validation_error validation of customer form
 	 * @var [array]
 	 */
-	public $validation_error = null;
+	public $wp_error = null;
 
 	/**
 	 * check customer form input value is valid
@@ -88,23 +88,24 @@ class Customer_Validator {
 					$has_error = true;
 					continue;
 				}
-				if(!is_numeric($value['number'])) {
+				$number = str_replace(array( '(', ')',' ','-' ), '', $value['number']);
+				if(!is_numeric($number)) {
 					$error->add("phones.$key.number", 'The phone must be a number.');
 					$has_error = true;
 					continue;
 				}
-				if(strlen($value['number']) > 10) {
+				if(strlen($number) > 10) {
 					$error->add("phones.$key.number", 'The phone number may not be greater than 10 digit.');
 					$has_error = true;
 				} 
-				if(strlen($value['number']) < 10) {
+				if(strlen($number) < 10) {
 					$error->add("phones.$key.number", 'The phone number may not be less than than 10 
 					digit.');
 					$has_error = true;
 				}
 			}
 		}
-		$this->validation_error = $error;
+		$this->wp_error = $error;
 		if($has_error) {
 
 			return false;
@@ -117,8 +118,8 @@ class Customer_Validator {
 	 * get validation error
 	 * @return [array] [validation errors]
 	 */
-	public function get_validation_error() {
-		return $this->validation_error;
+	public function get_wp_error() {
+		return $this->wp_error;
 	}
 
 }
