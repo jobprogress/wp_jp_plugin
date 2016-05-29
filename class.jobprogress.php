@@ -123,6 +123,12 @@ class JobProgress extends JP_Request {
 			array('jquery-validate')
 		);
 
+		wp_enqueue_script(
+			'underscore',
+			plugin_dir_url( __FILE__ ) . 'js/underscore-min.js',
+			array('underscore')
+		);
+
 		wp_enqueue_style(
 			'select2',
 			plugin_dir_url( __FILE__ ) . 'css/select2.min.css',
