@@ -1,4 +1,9 @@
-<div class="alert-msg alert-msg-success">Well done! You successfully read this important alert message. </div>
+
+<?php  if($success): ?>
+	<div class="alert-msg alert-msg-success">
+		Customer form saved successfully.
+	</div>
+<?php endif; ?>
 <div class="alert-msg alert-msg-danger">Oh snap! Change a few things up and try submitting again. </div>
 <form class="customer-page" method="post" id = "jobprogrssCustomerSignupForm" action="<?php echo esc_url( $_SERVER['REQUEST_URI'] ) ?>">
 	<div class="form-group customer">
@@ -35,10 +40,10 @@
 
 	<div class="form-group jobprogress-customer-phone">
 		<label>Phone <span class="required-sign">*</span></label>
-		<a class="additional-val jp-tooltip remove" title="Remove Additional Phone">
+		<!-- <a class="additional-val jp-tooltip remove remove-additional-phone" title="Remove Additional Phone">
 			<span></span>
-		</a>
-		<a class="additional-val jp-tooltip" title="Add Additional Phone">
+		</a> -->
+		<a class="additional-val add-additional-phone jp-tooltip" title="Add Additional Phone">
 			<span>+</span>
 		</a>
 		<div class="form-combine-select">
@@ -50,53 +55,25 @@
 				<option value="fax">Fax</option>
 				<option value="other">Other</option>
 			</select> 
-			<input type="text" class="phones number mask-select phone-number-field" name="phones[0][number]" placeholder="Phone" required > 
-			<input type="text" maxlength= "8" class="extension-field number" name="phones[0][ext]" placeholder="Extension" required >
+			<input type="text" class="phones  mask-select phone-number-field" name="phones[0][number]" placeholder="Phone" required > 
+			<input type="text" maxlength= "8" class="extension-field number" name="phones[0][ext]" placeholder="Extension" >
 		</div>
 		<?php echo $this->get_error_wrapper('phones.0.label'); ?>
 		<?php echo $this->get_error_wrapper('phones.0.number'); ?>
 	</div>
 
-	<div class="form-group jobprogress-customer-phone">
-		<label>Phone <span class="required-sign">*</span></label>
-		<div class="form-combine-select">
-			<select class="phone-label select2" name="phones[1][label]" required>
-				<option value="home">Home</option>
-				<option value="cell">Cell</option>
-				<option value="phone">Phone</option>
-				<option value="office">Office</option>
-				<option value="fax">Fax</option>
-				<option value="other">Other</option>
-			</select> 
-			<input type="text" class="phones number mask-select phone-number-field" name="phones[1][number]" placeholder="Phone" required>
-			<input type="text" maxlength= "8" class="number extension-field" name="phones[1][ext]" placeholder="Extension"/>
-		</div>
-		<?php echo $this->get_error_wrapper('phones.1.label'); ?>
-		<?php echo $this->get_error_wrapper('phones.1.number'); ?>
-
-	</div>
-
-	<div class="form-group email-section">
+	<div class="form-group additional-emails">
 		<label>Email <span class="required-sign">*</span></label>
 		<span>
 			<input type="text" placeholder="Email" name="email" required/ >
 			<?php echo $this->get_error_wrapper('email'); ?>
 		</span>
-		<a class="additional-val jp-tooltip remove" title="Remove Additional Phone">
-			<span></span>
-		</a>
-		<a class="additional-val jp-tooltip" title="Add Additional Phone">
+		
+		<a class="additional-val jp-tooltip start-additional-emails" title="Add Additional Phone">
 			<span>+</span>
 		</a>
 	</div>
 
-	<div class="form-group additional-email email-section">
-		<label></label>
-		<span>
-			<input type="text" placeholder="Additional Email" name="additional_emails[0]" / >
-			<?php echo $this->get_error_wrapper('additional_emails.0'); ?>
-		</span>
-	</div>
 	<div class="form-group">
 		<label>Address </label>
 		<span>
@@ -115,7 +92,7 @@
 		<label class="state">State </label>
 		<!-- <input type="text" placeholder="State" name="address[state]" / > -->
 		<span>
-			<select name="address[state_id]" class="select2">
+			<select name="address[state_id]" id="address-state" class="select2">
 				<option >Select States</option>
 				<?php foreach ($states as $key => $state) : ?>
 				<option value="<?php echo $state['id'] .'_'.$state['name']; ?>"><?php echo $state['name']; ?></option>
@@ -135,7 +112,7 @@
 	<div class="form-group col-5">
 		<label class="country">Country </label>
 		<span>
-			<select name="address[country_id]" class="select2">
+			<select name="address[country_id]" id="address-country" class="select2">
 				<option >Select Country</option>
 				<?php foreach ($countries as $key => $country) : ?>
 				<option value="<?php echo $country['id'] .'_'.$country['name']; ?>"><?php echo $country['name']; ?></option>
@@ -149,10 +126,10 @@
 	<div class="form-group">
 		<label>Billing Address</label>
 		<span>
-			<input type="checkbox" name="same_as_customer_address" value= "true"/ checked> Same as above
+			<input type="checkbox" name="same_as_customer_address" value= "true"/> Same as above
 		</span>
 	</div>
-
+	<div class="billing-address-container">
 	<div class="form-group">
 		<label>Address </label>
 		<span>
@@ -170,7 +147,7 @@
 	<div class="form-group col-5">
 		<label class="state">State </label>
 		<span>
-			<select name="billing[state_id]" class="select2">
+			<select name="billing[state_id]" id="billing-state" class="select2">
 				<option >Select States</option>
 				<?php foreach ($states as $key => $state) : ?>
 				<option value="<?php echo $state['id'] .'_'.$state['name']; ?>"><?php echo $state['name']; ?></option>
@@ -189,7 +166,7 @@
 	<div class="form-group col-5">
 		<label class="country">country </label>
 		<span>
-			<select name="billing[country_id]" class="select2">
+			<select name="billing[country_id]" id="billing-country" class="select2">
 				<option >Select Country</option>
 				<?php foreach ($countries as $key => $country) : ?>
 				<option value="<?php echo $country['id'] .'_'.$country['name']; ?>"><?php echo $country['name']; ?></option>
@@ -198,11 +175,11 @@
 			<?php echo $this->get_error_wrapper('billing.country'); ?>
 		</span>
 	</div>
+</div>
 	<div class="form-group">
 		<label>Trades <span class="required-sign">*</span></label>
 		<span>
-			<select name="billing[country_id]" class="select2" multiple="multiple">
-				<option >Select Trades</option>
+			<select name="job[trades][]" class="select2" multiple="multiple">
 				<?php if($trades): ?>
 				<?php foreach ($trades as $key => $trade) : ?>
 				<option value="<?php echo $trade['id'] ?>"><?php echo $trade['name']; ?></option>
@@ -210,7 +187,7 @@
 				<?php endif; ?>
 				<?php echo $this->get_error_wrapper('job_trades'); ?>
 			</select>
-			<?php echo $this->get_error_wrapper('job_description'); ?>
+			
 		</span>
 	</div>
 	<?php wp_nonce_field( 'submit_jp_customer_form' ); ?>
@@ -218,6 +195,7 @@
 		<label>Description</label>
 		<span>
 			<textarea name="job[description]" rows="5" placeholder="Description" required></textarea>
+			<?php echo $this->get_error_wrapper('job_description'); ?>
 		</span>
 	</div>
 	<div class="text-center">
