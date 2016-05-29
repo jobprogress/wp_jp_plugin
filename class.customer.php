@@ -13,6 +13,10 @@ class Customer extends JobProgress {
 	 */
 	public $input = array();
 	
+	protected $customer_form_saved = null;
+
+	protected $customer_form_wpdb_error = null;
+
 	/**
 	 * 
 	 * @return [type] [description]
@@ -92,21 +96,21 @@ class Customer extends JobProgress {
 				$plugin_input = $customer->get_plugin_input();
 				$this->wpdb->insert($table_name, $plugin_input);
 				if(! $this->wpdb->show_errors()) {
-					$success = true;
+					$this->customer_form_saved = true;
+				}else {
+					$this->customer_form_wpdb_error = $this->wpdb->last_error;
 				}
-				
 			}
 			$this->wp_error = $validator->get_wp_error();
 		}
-		$this->show_form($success);
+		$this->show_form();
 	}
 
 	/**
 	 * show add customer page
 	 * @return [html] [show customer page]
 	 */
-	public function show_form($success , $error) {
-		
+	public function show_form() {
 		if(($trades = get_transient("jp_trades")) === false 
 			|| $trades === '' ) {
 			$trades = $this->get(JP_TRADE_URL);

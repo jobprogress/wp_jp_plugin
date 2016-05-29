@@ -1,10 +1,12 @@
 
-<?php  if($success): ?>
+<?php  if($this->customer_form_saved): ?>
 	<div class="alert-msg alert-msg-success">
 		Customer form saved successfully.
 	</div>
 <?php endif; ?>
-<div class="alert-msg alert-msg-danger">Oh snap! Change a few things up and try submitting again. </div>
+<?php if($this->customer_form_wpdb_error): ?>
+<div class="alert-msg alert-msg-danger"><?php echo $this->customer_form_wpdb_error; ?></div>
+<?php endif ?>	
 <form class="customer-page" method="post" id = "jobprogrssCustomerSignupForm" action="<?php echo esc_url( $_SERVER['REQUEST_URI'] ) ?>">
 	<div class="form-group customer">
 		<label>Customer Type</label>
