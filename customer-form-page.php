@@ -33,7 +33,7 @@
 			<?php echo $this->get_error_wrapper('company_name_commercial'); ?>
 		</span>
 	</div>
-	<div class="form-group jobprogress-company-type">
+	<div class="form-group jobprogress-company-type jobprogress-residential-type">
 		<label>Company name</label>
 		<span>
 			<input type="text" name="company_name"  placeholder="Company Name" placeholder="Company Name">
@@ -107,7 +107,7 @@
 	<div class="form-group col-5">
 		<label>zip </label>
 		<span>
-			<input type="text" placeholder="zip" name="address[zip]" / >
+			<input type="text" class="number" placeholder="zip" name="address[zip]" minLength="5" / >
 			<?php echo $this->get_error_wrapper('address.zip'); ?>
 		</span>
 	</div>
@@ -128,7 +128,7 @@
 	<div class="form-group">
 		<label>Billing Address</label>
 		<span>
-			<input type="checkbox" name="same_as_customer_address" value= "true"/> Same as above
+			<input type="checkbox" name="same_as_customer_address" value= "true" checked/> Same as above
 		</span>
 	</div>
 	<div class="billing-address-container">
@@ -142,7 +142,7 @@
 	<div class="form-group col-5">
 		<label>City </label>
 		<span>
-			<input type="text" placeholder="city" name="billing[city]" / >
+			<input type="text" class="number" placeholder="city" name="billing[city]" minLength="5"/ >
 			<?php echo $this->get_error_wrapper('billing.city'); ?>
 		</span>
 	</div>
@@ -181,7 +181,7 @@
 	<div class="form-group">
 		<label>Trades <span class="required-sign">*</span></label>
 		<span>
-			<select name="job[trades][]" class="select2" multiple="multiple">
+			<select name="job[trades][]" class="select2" multiple="multiple" required>
 				<?php if($trades): ?>
 				<?php foreach ($trades as $key => $trade) : ?>
 				<option value="<?php echo $trade['id'] ?>"><?php echo $trade['name']; ?></option>
@@ -194,7 +194,7 @@
 	</div>
 	<?php wp_nonce_field( 'submit_jp_customer_form' ); ?>
 	<div class="form-group">
-		<label>Description</label>
+		<label>Description <span class="required-sign">*</span></label>
 		<span>
 			<textarea name="job[description]" rows="5" placeholder="Description" required></textarea>
 			<?php echo $this->get_error_wrapper('job_description'); ?>
