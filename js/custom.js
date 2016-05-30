@@ -19,7 +19,7 @@ jQuery(function($) {
 
 	// default customer type 1 selected first type is commercial
 	$("input:checkbox[name='jp_customer_type1']").prop("checked", true);
-	// $(this).prop("checked", true);
+	$('.billing-address-container').hide();
 	
 	$(".jobprogress-customer-type").on('change',function(){
 
@@ -97,24 +97,22 @@ jQuery(function($) {
 	});
 
 	$("input:checkbox[name='same_as_customer_address']").on('change', function(){
-		if( ($("input:checkbox[name='same_as_customer_address']").prop("checked")) ){
+		$('.billing-address-container').hide();
+		if(! ($("input:checkbox[name='same_as_customer_address']").prop("checked")) ){
 			address = $("input:text[name='address[address]']").val();
 			city = $("input:text[name='address[city]']").val();
 			country_id = $("#address-country").select2("val");
+			console.log(country_id);
 			state_id = $("#address-state").select2("val");
 			zip = $("input:text[name='address[zip]']").val();
-			// console.log(country_id);
-			// console.log(  $('#address-country option:eq(1)').val()  );
 			
-			$('#billing-country').select2().select2('val', $('#address-country option:eq(1)').val());
-
+			$('#billing-country').val(country_id).trigger("change");
 			$("input:text[name='billing[address]']").val(address);
 			$("input:text[name='billing[city]']").val(city);
 			$("input:checkbox[name='billing[state_id]']").val();
-			// $("#billing-country").select2('val', country_id);
-			$("#billing-state").select2().select2('val', state_id);
+			$("#billing-state").val(state_id).trigger("change");
 			$("input:text[name='billing[zip]']").val(zip);
-
+			$('.billing-address-container').show();
 		}
 	});
 	
