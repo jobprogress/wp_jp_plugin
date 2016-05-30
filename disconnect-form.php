@@ -3,35 +3,76 @@
 <input class="btn btn-red" type="submit" value="Disconnect">
 </form>
 
+ <?php if($jp_user): ?>
 <div class="subsDetail-container">
 	<div class="profile-header">
 		<div class="address-container">
+			<?php if(ine($jp_user['company_details'], 'logo')): ?>
 			<div class="pull-right address-container-profile-pic">
-				<div class="company-image-viewer profile-pic" image-url="https://staging.jobprogress.com/api/public/uploads/company/users/2_1450702741.jpg"><img class="img-thumbnail" alt="Logo" src="https://staging.jobprogress.com/api/public/uploads/company/users/2_1450702741.jpg?file=1464068664563"></div>
+				<div class="company-image-viewer profile-pic" image-url="https://staging.jobprogress.com/api/public/uploads/company/users/2_1450702741.jpg">
+						<img class="img-thumbnail" alt="Logo" src="<?php echo $jp_user['company_details']['logo']; ?>">
+				</div>
 			</div>
+			<?php endif; ?>
 			<div class="address-bar address-bar-section-first">
 				<div class="subscriber-info">
 					<h3>SUBSCRIBER DETAILS</h3>
+					<?php
+					$address = null;
+
+					if(ine($jp_user['profile'], 'address')) {
+						$address .= $jp_user['profile']['address'] . ', ';  
+					}
+
+					if(ine($jp_user['profile'], 'city')) {
+						$address .= $jp_user['profile']['city']. ', ';  
+					}
+
+					if(ine($jp_user['profile'], 'state')) {
+						$address .= $jp_user['profile']['state']. ', ';  
+					}
+
+					if(ine($jp_user['profile'], 'zip')) {
+						$address .= $jp_user['profile']['zip'].', ';
+					}
+
+					if(ine($jp_user['profile'], 'country')) {
+						$address .= $jp_user['profile']['country'] .', ';  
+					}
+					if($address):
+					?>
 					<div class="info-label">
 						<label>Address: </label>
 						<span>
-							<span class="">173 Route 46, Mine Hill Township, New Jersey, <br>07803, United States</span>
+							<span class=""><?php echo $address ?></span>
 						</span>
 					</div>
+					<?php endif; ?>
+
+					<?php if(ine($jp_user['profile'], 'address_line_1')): ?>
 					<div class="info-label " style="">
 						<label>Address 2: </label>
-						<span class="">Dummy</span>
+						<span class=""><?php echo $jp_user['profile']['address_line_1']; ?></span>
 					</div>
+					<?php endif; ?>
+					<?php if(ine($jp_user['profile'], 'additional_phone')): ?>			
 					<div class="info-label ">
-						<label class="">Phone: </label>
+						<?php $phone = reset($jp_user['profile']['additional_phone']);?>
+						<label class=""><?php echo ucfirst($phone['label']); ?>: </label>
 						<span class="">
-							(121) 222-3232 - Office
-							<span ng-if="phone.extension" class="userData-extension  ">Extension: 121</span>
+							<?php 
+							echo format_number($phone['phone']);
+							if(!empty($phone['ext'])):
+							?>
+							<span ng-if="phone.extension" class="userData-extension  ">Extension: 
+								<?php echo $phone['ext']; ?></span>
+							<?php endif; ?>
 						</span>
 					</div>
+					<?php endif ?>
 					<div class="info-label">
 						<label>Email: </label>
-						<span><a href="javascript:void(0)" class="">rajan.kumar@logicielsolutions.co.in</a></span>
+						<span><a href="javascript:void(0)" class=""><?php echo $jp_user['email']; ?></a></span>
 					</div>
 				</div>
 			</div>
@@ -39,30 +80,69 @@
 			<div class="address-bar address-bar-section-second">
 				<div class="subscriber-info">
 					<h3>COMPANY DETAILS</h3>
+					<?php
+					$billing_address = null;
+
+					if(ine($jp_user['company_details'], 'office_address')) {
+						$billing_address .= $jp_user['company_details']['office_address'] . ', ';  
+					}
+
+					if(ine($jp_user['company_details'], 'office_city')) {
+						$billing_address .= $jp_user['company_details']['office_city']. ', ';  
+					}
+
+					if(ine($jp_user['company_details'], 'office_state')
+						&& ine($jp_user['company_details']['office_state'], 'name') ) {
+						$billing_address .= $jp_user['company_details']['office_state']['name'].', ';
+					}
+
+					if(ine($jp_user['company_details'], 'office_zip')) {
+						$billing_address .= $jp_user['company_details']['office_zip'] .', ';  
+					}
+
+					if(ine($jp_user['company_details'], 'office_country')
+						&& ine($jp_user['company_details']['office_country'], 'name') ) {
+						$billing_address .= $jp_user['company_details']['office_country']['name'].' ';
+					}
+					?>
+					<?php if($billing_address): ?>
 					<div class="info-label " style="">
 						<label>Address: </label>
 						<span>
-							<span class="">173 Route 46, Mine Hill Township, New Jersey, <br>07803, United States</span>
+							<span class="">
+								<?php echo $billing_address; ?>
+							</span>
 						</span>
 					</div>
+					<?php endif ?>
+					<?php if(ine($jp_user['company_details'], 'office_address_line_1')): ?>
 					<div class="info-label ">
 						<label>Address 2: </label>
-						<span class="">dummy</span>
+						<span class="">
+							<?php echo $jp_user['company_details']['office_address_line_1']; ?>
+						</span>
 					</div>
+					<?php endif; ?>
+					<?php if(ine($jp_user['company_details'], 'office_phone')): ?>
 					<div class="info-label">
 						<label>Phone: </label>
-						<span class="">(111) 222-3333</span>
+						
+						<span class=""><?php echo format_number($jp_user['company_details']['office_phone']); ?></span>
 					</div>
+					<?php endif; ?>
 					<div class="info-label">
 						<label>Email: </label>
-						<span><a href="javascript:void(0)" class="">rajan.kumar@logicielsolutions.co.in</a></span>
+						<span><a href="javascript:void(0)" class=""><?php echo $jp_user['company_details']['office_email']; ?></a></span>
 					</div>
+					<?php if(ine($jp_user['company_details'], 'office_fax')): ?>
 					<div class="info-label ">
 						<label>Fax: </label>
-						<span class="">(111) 222-3334</span>
+						<span class=""><?php echo format_number($jp_user['company_details']['office_fax']); ?></span>
 					</div>
+					<?php endif ?>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+<?php endif; ?>
