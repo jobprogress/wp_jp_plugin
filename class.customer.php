@@ -45,11 +45,11 @@ class Customer extends JobProgress {
 	public function jp_admin_page() {
 		// show customer label on menu list
 		add_submenu_page( 
-			'jp-admin-page', 
+			'jp_admin_page', 
 			'Customer Manager', 
 			'Customers', 
 			'manage_options', 
-			'jp_customer-page', 
+			'jp_customer_page', 
 			array($this, 'index')
 		);
 	}
@@ -68,7 +68,7 @@ class Customer extends JobProgress {
 		$total = $this->wpdb->get_var( "SELECT COUNT(id) FROM {$this->wpdb->prefix}customers" );
 		$num_of_pages = ceil( $total / $limit );
 		$sql = "SELECT * FROM {$this->wpdb->prefix}customers";
-
+		
 		if(ine($input, 'date')) {
 			$sql .= " where DATE_FORMAT(created_at, '%Y-%m-%d') = '". sanitize_text_field($input['date']) . "'";
 		}
@@ -95,7 +95,7 @@ class Customer extends JobProgress {
 				$customer =  new Customer_Data_Map($input);
 				$plugin_input = $customer->get_plugin_input();
 				$this->wpdb->insert($table_name, $plugin_input);
-				if(! $this->wpdb->show_errors()) {
+				if(! $this->wpdb->last_error) {
 					$this->customer_form_saved = true;
 				}else {
 					$this->customer_form_wpdb_error = $this->wpdb->last_error;
