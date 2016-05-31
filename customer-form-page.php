@@ -80,48 +80,52 @@
 		<label>Address </label>
 		<span>
 			<input type="text" placeholder="Address" name="address[address]" / >
-			<?php echo $this->get_error_wrapper('address.address'); ?>
+		</span>
+	</div>
+	<div class="form-group">
+		<label>Address Line 2</label>
+		<span>
+			<input type="text" placeholder="Address" name="address[address_line_2]" / >
+		</span>
+	</div>
+	<div class="form-group">
+		<label>Address </label>
+		<span>
+			<input type="text" placeholder="Address" name="address[address]" / >
 		</span>
 	</div>
 	<div class="form-group col-5">
 		<label>City </label>
 		<span>
 			<input type="text" placeholder="city" name="address[city]" / >
-			<?php echo $this->get_error_wrapper('address.city'); ?>
 		</span>
 	</div>
 	<div class="form-group col-5">
 		<label class="state">State </label>
-		<!-- <input type="text" placeholder="State" name="address[state]" / > -->
 		<span>
 			<select name="address[state_id]" id="address-state" class="select2">
-				<option >Select States</option>
+				<option value="0">Select States</option>
 				<?php foreach ($states as $key => $state) : ?>
 				<option value="<?php echo $state['id'] .'_'.$state['name']; ?>"><?php echo $state['name']; ?></option>
 			<?php endforeach; ?>	
 			</select>
-		
-		<?php echo $this->get_error_wrapper('address.state'); ?>
 		</span>
 	</div>
 	<div class="form-group col-5">
 		<label>zip </label>
 		<span>
 			<input type="text" class="number" placeholder="zip" name="address[zip]" minLength="5" / >
-			<?php echo $this->get_error_wrapper('address.zip'); ?>
 		</span>
 	</div>
 	<div class="form-group col-5">
 		<label class="country">Country </label>
 		<span>
 			<select name="address[country_id]" id="address-country" class="select2">
-				<option >Select Country</option>
+				<option value="0" >Select Country</option>
 				<?php foreach ($countries as $key => $country) : ?>
 				<option value="<?php echo $country['id'] .'_'.$country['name']; ?>"><?php echo $country['name']; ?></option>
 			<?php endforeach; ?>	
 			</select>
-
-			<?php echo $this->get_error_wrapper('address.country'); ?>
 		</span>
 	</div>
 
@@ -136,45 +140,40 @@
 		<label>Address </label>
 		<span>
 			<input type="text" placeholder="Address" name="billing[address]" / >
-			<?php echo $this->get_error_wrapper('billing.address'); ?>
 		</span>
 	</div>
 	<div class="form-group col-5">
 		<label>City </label>
 		<span>
 			<input type="text" class="number" placeholder="city" name="billing[city]" minLength="5"/ >
-			<?php echo $this->get_error_wrapper('billing.city'); ?>
 		</span>
 	</div>
 	<div class="form-group col-5">
 		<label class="state">State </label>
 		<span>
 			<select name="billing[state_id]" id="billing-state" class="select2">
-				<option >Select States</option>
+				<option value="0">Select States</option>
 				<?php foreach ($states as $key => $state) : ?>
 				<option value="<?php echo $state['id'] .'_'.$state['name']; ?>"><?php echo $state['name']; ?></option>
 			<?php endforeach; ?>	
 			</select>
-			<?php echo $this->get_error_wrapper('billing.state'); ?>
 		</span>
 	</div>
 	<div class="form-group col-5">
 		<label>zip </label>
 		<span>
 			<input type="text" placeholder="zip code" name="billing[zip]" / >
-			<?php echo $this->get_error_wrapper('billing.zip'); ?>
 		</span>
 	</div>
 	<div class="form-group col-5">
 		<label class="country">country </label>
 		<span>
 			<select name="billing[country_id]" id="billing-country" class="select2">
-				<option >Select Country</option>
+				<option value="0">Select Country</option>
 				<?php foreach ($countries as $key => $country) : ?>
 				<option value="<?php echo $country['id'] .'_'.$country['name']; ?>"><?php echo $country['name']; ?></option>
 			<?php endforeach; ?>	
 			</select>
-			<?php echo $this->get_error_wrapper('billing.country'); ?>
 		</span>
 	</div>
 </div>
@@ -202,7 +201,7 @@
 	</div>
 	<div class="text-center">
 		<button type="submit" class="btn btn-blue">Save</button>
-		<button class="btn btn-grey">Cancel</button>
+		<button type="reset" class="btn btn-grey">Cancel</button>
 	</div>
 
 </form>
