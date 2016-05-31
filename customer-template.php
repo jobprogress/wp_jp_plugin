@@ -32,6 +32,7 @@
 		<input type="text"  placeholder="(xxx) xxx-xxxx" name="phones[{{ index }}][number]" class="phones number mask-select phone-number-field" aria-required="true" required /> 
 			<input type="text" placeholder="Extension" name="phones[{{ index }}][ext]" class="extension-field number" maxlength="8" aria-required="true">
 		</div>
+		<?php echo $this->get_error_wrapper('phones.{{ index }}.number'); ?>
 	</div>	
 </script>
 
