@@ -1,6 +1,13 @@
-<form class="jp-btn-connect" method="post" action="<?php echo esc_url( $_SERVER['REQUEST_URI'] ) ?>">
+<div id="disconnect-dialog-confirm" title="Disconnect from JobProgress.">
+      <p>
+      	<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+      	Are you sure?
+      </p>
+  </div>
+
+<form class="jp-btn-connect disconnect-form" method="post" action="<?php echo esc_url( $_SERVER['REQUEST_URI'] ) ?>">
 <input type="hidden" name="disconnect" value = "1"/>
-<input class="btn btn-red" type="submit" value="Disconnect">
+<input class="btn btn-red jp-disconnect" value="Disconnect">
 </form>
 
  <?php if($jp_user): ?>
@@ -18,43 +25,37 @@
 				<div class="subscriber-info">
 					<h3>SUBSCRIBER DETAILS</h3>
 					<?php
-					$address = null;
+					$address = [];
 
 					if(ine($jp_user['profile'], 'address')) {
-						$address .= $jp_user['profile']['address'] . ', ';  
+						$address[] = $jp_user['profile']['address'];  
 					}
 
 					if(ine($jp_user['profile'], 'city')) {
-						$address .= $jp_user['profile']['city']. ', ';  
+						$address[] = $jp_user['profile']['city'];  
 					}
 
 					if(ine($jp_user['profile'], 'state')) {
-						$address .= $jp_user['profile']['state']. ', ';  
+						$address[] = $jp_user['profile']['state'];  
 					}
 
 					if(ine($jp_user['profile'], 'zip')) {
-						$address .= $jp_user['profile']['zip'].', ';
+						$address[] = $jp_user['profile']['zip'];
 					}
 
 					if(ine($jp_user['profile'], 'country')) {
-						$address .= $jp_user['profile']['country'] .', ';  
+						$address[] = $jp_user['profile']['country'];  
 					}
 					if($address):
 					?>
 					<div class="info-label">
 						<label>Address: </label>
 						<span>
-							<span class=""><?php echo $address ?></span>
+							<span class=""><?php echo implode(', ', $address) ?></span>
 						</span>
 					</div>
 					<?php endif; ?>
 
-					<?php if(ine($jp_user['profile'], 'address_line_1')): ?>
-					<div class="info-label " style="">
-						<label>Address 2: </label>
-						<span class=""><?php echo $jp_user['profile']['address_line_1']; ?></span>
-					</div>
-					<?php endif; ?>
 					<?php if(ine($jp_user['profile'], 'additional_phone')): ?>			
 					<div class="info-label ">
 						<?php $phone = reset($jp_user['profile']['additional_phone']);?>
@@ -72,7 +73,10 @@
 					<?php endif ?>
 					<div class="info-label">
 						<label>Email: </label>
-						<span><a href="javascript:void(0)" class=""><?php echo $jp_user['email']; ?></a></span>
+						<span>
+							<a href="mailto:<?php echo  $jp_user['email'] ?>" target="_top">
+							<?php echo $jp_user['email']; ?></a>
+						</span>
 					</div>
 				</div>
 			</div>
@@ -84,25 +88,25 @@
 					$billing_address = null;
 
 					if(ine($jp_user['company_details'], 'office_address')) {
-						$billing_address .= $jp_user['company_details']['office_address'] . ', ';  
+						$billing_address[] = $jp_user['company_details']['office_address'];  
 					}
 
 					if(ine($jp_user['company_details'], 'office_city')) {
-						$billing_address .= $jp_user['company_details']['office_city']. ', ';  
+						$billing_address[] = $jp_user['company_details']['office_city'];  
 					}
 
 					if(ine($jp_user['company_details'], 'office_state')
 						&& ine($jp_user['company_details']['office_state'], 'name') ) {
-						$billing_address .= $jp_user['company_details']['office_state']['name'].', ';
+						$billing_address[] = $jp_user['company_details']['office_state']['name'];
 					}
 
 					if(ine($jp_user['company_details'], 'office_zip')) {
-						$billing_address .= $jp_user['company_details']['office_zip'] .', ';  
+						$billing_address[] = $jp_user['company_details']['office_zip'];  
 					}
 
 					if(ine($jp_user['company_details'], 'office_country')
 						&& ine($jp_user['company_details']['office_country'], 'name') ) {
-						$billing_address .= $jp_user['company_details']['office_country']['name'].' ';
+						$billing_address[] = $jp_user['company_details']['office_country']['name'];
 					}
 					?>
 					<?php if($billing_address): ?>
@@ -110,19 +114,11 @@
 						<label>Address: </label>
 						<span>
 							<span class="">
-								<?php echo $billing_address; ?>
+								<?php echo implode(', ', $billing_address); ?>
 							</span>
 						</span>
 					</div>
 					<?php endif ?>
-					<?php if(ine($jp_user['company_details'], 'office_address_line_1')): ?>
-					<div class="info-label ">
-						<label>Address 2: </label>
-						<span class="">
-							<?php echo $jp_user['company_details']['office_address_line_1']; ?>
-						</span>
-					</div>
-					<?php endif; ?>
 					<?php if(ine($jp_user['company_details'], 'office_phone')): ?>
 					<div class="info-label">
 						<label>Phone: </label>
@@ -132,7 +128,11 @@
 					<?php endif; ?>
 					<div class="info-label">
 						<label>Email: </label>
-						<span><a href="javascript:void(0)" class=""><?php echo $jp_user['company_details']['office_email']; ?></a></span>
+						<span>
+							<a href="mailto:<?php echo $jp_user['company_details']['office_email']; ?>" target="_top">
+								<?php echo $jp_user['company_details']['office_email']; ?>
+							</a>
+						</span>
 					</div>
 					<?php if(ine($jp_user['company_details'], 'office_fax')): ?>
 					<div class="info-label ">
