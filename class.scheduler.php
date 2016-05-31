@@ -19,7 +19,7 @@ class Scheduler extends JobProgress {
 			wp_schedule_event( time(), '10min', 'jp_token_refresh_hook' );
 		}
 		if(!wp_next_scheduled('jb_customer_sync_hook')) {
-			wp_schedule_event( time(), '5min', 'jb_customer_sync_hook' );	
+			wp_schedule_event( time(), '1min', 'jb_customer_sync_hook' );	
 		}
 		add_action( 'jp_token_refresh_hook', array( $this, 'update_token'));
 		add_action( 'jb_customer_sync_hook', array( $this, 'sync_jp_customer'));
@@ -35,11 +35,11 @@ class Scheduler extends JobProgress {
 	public function custom_schedules($schedules){
 	    if(!isset($schedules["10min"])) {
 	    	$schedules = [
-	    		'1min' => [
+	    		'10min' => [
 		            'interval' => 600,
 		            'display' => __('Once every 10 min')
 	    		],
-	    		'5min' => [
+	    		'1min' => [
 	    			'interval' => 300,
 	    			'display'  => __('once every 5 min')
 	    		]
@@ -55,7 +55,7 @@ class Scheduler extends JobProgress {
 	 */
 	public function update_token() {
 		//file create code is temporary only for scheduler testing
-		fopen( JP_PLUGIN_DIR . current_time('timestamp').'token.txt' , "w");
+		// fopen( JP_PLUGIN_DIR . current_time('timestamp').'token.txt' , "w");
 		$body = [
 			'grant_type'    => JP_REFRESH_TOKEN_GRANT_TYPE,
 			'client_id'     => JP_CLIENT_ID,
