@@ -64,6 +64,7 @@
     background-color: #c9302c;
     border-color: #761c19;
     color: #fff;
+    cursor: pointer;
 }
 .jp-btn-connect .btn {
 	margin: 24px 0;
@@ -159,4 +160,106 @@
     background-color: #f2dede;
     border-color: #ebccd1;
     color: #a94442;
+}
+.shortcode-text {
+    font-size: 14px;
+    font-weight: normal;
+}
+.ui-widget {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    z-index: 1;
+    padding: 0;
+    box-shadow: 0 5px 15px rgba(0,0,0,.5);
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: 6px;
+    outline: 0;
+}
+.ui-widget-header {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    margin: 0;
+    border-bottom: 1px solid #e5e5e5;
+}
+.ui-dialog .ui-dialog-titlebar {
+    padding: 20px 15px;
+    font-size: 18px;
+}
+.ui-widget-header .ui-state-default { 
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    margin: 0;
+    box-shadow: none;
+}
+.ui-dialog .ui-dialog-titlebar-close {
+    top: 50%;
+    right: 10px;
+    margin-top: -10px;
+    padding: 0;
+}
+.ui-button-icon-only .ui-icon {
+    left: auto;
+    top: auto;
+}
+.ui-dialog .ui-dialog-content {
+    overflow: hidden;
+}
+.ui-dialog .ui-dialog-content p {
+    font-size: 14px;
+    padding: 3px;
+}
+.ui-widget-content {
+    border-color: #e5e5e5;
+}
+.ui-dialog-buttonset .ui-button {
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    box-shadow: none;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857;
+    margin-bottom: 0;
+    padding: 6px 12px;
+    font-weight: bold;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+    -webkit-user-select: none;
+            user-select: none;
+}
+.ui-dialog-buttonset .ui-button:active { 
+    background-image: none;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.125) inset;
+    outline: 0 none; 
+}
+.ui-dialog-buttonset .ui-button:first-child {
+    background-color: #428bca;
+    border-color: #357ebd;
+    color: #fff;
+    margin-right: 10px;
+}
+.ui-dialog-buttonset .ui-button:first-child:active, .ui-dialog-buttonset .ui-button:first-child:focus, .ui-dialog-buttonset .ui-button:first-child:hover {
+    background-color: #3071a9;
+    border-color: #285e8e;
+    color: #fff;
+}
+.ui-dialog-buttonset .ui-button:last-child {
+    background: #6c6c6c none repeat scroll 0 0;
+    color: #fff;
+}
+.ui-dialog-buttonset .ui-button:last-child:active, .ui-dialog-buttonset .ui-button:last-child:focus, .ui-dialog-buttonset .ui-button:last-child:hover {
+    background: #5f5f5f none repeat scroll 0 0;
+    color: #fff;
+}
+.ui-button-text-only .ui-button-text {
+    padding: 0;
+}
+.invalid-msg {
+    margin: 10px 0;
+    max-width: 500px;
 }
