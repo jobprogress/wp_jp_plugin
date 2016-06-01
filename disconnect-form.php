@@ -9,7 +9,7 @@
 <input type="hidden" name="disconnect" value = "1"/>
 <input class="btn btn-red jp-disconnect" value="Disconnect">
 </form>
-
+<h5>For Use customer form please add this shortcode jobprogress_customer_form_code</h5>
  <?php if($jp_user): ?>
 <div class="subsDetail-container">
 	<div class="profile-header">
