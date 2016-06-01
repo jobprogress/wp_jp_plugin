@@ -43,3 +43,7 @@ function dd($data = array()) {
 	print_r($data);
 	exit;
 }
+
+function format_number($number = false) {
+	return "(".substr($number, 0, 3).") ".substr($number, 3, 3)."-".substr($number,6);
+}

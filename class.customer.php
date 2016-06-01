@@ -5,7 +5,7 @@ class Customer extends JobProgress {
 	 * [$validation_error validation error
 	 * @var null
 	 */
-	public $validation_error = null;
+	public $wp_error = null;
 
 	/**
 	 * [$input description]
@@ -13,6 +13,10 @@ class Customer extends JobProgress {
 	 */
 	public $input = array();
 	
+	protected $customer_form_saved = null;
+
+	protected $customer_form_wpdb_error = null;
+
 	/**
 	 * 
 	 * @return [type] [description]
@@ -31,7 +35,6 @@ class Customer extends JobProgress {
 		ob_start();
 		if(!$this->is_connected()) return false;
 		$this->save_customer();
-		$this->show_form();
 		return ob_get_clean();
 	}
 
@@ -42,11 +45,11 @@ class Customer extends JobProgress {
 	public function jp_admin_page() {
 		// show customer label on menu list
 		add_submenu_page( 
-			'jp-admin-page', 
+			'jp_admin_page', 
 			'Customer Manager', 
 			'Customers', 
 			'manage_options', 
-			'jp_customer-page', 
+			'jp_customer_page', 
 			array($this, 'index')
 		);
 	}
@@ -65,13 +68,14 @@ class Customer extends JobProgress {
 		$total = $this->wpdb->get_var( "SELECT COUNT(id) FROM {$this->wpdb->prefix}customers" );
 		$num_of_pages = ceil( $total / $limit );
 		$sql = "SELECT * FROM {$this->wpdb->prefix}customers";
-
+		
 		if(ine($input, 'date')) {
 			$sql .= " where DATE_FORMAT(created_at, '%Y-%m-%d') = '". sanitize_text_field($input['date']) . "'";
 		}
 		$sql .= " ORDER BY $order_by $order";
 		$sql .= " LIMIT $offset, $limit";
 		$customers = $this->wpdb->get_results( $sql );
+		
 		return require_once( JP_PLUGIN_DIR . 'customer-index-page.php' );
 	}
 
@@ -80,11 +84,7 @@ class Customer extends JobProgress {
 	 * @return [type] [description]
 	 */
 	public function save_customer() {
-		$nonce = $_POST['_wpnonce'];
-		if ( ! wp_verify_nonce( $nonce, 'submit_jp_customer_form' ) ) {
-		  return false;
-		}
-		if(isset($_POST) && !empty($_POST)) {
+		if(isset($_POST) && !empty($_POST) && wp_verify_nonce( $_POST['_wpnonce'], 'submit_jp_customer_form' ) ) {
 			require_once( JP_PLUGIN_DIR . 'class.customer-validator.php' );
 			$validator = new Customer_Validator;
 		
@@ -95,11 +95,15 @@ class Customer extends JobProgress {
 				$customer =  new Customer_Data_Map($input);
 				$plugin_input = $customer->get_plugin_input();
 				$this->wpdb->insert($table_name, $plugin_input);
-				return true;
+				if(! $this->wpdb->last_error) {
+					$this->customer_form_saved = true;
+				}else {
+					$this->customer_form_wpdb_error = $this->wpdb->last_error;
+				}
 			}
-			$this->validation_error = $validator->get_validation_error();
+			$this->wp_error = $validator->get_wp_error();
 		}
-
+		$this->show_form();
 	}
 
 	/**
@@ -107,7 +111,6 @@ class Customer extends JobProgress {
 	 * @return [html] [show customer page]
 	 */
 	public function show_form() {
-		
 		if(($trades = get_transient("jp_trades")) === false 
 			|| $trades === '' ) {
 			$trades = $this->get(JP_TRADE_URL);
@@ -125,7 +128,7 @@ class Customer extends JobProgress {
 			$countries = $this->get(JP_COUNTRY_URL);
 			set_transient("jp_countries", $countries, 86400);
 		}
-
+		require_once(JP_PLUGIN_DIR. 'customer-template.php');
 		return require_once( JP_PLUGIN_DIR . 'customer-form-page.php' );
 	}
 
@@ -137,17 +140,17 @@ class Customer extends JobProgress {
 	 */
 	protected function get_error_wrapper($code = '') {
 		$error = null;
-		if(! $this->validation_error) {
+		if(! $this->wp_error) {
 			return false;
 		}
-		if(! $this->validation_error->get_error_message($code)) {
+		if(! $this->wp_error->get_error_message($code)) {
 			return false;
 		}
 		
 		$id  = str_replace(array('.','_'), '-', $code). '-error';
 		$for = str_replace('.', '_', $code).'_error';
 	 	$html = '<label id='.$id.' class="error" for='.$for.'>';
-	 	$html .= $this->validation_error->get_error_message($code);
+	 	$html .= $this->wp_error->get_error_message($code);
 	 	$html .= '</label>';
 		return $html;
 	}

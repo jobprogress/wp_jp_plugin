@@ -31,7 +31,7 @@ class JobProgress extends JP_Request {
 			'JP Options', 
 			'JobProgress', 
 			'manage_options', 
-			'jp-admin-page', 
+			'jp_admin_page', 
 			array($this, 'authorization'),
 			JP_MENU_ICON,
 			6
@@ -123,6 +123,12 @@ class JobProgress extends JP_Request {
 			array('jquery-validate')
 		);
 
+		wp_enqueue_script(
+			'underscore',
+			plugin_dir_url( __FILE__ ) . 'js/underscore-min.js',
+			array('underscore')
+		);
+
 		wp_enqueue_style(
 			'select2',
 			plugin_dir_url( __FILE__ ) . 'css/select2.min.css',
@@ -144,11 +150,19 @@ class JobProgress extends JP_Request {
 	 * @return [type]       [description]
 	 */
 	public function admin_script($hook){
-		if((string)$hook === 'toplevel_page_jp-admin-page'
-			|| (string)$hook === 'jobprogress_page_jp_customer-page' ) {
-			wp_enqueue_script( 'my_custom_script', plugin_dir_url( __FILE__ ) . 'js/myscript.js' );
-			wp_enqueue_style( 'custom', plugin_dir_url( __FILE__ ) . 'css/admin-style.css'  );
-		} 
+		if((string)$hook === 'toplevel_page_jp_admin_page'
+			|| (string)$hook === 'jobprogress_page_jp_customer_page' ) {
+
+			wp_enqueue_style( 'custom', plugin_dir_url( __FILE__ ) . 'css/admin-style.css');
+		}
+
+		if((string)$hook === 'toplevel_page_jp_admin_page') {
+			wp_enqueue_script( 'jquery', plugin_dir_url( __FILE__ ) . 'js/jquery.min.js' );
+			wp_enqueue_script( 'jquery-ui', plugin_dir_url( __FILE__ ) . 'js/jquery-ui.js' );
+			wp_enqueue_script( 'custom-admin-side', plugin_dir_url( __FILE__ ) . 'js/custom-admin-side.js' );
+			wp_enqueue_style( 'jquery-ui', plugin_dir_url( __FILE__ ) . 'css/jquery-ui.css');
+		}
+
 	}
 
 	/**
@@ -181,9 +195,7 @@ class JobProgress extends JP_Request {
 	 * @return [type] [description]
 	 */
 	public  function plugin_deactivation() {
-		// $customer_sql = "DROP TABLE ". $this->wpdb->prefix."customers";
-		// $this->wpdb->query($customer_sql);	
-
+		
 		if($this->is_connected()) {
 			return $this->disconnect();
 		}
@@ -265,6 +277,6 @@ class JobProgress extends JP_Request {
     		?$url_parts['path']
     		:'');
     		
-    	return $url . '?page=jp-admin-page';
+    	return $url . '?page=jp_admin_page';
 	}
 }

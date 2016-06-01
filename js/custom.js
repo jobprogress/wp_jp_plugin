@@ -7,6 +7,9 @@ jQuery(function($) {
 			email:{
 				email: true
 			},
+			'additional_emails[]' : {
+				email: true
+			},
 		},
 		messages: {
 			first_name: "Please enter the first name.",
@@ -16,7 +19,7 @@ jQuery(function($) {
 
 	// default customer type 1 selected first type is commercial
 	$("input:checkbox[name='jp_customer_type1']").prop("checked", true);
-	$(this).prop("checked", true);
+	$('.billing-address-container').hide();
 	
 	$(".jobprogress-customer-type").on('change',function(){
 
@@ -43,4 +46,74 @@ jQuery(function($) {
 	  $(this).parent().removeClass('active');
 	});
 
+	//additional email
+	
+	_.templateSettings = {
+	  interpolate: /\{\{(.+?)\}\}/g
+	};
+
+	var template = _.template($('.billing-address').html());
+	$("input:checkbox[name='same_as_customer_address']").parent().parent().after(template);
+
+	// add first additional email
+	$('.start-additional-emails').on('click', function(e) {
+		if($('.additional-emails').length === 4) {
+			$('.start-additional-emails').css('pointer-events', 'none');
+		}
+		
+		var template = _.template($('.additional-email').html());
+		$('.additional-emails').last().after(template);
+
+	});
+	
+	//remove additional email
+	$('body').delegate('.additional-email-remove', 'click', function(e) {
+		$(this).parent().remove();
+		$('.start-additional-emails').css('pointer-events', 'auto');
+	});
+
+	/**
+	 * additional phones
+	 */
+	var x = 1;
+	$('body').delegate('.add-additional-phone', 'click', function(e) {
+		if($('.jobprogress-customer-phone').length === 4) {
+			$('.add-additional-phone').css('pointer-events', 'none');
+		}
+		
+		var template = _.template($('.additional-phone').html());
+
+		$('.jobprogress-customer-phone').last().after(template(
+			{
+				index: x
+			}));
+		x++;
+
+	});
+
+	$('body').delegate('.remove-additional-phone', 'click', function(e) {
+		$(this).parent().remove();
+		$('.add-additional-phone').css('pointer-events', 'auto');
+	});
+
+	$("input:checkbox[name='same_as_customer_address']").on('change', function(){
+		$('.billing-address-container').hide();
+		if(! ($("input:checkbox[name='same_as_customer_address']").prop("checked")) ){
+			address = $("input:text[name='address[address]']").val();
+			city = $("input:text[name='address[city]']").val();
+			country_id = $("#address-country").select2("val");
+			console.log(country_id);
+			state_id = $("#address-state").select2("val");
+			zip = $("input:text[name='address[zip]']").val();
+			
+			$('#billing-country').val(country_id).trigger("change");
+			$("input:text[name='billing[address]']").val(address);
+			$("input:text[name='billing[city]']").val(city);
+			$("input:checkbox[name='billing[state_id]']").val();
+			$("#billing-state").val(state_id).trigger("change");
+			$("input:text[name='billing[zip]']").val(zip);
+			$('.billing-address-container').show();
+		}
+	});
+	
 });

@@ -1,5 +1,4 @@
 <?php 
-// $this->get_customers();
 if($order == 'asc') {
 	$order = 'desc';
 } else {
@@ -8,9 +7,6 @@ if($order == 'asc') {
 ?>
 <div class="wrap">
 	<h1>Customers
-		<!-- <a class="page-title-action" href="http://localhost/jobprogress/wordpress/2016/04/27/hello-world/">
-			Add New
-		</a> -->
 	</h1>
 
 	<h2 class="screen-reader-text">Filter pages list</h2>
@@ -21,10 +17,8 @@ if($order == 'asc') {
 			</a>
 		</li>
 	</ul>
-	<form method="get" id="posts-filter" action="<?php echo $_SERVER['PHP_SELF'] . "?page=customers" ?>">
-		<input type="hidden" value="customers" name="page">
-		
-
+	<form method="get" id="posts-filter" action="<?php echo $_SERVER['PHP_SELF'] . "?page=jp_customer_page" ?>">
+		<input type="hidden" value="jp_customer" name="page">
 		
 		<div class="tablenav top">
 
@@ -41,7 +35,7 @@ if($order == 'asc') {
 					'format'             => '',
 					'total'              => $num_of_pages,
 					'current'            => $page_num,
-					'show_all'           => false,
+					'show_all'           => true,
 					'end_size'           => 2,
 					'mid_size'           => 2,
 					'prev_next'          => true,
@@ -71,7 +65,7 @@ if($order == 'asc') {
 					
 					<th class="manage-column column-title column-primary sortable desc" id="title" scope="col">
 
-						<a href="<?php echo $_SERVER['PHP_SELF'] . "?order=$order&order_by=first_name&page=jp_customer-page" ?>">
+						<a href="<?php echo $_SERVER['PHP_SELF'] . "?order=$order&order_by=first_name&page=jp_customer_page" ?>">
 							<span>Full Name</span>
 							<span class="sorting-indicator"></span>
 						</a>
@@ -106,7 +100,7 @@ if($order == 'asc') {
 					</th>
 
 					<th class="manage-column column-creation-date column-primary" id="creation-date" scope="col">
-						<a href="<?php echo $_SERVER['PHP_SELF'] . "?order=$order&order_by=created_at&page=jp_customer-page" ?>">
+						<a href="<?php echo $_SERVER['PHP_SELF'] . "?order=$order&order_by=created_at&page=jp_customer_page" ?>">
 							<span>Creation Date</span>
 							<span class="sorting-indicator"></span>
 						</a>
@@ -152,26 +146,27 @@ if($order == 'asc') {
 				<td data-colname="Address" class="address column-address">
 
 					<a>	<?php  
-
-					$address = json_decode($customer->address, true);
-					$addressArray = $address['address'];
+					$address = [];
+					$completeAddress = json_decode($customer->address, true);
+					$addressArray = $completeAddress['address'];
 					if(ine($addressArray, 'address')) {
-						echo $addressArray['address'] . ', ';
+						$address[] = $addressArray['address'];
 					}
 					if(ine($addressArray, 'city')) {
-						echo $addressArray['city'].', ';
+						$address[] = $addressArray['city'];
 					}
 					if(ine($addressArray, 'state_id')) {
 						$state = explode('_', $addressArray['state_id']);
-						echo $state[1] .', ';
+						$address[] = $state[1];
 					}
 					if(ine($addressArray, 'zip')) {
-						echo $addressArray['zip'] .', ';
+						$address[] = $addressArray['zip'] . '<br>';
 					}
 					if(ine($addressArray, 'country_id')) {
 						$country = explode('_', $addressArray['country_id']);
-						echo $country[1] .', ';
+						$address[] = $country[1];
 					}
+					echo implode(', ', $address);
 					?>
 				</a>
 			</td>
@@ -194,7 +189,7 @@ if($order == 'asc') {
 	<tr>
 		<th class="manage-column column-title column-primary sortable desc" id="title" scope="col">
 
-			<a href="<?php echo $_SERVER['PHP_SELF'] . "?order=$order&order_by=first_name&page=jp_customer-page" ?>">
+			<a href="<?php echo $_SERVER['PHP_SELF'] . "?order=$order&order_by=first_name&page=jp_customer_page" ?>">
 				<span>Full Name</span>
 				<span class="sorting-indicator"></span>
 			</a>
@@ -229,7 +224,7 @@ if($order == 'asc') {
 					</th>
 
 		<th class="manage-column column-creation-date column-primary" id="creation-date" scope="col">
-			<a href="<?php echo $_SERVER['PHP_SELF'] . "?order=$order&order_by=created_at&page=jp_customer-page" ?>">
+			<a href="<?php echo $_SERVER['PHP_SELF'] . "?order=$order&order_by=created_at&page=jp_customer_page" ?>">
 				<span>Creation Date</span>
 				<span class="sorting-indicator"></span>
 			</a>

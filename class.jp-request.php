@@ -16,7 +16,8 @@ class JP_Request {
 		$response = wp_remote_get( $url, $args );	
 		$response_body = wp_remote_retrieve_body( $response );
 		$body_array = json_decode($response_body, true);
-		return $body_array['data'];
+		
+		return ine($body_array,'data') ? $body_array['data'] : null;
 	}
 
 	/**

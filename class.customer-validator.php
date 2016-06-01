@@ -4,7 +4,7 @@ class Customer_Validator {
 	 * [$validation_error validation of customer form
 	 * @var [array]
 	 */
-	public $validation_error = null;
+	public $wp_error = null;
 
 	/**
 	 * check customer form input value is valid
@@ -48,17 +48,10 @@ class Customer_Validator {
 		
 
 		if(isset($_POST['additional_emails']) 
-			&& !empty($additional_emails = $_POST['additional_emails']) ) {
-			foreach ($additional_emails as $key => $additional_email) {
-				if(! $additional_email) {
-					$error->add("additional_emails.$key", 'Please enter the additional email.');
-					$has_error = true;
-					continue;
-				}
+			&& !empty($additional_emails = array_filter($_POST['additional_emails'])) ) {
+			foreach (array_filter($additional_emails) as $key => $additional_email) {
 				if(! filter_var($additional_email, FILTER_VALIDATE_EMAIL))	{
-					$error->add("additional_emails.$key", 'The additional email must be a valid email 
-					address.');
-					$has_error = true;
+					unset($_POST['additional_emails'][$key]);
 				}
 			}
 		}
@@ -78,7 +71,6 @@ class Customer_Validator {
 			$phones = array_filter($_POST['phones']);
 
 			foreach ($phones as $key => $value) {
-
 				if(! ine($value, 'label')) {
 					$error->add("phones.$key.label", 'Please choose the phone label.');
 					$has_error = true;
@@ -88,23 +80,26 @@ class Customer_Validator {
 					$has_error = true;
 					continue;
 				}
-				if(!is_numeric($value['number'])) {
+				$number = str_replace(array( '(', ')',' ','-' ), '', $value['number']);
+				if(!is_numeric($number)) {
 					$error->add("phones.$key.number", 'The phone must be a number.');
 					$has_error = true;
 					continue;
 				}
-				if(strlen($value['number']) > 10) {
+
+				if(strlen($number) > 10) {
 					$error->add("phones.$key.number", 'The phone number may not be greater than 10 digit.');
 					$has_error = true;
-				} 
-				if(strlen($value['number']) < 10) {
+				}
+
+				if(strlen($number) < 10) {
 					$error->add("phones.$key.number", 'The phone number may not be less than than 10 
 					digit.');
 					$has_error = true;
 				}
 			}
 		}
-		$this->validation_error = $error;
+		$this->wp_error = $error;
 		if($has_error) {
 
 			return false;
@@ -117,8 +112,8 @@ class Customer_Validator {
 	 * get validation error
 	 * @return [array] [validation errors]
 	 */
-	public function get_validation_error() {
-		return $this->validation_error;
+	public function get_wp_error() {
+		return $this->wp_error;
 	}
 
 }
