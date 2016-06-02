@@ -6,7 +6,8 @@ jQuery(function($) {
 
     $('#disconnect-dialog-confirm').dialog({
           resizable: false,
-          height:140,
+          height: 200,
+          width: 400,
           autoOpen: false,
           modal: true,
           buttons: {

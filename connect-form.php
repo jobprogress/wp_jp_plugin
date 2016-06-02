@@ -1,8 +1,6 @@
-
 <?php if(ine($_GET, 'error')): ?>
-<div class="alert-msg alert-msg-danger"><?php echo $_GET['error']['message']; ?></div>
+<div class="alert-msg alert-msg-danger invalid-msg"><?php echo $_GET['error']['message']; ?></div>
 <?php endif ?>	
-
 <form method="get" action="<?php echo JP_AUTHORIZATION_URL ?>" class="jp-btn-connect">
 
 <input type="hidden" name="domain" value="<?php echo $domain; ?>">

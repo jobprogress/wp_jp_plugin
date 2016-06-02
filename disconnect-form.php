@@ -1,15 +1,14 @@
-<div id="disconnect-dialog-confirm" title="Disconnect from JobProgress.">
+<div id="disconnect-dialog-confirm" title="Disconnect from JobProgress">
       <p>
-      	<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
-      	Are you sure?
+      	Do you really want to disconnect?
       </p>
   </div>
 
 <form class="jp-btn-connect disconnect-form" method="post" action="<?php echo esc_url( $_SERVER['REQUEST_URI'] ) ?>">
-<input type="hidden" name="disconnect" value = "1"/>
-<input class="btn btn-red jp-disconnect" value="Disconnect">
+	<input type="hidden" name="disconnect" value = "1"/>
+	<input class="btn btn-red jp-disconnect" value="Disconnect">
 </form>
-<h5>For Use customer form please add this shortcode jobprogress_customer_form_code</h5>
+<h5 class="shortcode-text">For Use customer form please add this shortcode <strong>[jobprogress_customer_form_code]</strong></h5>
  <?php if($jp_user): ?>
 <div class="subsDetail-container">
 	<div class="profile-header">

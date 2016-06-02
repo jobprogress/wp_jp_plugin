@@ -150,17 +150,17 @@ class JobProgress extends JP_Request {
 	 * @return [type]       [description]
 	 */
 	public function admin_script($hook){
+
+		if((string)$hook === 'toplevel_page_jp_admin_page') {
+			// wp_enqueue_script( 'jquery', plugin_dir_url( __FILE__ ) . 'js/jquery.min.js' );
+			wp_enqueue_script( 'jquery-ui', plugin_dir_url( __FILE__ ) . 'js/jquery-ui.js' );
+			wp_enqueue_script( 'custom-admin-side', plugin_dir_url( __FILE__ ) . 'js/custom-admin-side.js' );
+			wp_enqueue_style( 'jquery-ui', plugin_dir_url( __FILE__ ) . 'css/jquery-ui.css');
+		}
 		if((string)$hook === 'toplevel_page_jp_admin_page'
 			|| (string)$hook === 'jobprogress_page_jp_customer_page' ) {
 
 			wp_enqueue_style( 'custom', plugin_dir_url( __FILE__ ) . 'css/admin-style.css');
-		}
-
-		if((string)$hook === 'toplevel_page_jp_admin_page') {
-			wp_enqueue_script( 'jquery', plugin_dir_url( __FILE__ ) . 'js/jquery.min.js' );
-			wp_enqueue_script( 'jquery-ui', plugin_dir_url( __FILE__ ) . 'js/jquery-ui.js' );
-			wp_enqueue_script( 'custom-admin-side', plugin_dir_url( __FILE__ ) . 'js/custom-admin-side.js' );
-			wp_enqueue_style( 'jquery-ui', plugin_dir_url( __FILE__ ) . 'css/jquery-ui.css');
 		}
 
 	}
