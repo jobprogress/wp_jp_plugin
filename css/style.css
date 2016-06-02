@@ -22,7 +22,7 @@
     width: 100%;
 }
 .customer-page .form-group {
-    margin-bottom: 25px;
+    margin-bottom: 15px;
     position: relative;
 }
 .customer-page .form-group label {
@@ -139,6 +139,12 @@
     width: auto;
     text-align: left;
 }
+.customer-page .error {
+    color: #c81b1b;
+    margin: 5px 0;
+    padding-left: 23%;
+    display: block;
+}
 .customer-page .required-sign {
     color: #c81b1b;
 }
@@ -233,13 +239,7 @@
     border: none; 
     border-left: 1px solid rgb(204, 204, 204); 
     float: right;
-} 
-// .customer-page .additional-email {
-//     margin-left: 23.4%;
-// }
-// .customer-page .additional-email input { 
-//     width: 84.5%;
-// }
+}
 .text-center {
     text-align: center;
 }
@@ -283,6 +283,9 @@
     }
     .customer-page .additional-email label {
         display: none;
+    }
+    .customer-page .error {
+        padding-left: 0;
     }
 }
 @media(max-width: 480px) {

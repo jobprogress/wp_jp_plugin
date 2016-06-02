@@ -40,7 +40,7 @@
 	<div class="form-group additional-emails">
 		<label></label>
 		<span>
-			<input type="text" placeholder="Additional Email" name="additional_emails[]" required/ >
+			<input type="text" class="email" placeholder="Additional Email" name="additional_emails[{{index}}]" required/ >
 		</span>
 		
 		<a title="Remove Additional Phone" class="additional-val jp-tooltip remove additional-email-remove">

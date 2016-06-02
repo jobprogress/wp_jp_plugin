@@ -1,13 +1,11 @@
 jQuery(function($) {
 	// validate signup form on keyup and submit
 	$("#jobprogrssCustomerSignupForm").validate({
+		email:true,
 		rules: {
 			first_name: "required",
 			last_name: "required",
 			email:{
-				email: true
-			},
-			'additional_emails[]' : {
 				email: true
 			},
 		},
@@ -15,6 +13,11 @@ jQuery(function($) {
 			first_name: "Please enter the first name.",
 			last_name: "Please enter the last name.",
 		},
+		errorPlacement: function(error, element) {
+			error.insertAfter( element.parent().parent());
+		 }
+
+
 	});
 
 	// default customer type 1 selected first type is commercial
@@ -55,6 +58,7 @@ jQuery(function($) {
 	var template = _.template($('.billing-address').html());
 	$("input:checkbox[name='same_as_customer_address']").parent().parent().after(template);
 
+	var y = 1;
 	// add first additional email
 	$('.start-additional-emails').on('click', function(e) {
 		if($('.additional-emails').length === 4) {
@@ -62,8 +66,10 @@ jQuery(function($) {
 		}
 		
 		var template = _.template($('.additional-email').html());
-		$('.additional-emails').last().after(template);
-
+		$('.additional-emails').last().after(template({
+			index : y
+		}));
+		y++;
 	});
 	
 	//remove additional email
