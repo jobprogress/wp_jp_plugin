@@ -13,13 +13,14 @@
     text-align: center;
     vertical-align: middle;
     white-space: nowrap;
-	-webkit-user-select: none;
-			user-select: none;
+    -webkit-user-select: none;
+            user-select: none;
 }
 .btn-blue {
     background-color: #428bca;
     border-color: #357ebd;
-    color: #fff;
+    color: transparent;
+    text-shadow: 0 0 0 #fff;
 }
 .btn.active, .btn:active {
     background-image: none;
@@ -29,7 +30,6 @@
 .btn-blue.active, .btn-blue:active, .btn-blue:focus, .btn-blue:hover, .open > .dropdown-toggle.btn-blue {
     background-color: #3071a9;
     border-color: #285e8e;
-    color: #fff;
 }
 .btn-blue.active, .btn-blue:active, .open > .dropdown-toggle.btn-blue {
     background-image: none;
@@ -48,26 +48,26 @@
     background-color: #d9534f;
     border-color: #d43f3a;
     color: #fff;
+    color: transparent;
+    text-shadow: 0 0 0 #fff;
 }
 .btn-red:hover {
     background-color: #c9302c;
     border-color: #ac2925;
-    color: #fff;
 }
 .btn-red.active, .btn-red:active {
     background-image: none;
     background-color: #c9302c;
     border-color: #ac2925;
-    color: #fff;
 }
 .btn-red.focus, .btn-red:focus {
     background-color: #c9302c;
     border-color: #761c19;
-    color: #fff;
     cursor: pointer;
 }
 .jp-btn-connect .btn {
 	margin: 24px 0;
+    max-width: 100px;
 }
 .subsDetail-container .profile-header {
     padding: 30px 20px;
@@ -85,7 +85,7 @@
     width: 160px;
 }
 .subsDetail-container .profile-header .profile-pic {
-     background-color: #fff;
+    background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 4px;
     display: inline-block;
@@ -94,6 +94,7 @@
     margin-bottom: 10px;
     overflow: hidden;
     width: 150px;
+    text-align: center;
 }
 .subsDetail-container .profile-header .profile-pic img {
     background-color: transparent;
@@ -104,6 +105,9 @@
     max-width: 100%;
     padding: 0;
     width: auto;
+    vertical-align: middle;
+    display: inline-block;
+    text-align: center;
 }
 .subsDetail-container .profile-header .address-container .address-bar-section-first {
     // width: 500px;
