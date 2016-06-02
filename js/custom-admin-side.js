@@ -10,6 +10,7 @@ jQuery(function($) {
           width: 400,
           autoOpen: false,
           modal: true,
+          draggable: false,
           buttons: {
             Yes: function() {
                 $( this ).dialog( "close" );
