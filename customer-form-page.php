@@ -15,7 +15,7 @@
 		
 		<?php echo $this->get_error_wrapper('customer_type'); ?>
 	</div>
-	<div class="form-group jobprogress-residential-type">
+	<div class="form-group jobprogress-residential-type jp-name">
 		<label>Name <span class="required-sign">*</span></label>
 		<span>
 			<input type="text" name="first_name" placeholder="First Name" required>
@@ -33,7 +33,7 @@
 			<?php echo $this->get_error_wrapper('company_name_commercial'); ?>
 		</span>
 	</div>
-	<div class="form-group jobprogress-company-type jobprogress-residential-type">
+	<div class="form-group jobprogress-residential-type">
 		<label>Company name</label>
 		<span>
 			<input type="text" name="company_name"  placeholder="Company Name" placeholder="Company Name">

@@ -47,7 +47,7 @@
 .customer-page .form-group input:focus, .customer-page .form-group textarea:focus { 
     border-color: #66afe9;
 }
-.customer-page .form-group.jobprogress-residential-type input {
+.customer-page .form-group.jp-name input {
     width: 32%;
     margin-right: 7px;
 }
@@ -289,7 +289,7 @@
     }
 }
 @media(max-width: 480px) {
-    .customer-page .form-group.jobprogress-residential-type input {
+    .customer-page .form-group.jp-name input {
         width: 100%;
         margin-bottom: 5px;
     }

@@ -30,9 +30,15 @@ jQuery(function($) {
 		if($(this).attr('name') === 'jp_customer_type2') {
 			$('.jobprogress-residential-type').hide();
 			$('.jobprogress-commercial-type').show();
+			$('#first_name-error').hide();
+			$('#last_name-error').hide();
+			$('#company_name_commercial-error').show();
 		} else {
 			$('.jobprogress-commercial-type').hide();
 			$('.jobprogress-residential-type').show();
+			$('#first_name-error').show();
+			$('#last_name-error').show();
+			$('#company_name_commercial-error').hide();
 		}
 		$(all_customer_types).prop("checked", false);
 		$(this).prop("checked", true);
