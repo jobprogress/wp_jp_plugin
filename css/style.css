@@ -139,7 +139,7 @@
     width: auto;
     text-align: left;
 }
-.customer-page .error {
+.customer-page label.error {
     color: #c81b1b;
     margin: 5px 0;
     padding-left: 23%;
