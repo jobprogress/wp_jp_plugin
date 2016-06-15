@@ -46,7 +46,15 @@ jQuery(function($) {
 
 	$(".select2").select2({
 		minimumResultsForSearch: Infinity
+	}).on('change', function (e) {
+		var input = $(this).parent().find('.extension-field');
+		if (e.currentTarget.value == "cell") {
+			input.attr('disabled', true);
+		} else {
+			input.attr('disabled', false);	
+		}
 	});
+	
 	//$('.mask-select').mask("(xxx) xxx-xxxx", {selectOnFocus: true});
 	$('.mask-select').mask("(000) 000-0000", {placeholder: "(xxx) xxx-xxxx"});
 	$('.form-combine-select input').focus(function(){
@@ -95,10 +103,26 @@ jQuery(function($) {
 		
 		var template = _.template($('.additional-phone').html());
 
-		$('.jobprogress-customer-phone').last().after(template(
-			{
-				index: x
-			}));
+		$('.jobprogress-customer-phone')
+			.last()
+			.after(
+				template({
+					index: x,
+					className: 'jp-select-' + x
+				})
+			);
+
+		$('.jp-select-' + x).find('.select-input').select2({
+			minimumResultsForSearch: Infinity
+		}).on('change', function (e) {
+			var input = $(this).parent().find('.extension-field');
+			if (e.currentTarget.value == "cell") {
+				input.attr('disabled', true);
+			} else {
+				input.attr('disabled', false);	
+			}
+		});
+
 		x++;
 
 	});
@@ -116,15 +140,6 @@ jQuery(function($) {
 			country_id = $("#address-country").select2("val");
 			console.log(country_id);
 			state_id = $("#address-state").select2("val");
-			zip = $("input:text[name='address[zip]']").val();
-			
-			$('#billing-country').val(country_id).trigger("change");
-			$("input:text[name='billing[address]']").val(address);
-			$("input:text[name='billing[city]']").val(city);
-			$("input:checkbox[name='billing[state_id]']").val();
-			$("#billing-state").val(state_id).trigger("change");
-			$("input:text[name='billing[zip]']").val(zip);
-			$('.billing-address-container').show();
 		}
 	});
 	
