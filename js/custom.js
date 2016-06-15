@@ -14,10 +14,8 @@ jQuery(function($) {
 			last_name: "Please enter the last name.",
 		},
 		errorPlacement: function(error, element) {
-			error.insertAfter( element.parent().parent());
-		 }
-
-
+			error.insertAfter( element.parent());
+		}
 	});
 
 	// default customer type 1 selected first type is commercial
@@ -54,7 +52,7 @@ jQuery(function($) {
 			input.attr('disabled', false);	
 		}
 	});
-	
+
 	//$('.mask-select').mask("(xxx) xxx-xxxx", {selectOnFocus: true});
 	$('.mask-select').mask("(000) 000-0000", {placeholder: "(xxx) xxx-xxxx"});
 	$('.form-combine-select input').focus(function(){

@@ -47,9 +47,21 @@
 .customer-page .form-group input:focus, .customer-page .form-group textarea:focus { 
     border-color: #66afe9;
 }
+.customer-name-section {
+    display: inline-block;
+    width: 65%;
+}
 .customer-page .form-group.jp-name input {
-    width: 32%;
+    /*width: 32%;*/
+    width: 100%;
     margin-right: 7px;
+}
+.customer-page .form-group.jp-name .customer-name-label {
+    vertical-align: top;
+    padding-top: 6px;
+}
+.customer-page .form-group.jp-name label {
+    padding-left: 0;
 }
 .customer-page .form-group .jobprogress-customer-type {
 	width: auto;
@@ -129,21 +141,24 @@
 .customer-page .form-group span {
     position: relative;
 }
-.customer-page .form-group label.error, .customer-page .form-group span label.error  {
-    bottom: 0;
-    color: #c81b1b;
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 32px;
-    width: auto;
-    text-align: left;
-}
+// .customer-page .form-group label.error, .customer-page .form-group span label.error  {
+//     bottom: 0;
+//     color: #c81b1b;
+//     left: 0;
+//     position: absolute;
+//     right: 0;
+//     top: 32px;
+//     width: auto;
+//     text-align: left;
+// }
 .customer-page label.error {
     color: #c81b1b;
     margin: 5px 0;
     padding-left: 23%;
     display: block;
+    font-weight: normal;
+    width: auto;
+    text-align: left;
 }
 .customer-page .required-sign {
     color: #c81b1b;

@@ -16,7 +16,22 @@
 		<?php echo $this->get_error_wrapper('customer_type'); ?>
 	</div>
 	<div class="form-group jobprogress-residential-type jp-name">
-		<label>Name <span class="required-sign">*</span></label>
+		<label class="customer-name-label">Name <span class="required-sign">*</span></label>
+		<div class="customer-name-section">
+				<div class="col-5">
+					<span>
+						<input type="text" name="first_name" placeholder="First Name" required>
+						<?php echo $this->get_error_wrapper('first_name'); ?>
+					</span>
+				</div>
+				<div class="col-5">
+					<span>
+						<input type="text" name="last_name"  placeholder="Last Name"  >
+						<?php echo $this->get_error_wrapper('last_name'); ?>
+					</span>
+				</div>
+		</div>
+		<!-- <div class="col-md-8"></div>
 		<span>
 			<input type="text" name="first_name" placeholder="First Name" required>
 			<?php echo $this->get_error_wrapper('first_name'); ?>
@@ -24,7 +39,7 @@
 		<span>
 			<input type="text" name="last_name"  placeholder="Last Name"  >
 			<?php echo $this->get_error_wrapper('last_name'); ?>
-		</span>
+		</span> -->
 	</div>
 	<div class="form-group jobprogress-commercial-type" style="display:none;">
 		<label>Company name <span class="required-sign">*</span></label>
