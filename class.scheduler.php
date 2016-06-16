@@ -16,10 +16,10 @@ class Scheduler extends JobProgress {
 		}
 		add_filter('cron_schedules',array($this, 'custom_schedules'));
 		if (!wp_next_scheduled('jp_token_refresh_hook')) {
-			wp_schedule_event( time(), '10min', 'jp_token_refresh_hook' );
+			wp_schedule_event( time(), '1month', 'jp_token_refresh_hook' );
 		}
 		if(!wp_next_scheduled('jb_customer_sync_hook')) {
-			wp_schedule_event( time(), '1min', 'jb_customer_sync_hook' );	
+			wp_schedule_event( time(), '2min', 'jb_customer_sync_hook' );	
 		}
 		add_action( 'jp_token_refresh_hook', array( $this, 'update_token'));
 		add_action( 'jb_customer_sync_hook', array( $this, 'sync_jp_customer'));
@@ -33,15 +33,15 @@ class Scheduler extends JobProgress {
 	 * @return [array]            [custom_schdules]
 	 */
 	public function custom_schedules($schedules){
-	    if(!isset($schedules["10min"])) {
+	    if(!isset($schedules["1month"])) {
 	    	$schedules = [
-	    		'10min' => [
-		            'interval' => 600,
-		            'display' => __('Once every 10 min')
+	    		'1month' => [
+		            'interval' => 2649600,
+		            'display' => __('Once every 1 month')
 	    		],
-	    		'1min' => [
-	    			'interval' => 300,
-	    			'display'  => __('once every 5 min')
+	    		'2min' => [
+	    			'interval' => 120,
+	    			'display'  => __('once every 2 min')
 	    		]
 	    	];
 	    }
