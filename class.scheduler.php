@@ -56,11 +56,12 @@ class Scheduler extends JobProgress {
 	public function update_token() {
 		//file create code is temporary only for scheduler testing
 		// fopen( JP_PLUGIN_DIR . current_time('timestamp').'token.txt' , "w");
+		$accessToken = $this->get_access_token();
 		$body = array(
 			'grant_type'    => JP_REFRESH_TOKEN_GRANT_TYPE,
 			'client_id'     => JP_CLIENT_ID,
 			'client_secret' => JP_CLIENT_SECRET,
-			'refresh_token' => 	$this->get_access_token()['refresh_token']
+			'refresh_token' => 	$accessToken['refresh_token']
 		);
 		$response = $this->post(JP_REFRESH_TOKEN_URL, $body);
 		if(ine($response, 'status') && (int)$response['status'] != 200) {

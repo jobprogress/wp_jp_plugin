@@ -8,7 +8,7 @@ Author: Logiciel solutions
 Author URI: http://w3guy.com
 */
 define( 'JP_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
-define('API_BASE_URL', 'http://api.job_progress.dev/api/v1/');
+define('API_BASE_URL', 'http://staging.jobprogress.com/web_api/public/api/v1/');
 define('JP_CLIENT_ID', '123457');
 define('JP_CLIENT_SECRET', 'schs1EKRpLaS1auhTIc25JrlWSjkry1P');
 define('JP_AUTHORIZATION_URL', API_BASE_URL.'login_form');
