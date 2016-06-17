@@ -24,7 +24,7 @@
 				<div class="subscriber-info">
 					<h3>SUBSCRIBER DETAILS</h3>
 					<?php
-					$address = [];
+					$address = array();
 
 					if(ine($jp_user['profile'], 'address')) {
 						$address[] = $jp_user['profile']['address'];  
@@ -45,7 +45,7 @@
 					if(ine($jp_user['profile'], 'country')) {
 						$address[] = $jp_user['profile']['country'];  
 					}
-					if($address):
+					if(!empty($address)):
 					?>
 					<div class="info-label">
 						<label>Address: </label>
@@ -84,7 +84,7 @@
 				<div class="subscriber-info">
 					<h3>COMPANY DETAILS</h3>
 					<?php
-					$billing_address = null;
+					$billing_address = array();
 
 					if(ine($jp_user['company_details'], 'office_address')) {
 						$billing_address[] = $jp_user['company_details']['office_address'];  
@@ -108,7 +108,7 @@
 						$billing_address[] = $jp_user['company_details']['office_country']['name'];
 					}
 					?>
-					<?php if($billing_address): ?>
+					<?php if(!empty($billing_address)): ?>
 					<div class="info-label " style="">
 						<label>Address: </label>
 						<span>

@@ -146,7 +146,7 @@ if($order == 'asc') {
 				<td data-colname="Address" class="address column-address">
 
 					<a>	<?php  
-					$address = [];
+					$address = array();
 					$completeAddress = json_decode($customer->address, true);
 					$addressArray = $completeAddress['address'];
 					if(ine($addressArray, 'address')) {

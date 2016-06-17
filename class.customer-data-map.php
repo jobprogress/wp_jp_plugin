@@ -12,10 +12,9 @@ class Customer_Data_Map {
 	 * @return [array] [customer data]
 	 */
 	public function get_plugin_input() {
-		$map = ['email', 'first_name', 'last_name', 'company_name', 'is_sync'];
-
-		$addressFields = ['address','address_line_1','city','state_id','country_id','zip'];
-
+		$map = array('email', 'first_name', 'last_name', 'company_name', 'is_sync');
+		$addressFields = array('address','address_line_1','city','state_id','country_id','zip');
+		$address = array();
 		$data = $this->map_inputs($map);
 		$address['address'] = $this->mapFirstSubInputs($addressFields, 'address');
 
@@ -70,7 +69,7 @@ class Customer_Data_Map {
      */
     private function map_phone_inputs() {
     	$phones = $this->input['phones'];
-    	$ret = [];
+    	$ret = array();
     	foreach ($phones as $key => $phone) {
     		$ret[$key]['label'] = isset($phone['label']) ? htmlentities($phone['label']) : '';
     		$ret[$key]['number'] = isset($phone['number']) ? htmlentities($phone['number']) : '';
@@ -85,7 +84,7 @@ class Customer_Data_Map {
      * @return [arrat] [additional email input]
      */
     private function map_additional_mail_input() {
-    	if(! ine($this->input, 'additional_emails')) return [];
+    	if(! ine($this->input, 'additional_emails')) return array();
     	$additional_emails = $this->input['additional_emails'];
     	return $this->map_numeric_array_inputs($additional_emails);
     }
@@ -133,7 +132,7 @@ class Customer_Data_Map {
 	 * @return [type]              [description]
 	 */
 	private function map_numeric_array_inputs($array_input) {
-		$ret = [];
+		$ret = array();
     	foreach ($array_input as $key => $value) {
     		$ret[] = htmlentities($value);
     	}

@@ -55,18 +55,18 @@ class JobProgress extends JP_Request {
 			&& wp_verify_nonce( $_GET['_wpnonce'], 'jp_connect_form' )
 			&& ! $this->is_connected()
 		) {
-			$jp_token_data = [
+			$jp_token_data = array(
 				'access_token'  => $_GET['access_token'],
 				'refresh_token' => $_GET['refresh_token'],
 				'expires_in'    => $_GET['expires_in'],
 				'token_type'    => $_GET['token_type']
-			];
+			);
 
 			update_option('jp_token_options', $jp_token_data);
 
-			$body = [
+			$body = array(
 				'includes[]' => 'company_details'
-			];
+			);
 
 			// get user detail from jobprogress
 			$user = $this->get(JP_USER_URL.$_GET['user_id'] .'?'. http_build_query($body));
@@ -215,7 +215,7 @@ class JobProgress extends JP_Request {
 	 * @return boolean [true or false]
 	 */
 	protected function is_connected() {
-		return (get_option('jp_token_options')) ? true : false;
+		return (get_option( 'jp_token_options' )) ? true : false;
 	}
 
 	
@@ -233,9 +233,9 @@ class JobProgress extends JP_Request {
 	 * @return [type] [description]
 	 */
 	private function disconnect() {
-		$data = [
+		$data = array(
 			'domain' =>	$this->get_domain()
-		];
+		);
 		$response = $this->request(JP_DISCONNECT_URL, $data, JP_DELETE_REQUEST);
 		if(ine($response, 'status') && (int)$response['status'] != 200) {
 			return false;

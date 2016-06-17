@@ -46,12 +46,12 @@ class JP_Request {
 	 * @return [type]         [response of api]
 	 */
 	public function request($url, $body, $method = 'GET') {
-		$arg = [
+		$arg = array(
 			'timeout' => 5,
 			'headers' => $this->get_header(),
 			'body'	  => $body,
 			'method'  => $method
-		];
+		);
 		$response = wp_remote_request($url, $arg);
 		$response_body = wp_remote_retrieve_body( $response );
 		$body_array = json_decode($response_body, true);
@@ -66,7 +66,7 @@ class JP_Request {
 	public function get_header() {
 		$jp_token_option = get_option( 'jp_token_options' );
 		$bearer_token =  'Bearer '.$jp_token_option['access_token'];
-		return ['Authorization' => $bearer_token ];
+		return array('Authorization' => $bearer_token);
 	}
 }
 

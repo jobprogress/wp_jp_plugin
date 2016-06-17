@@ -21,8 +21,8 @@ class Scheduler extends JobProgress {
 		if(!wp_next_scheduled('jb_customer_sync_hook')) {
 			wp_schedule_event( time(), '2min', 'jb_customer_sync_hook' );	
 		}
-		add_action( 'jp_token_refresh_hook', array( $this, 'update_token'));
-		add_action( 'jb_customer_sync_hook', array( $this, 'sync_jp_customer'));
+		add_action( 'jp_token_refresh_hook ', array( $this, 'update_token' ));
+		add_action( 'jb_customer_sync_hook ', array( $this, 'sync_jp_customer' ));
 
 		return true;
 	}
@@ -34,16 +34,16 @@ class Scheduler extends JobProgress {
 	 */
 	public function custom_schedules($schedules){
 	    if(!isset($schedules["1month"])) {
-	    	$schedules = [
-	    		'1month' => [
+	    	$schedules = array(
+	    		'1month' => array(
 		            'interval' => 2649600,
 		            'display' => __('Once every 1 month')
-	    		],
-	    		'2min' => [
+	    		),
+	    		'2min' => array(
 	    			'interval' => 120,
 	    			'display'  => __('once every 2 min')
-	    		]
-	    	];
+	    		)
+	    	);
 	    }
 
 	    return $schedules;
@@ -56,18 +56,17 @@ class Scheduler extends JobProgress {
 	public function update_token() {
 		//file create code is temporary only for scheduler testing
 		// fopen( JP_PLUGIN_DIR . current_time('timestamp').'token.txt' , "w");
-		$body = [
+		$body = array(
 			'grant_type'    => JP_REFRESH_TOKEN_GRANT_TYPE,
 			'client_id'     => JP_CLIENT_ID,
 			'client_secret' => JP_CLIENT_SECRET,
 			'refresh_token' => 	$this->get_access_token()['refresh_token']
-		];
+		);
 		$response = $this->post(JP_REFRESH_TOKEN_URL, $body);
 		if(ine($response, 'status') && (int)$response['status'] != 200) {
 			return false;
 		}
 		$token = $response['token'];
-
 		$this->update_access_token($token);
 	}
 
@@ -92,13 +91,13 @@ class Scheduler extends JobProgress {
 			$response = $this->post(JP_ADD_CUSTOMER_URL, $customer_data);
 			if(ine($response, 'status') && (int)$response['status'] === 200) {
 				$this->wpdb->update( $table_name, 
-					[
+					array(
 						 'is_sync'     => 1,
 						 'customer_id' => $response['customer']['id']
-					], 
-					[
+					), 
+					array(
 						'id' => $customer->id
-					]
+					)
 				);
 			}
 		}
