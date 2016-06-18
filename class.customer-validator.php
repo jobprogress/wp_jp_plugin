@@ -68,7 +68,7 @@ class Customer_Validator {
 			}
 			if(ine($_POST['job'], 'trades') 
 				&& in_array(24, $_POST['job']['trades'])
-				&& !ine($_POST['job']['other_trade_type_description'])) {
+				&& !ine($_POST['job'], 'other_trade_type_description')) {
 				$error->add("other_trade_type_description", 'Please enter the note.');
 				$has_error = true;
 			}
