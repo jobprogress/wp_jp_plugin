@@ -31,15 +31,6 @@
 					</span>
 				</div>
 		</div>
-		<!-- <div class="col-md-8"></div>
-		<span>
-			<input type="text" name="first_name" placeholder="First Name" required>
-			<?php echo $this->get_error_wrapper('first_name'); ?>
-		</span>
-		<span>
-			<input type="text" name="last_name"  placeholder="Last Name"  >
-			<?php echo $this->get_error_wrapper('last_name'); ?>
-		</span> -->
 	</div>
 	<div class="form-group jobprogress-commercial-type" style="display:none;">
 		<label>Company name <span class="required-sign">*</span></label>
@@ -57,9 +48,6 @@
 
 	<div class="form-group jobprogress-customer-phone">
 		<label>Phone <span class="required-sign">*</span></label>
-		<!-- <a class="additional-val jp-tooltip remove remove-additional-phone" title="Remove Additional Phone">
-			<span></span>
-		</a> -->
 		<a class="additional-val add-additional-phone jp-tooltip" title="Add Additional Phone">
 			<span>+</span>
 		</a>
@@ -101,12 +89,6 @@
 		<label>Address Line 2</label>
 		<span>
 			<input type="text" placeholder="Address" name="address[address_line_2]" / >
-		</span>
-	</div>
-	<div class="form-group">
-		<label>Address </label>
-		<span>
-			<input type="text" placeholder="Address" name="address[address]" / >
 		</span>
 	</div>
 	<div class="form-group col-5">
@@ -155,6 +137,12 @@
 		<label>Address </label>
 		<span>
 			<input type="text" placeholder="Address" name="billing[address]" / >
+		</span>
+	</div>
+	<div class="form-group">
+		<label>Address Line 2</label>
+		<span>
+			<input type="text" placeholder="Address" name="billing[address_line_2]" / >
 		</span>
 	</div>
 	<div class="form-group col-5">

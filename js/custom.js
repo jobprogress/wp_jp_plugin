@@ -67,8 +67,8 @@ jQuery(function($) {
 	  interpolate: /\{\{(.+?)\}\}/g
 	};
 
-	var template = _.template($('.billing-address').html());
-	$("input:checkbox[name='same_as_customer_address']").parent().parent().after(template);
+	// var template = _.template($('.billing-address').html());
+	// $("input:checkbox[name='same_as_customer_address']").after(template);
 
 	var y = 1;
 	// add first additional email
@@ -131,14 +131,26 @@ jQuery(function($) {
 	});
 
 	$("input:checkbox[name='same_as_customer_address']").on('change', function(){
-		$('.billing-address-container').hide();
-		if(! ($("input:checkbox[name='same_as_customer_address']").prop("checked")) ){
+		
+	$('.billing-address-container').show();
+		if( ($("input:checkbox[name='same_as_customer_address']").prop("checked")) ){
 			address = $("input:text[name='address[address]']").val();
 			city = $("input:text[name='address[city]']").val();
 			country_id = $("#address-country").select2("val");
-			console.log(country_id);
 			state_id = $("#address-state").select2("val");
+			zip = $("input:text[name='address[zip]']").val();
+			
+			$('#billing-country').select2().select2('val', $('#address-country option:eq(1)').val());
+			$("input:text[name='billing[address]']").val(address);
+			$("input:text[name='billing[city]']").val(city);
+			$("input:checkbox[name='billing[state_id]']").val();
+			$("#billing-country").select2().select2('val', country_id);
+			$("#billing-state").select2().select2('val', state_id);
+			$("input:text[name='billing[zip]']").val(zip);
+			$('.billing-address-container').hide();
+		}else {
+			$("#billing-country").select2().select2('val', '');
+			$("#billing-state").select2().select2('val', '');
 		}
 	});
-	
 });
