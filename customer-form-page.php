@@ -1,7 +1,7 @@
 
 <?php  if($this->customer_form_saved): ?>
 	<div class="alert-msg alert-msg-success">
-		Customer form saved successfully.
+		<?php echo JP_CUSTOMER_FORM_SAVED; ?>
 	</div>
 <?php endif; ?>
 <?php if($this->customer_form_wpdb_error): ?>
@@ -183,7 +183,7 @@
 	<div class="form-group">
 		<label>Trades <span class="required-sign">*</span></label>
 		<span>
-			<select name="job[trades][]" class="select2" multiple="multiple" required>
+			<select name="job[trades][]" class="jp-trade" multiple="multiple" required>
 				<?php if($trades): ?>
 				<?php foreach ($trades as $key => $trade) : ?>
 				<option value="<?php echo $trade['id'] ?>"><?php echo $trade['name']; ?></option>
@@ -192,6 +192,13 @@
 				<?php echo $this->get_error_wrapper('job_trades'); ?>
 			</select>
 			
+		</span>
+	</div>
+	<div class="form-group other-trade-note-container" style="display:none;">
+		<label>Other Note <span class="required-sign">*</span></label>
+		<span>
+			<input class="other-trade-note" type="text" name="job[other_trade_type_description]" required/>
+			<?php echo $this->get_error_wrapper('other_trade_type_description'); ?>
 		</span>
 	</div>
 	<?php wp_nonce_field( 'submit_jp_customer_form' ); ?>

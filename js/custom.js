@@ -1,4 +1,5 @@
 jQuery(function($) {
+	
 	// validate signup form on keyup and submit
 	$("#jobprogrssCustomerSignupForm").validate({
 		email:true,
@@ -53,7 +54,24 @@ jQuery(function($) {
 		}
 	});
 
-	//$('.mask-select').mask("(xxx) xxx-xxxx", {selectOnFocus: true});
+	$(".jp-trade").select2({
+		minimumResultsForSearch: Infinity
+	}).on('change', function (e) {
+		var input = $(this).parent().find('.extension-field');
+		if (e.currentTarget.value == "cell") {
+			input.attr('disabled', true);
+		} else {
+			input.attr('disabled', false);	
+		}
+
+		if($.inArray('24', $(this).val()) > -1 ) {
+			$('.other-trade-note-container').show();
+		} else {
+			$('.other-trade-note-container').hide();
+		} 
+		
+	});
+
 	$('.mask-select').mask("(000) 000-0000", {placeholder: "(xxx) xxx-xxxx"});
 	$('.form-combine-select input').focus(function(){
 		$(this).parent().addClass('active');
@@ -131,8 +149,7 @@ jQuery(function($) {
 	});
 
 	$("input:checkbox[name='same_as_customer_address']").on('change', function(){
-		
-	$('.billing-address-container').show();
+		$('.billing-address-container').show();
 		if( ($("input:checkbox[name='same_as_customer_address']").prop("checked")) ){
 			address = $("input:text[name='address[address]']").val();
 			city = $("input:text[name='address[city]']").val();

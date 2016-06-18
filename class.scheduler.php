@@ -3,6 +3,7 @@ class Scheduler extends JobProgress {
 
 	public function __construct() {
 		parent::__construct();
+
 		$this->cron_schedules();
 	}
 
@@ -11,6 +12,7 @@ class Scheduler extends JobProgress {
 	 * @return [boolean] [description]
 	 */
 	private function cron_schedules(){
+		
 		if(! $this->is_connected()) {
 			return false;
 		}

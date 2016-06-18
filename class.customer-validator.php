@@ -48,8 +48,9 @@ class Customer_Validator {
 		
 
 		if(isset($_POST['additional_emails']) 
-			&& !empty($additional_emails = array_filter($_POST['additional_emails'])) ) {
-			foreach (array_filter($additional_emails) as $key => $additional_email) {
+			&& !empty($_POST['additional_emails'])) {
+			$additionalEmails = array_filter($_POST['additional_emails']);
+			foreach ($additionalEmails as $key => $additional_email) {
 				if(! filter_var($additional_email, FILTER_VALIDATE_EMAIL))	{
 					unset($_POST['additional_emails'][$key]);
 				}
@@ -63,6 +64,12 @@ class Customer_Validator {
 			}
 			if(! ine($_POST['job'], 'description')) {
 				$error->add("job_description", 'Please enter the description.');
+				$has_error = true;
+			}
+			if(ine($_POST['job'], 'trades') 
+				&& in_array(24, $_POST['job']['trades'])
+				&& !ine($_POST['job']['other_trade_type_description'])) {
+				$error->add("other_trade_type_description", 'Please enter the note.');
 				$has_error = true;
 			}
 		}

@@ -94,10 +94,13 @@ class Customer_Data_Map {
      * @return [array] [job input]
      */
     private function map_job_input() {
-    	$job = $this->input['job'];
-    	$job['trades'] = $this->map_numeric_array_inputs($job['trades']);
-    	$job['description'] = htmlentities($job['description']);
-
+    	$jobInput = $this->input['job'];
+    	$job['trades'] = $this->map_numeric_array_inputs($jobInput['trades']);
+    	$job['description'] = htmlentities($jobInput['description']);
+    	$job['other_trade_type_description'] = null;
+    	if(in_array(24, $jobInput['trades'])) {
+    		$job['other_trade_type_description'] = htmlentities($jobInput['other_trade_type_description']);
+    	}
     	return $job;
 
     }
