@@ -211,7 +211,7 @@
 	</div>
 	<div class="text-center">
 		<button type="submit" class="btn btn-blue">Save</button>
-		<button type="reset" class="btn btn-grey">Cancel</button>
+		<button type="reset" class="btn btn-grey" onclick="location.reload()">Cancel</button>
 	</div>
 
 </form>
