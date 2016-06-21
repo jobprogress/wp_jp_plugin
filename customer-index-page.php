@@ -18,18 +18,18 @@ if($order == 'asc') {
 		</li>
 	</ul>
 	<form method="get" id="posts-filter" action="<?php echo $_SERVER['PHP_SELF'] . "?page=jp_customer_page" ?>">
-		<input type="hidden" value="jp_customer" name="page">
+		<!-- <input type="hidden" value="jp_customer_page" name="page"> -->
 		
 		<div class="tablenav top">
 
 			<div class="alignleft actions">
-				<label class="screen-reader-text" for="filter-by-date">Filter by date</label>
+				<!-- <label class="screen-reader-text" for="filter-by-date">Filter by date</label>
 				<select id="filter-by-date" name="date">
 					<option value="0" selected="selected">All dates</option>
 					<?php $datetime = new DateTime() ?>
 					<option value="<?php echo $datetime->format('Y\-m\-d'); ?>"><?php echo $datetime->format('F Y'); ?></option>
-				</select>
-				<input type="submit" value="Filter" class="button" id="post-query-submit" name="filter_action">
+				</select> 
+				<input type="submit" value="Filter" class="button" id="post-query-submit" name="filter_action">-->
 				<?php $args = array(
 					'base'               =>  add_query_arg( 'page_num', '%#%' ),
 					'format'             => '',
