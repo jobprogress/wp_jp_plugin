@@ -78,7 +78,7 @@ class JobProgress extends JP_Request {
 		if(ine($_POST, 'disconnect')) {
 			$this->disconnect();
 		}
-		$jp_user = get_option( 'jp_connected_user' );
+		$jp_user = $this->get_connected_user();
 		if($this->is_connected()) {
 			return require_once( JP_PLUGIN_DIR . 'disconnect-form.php' );	
 		}
@@ -278,5 +278,10 @@ class JobProgress extends JP_Request {
     		:'');
     		
     	return $url . '?page=jp_admin_page';
+	}
+
+	public function get_connected_user()
+	{
+		return get_option( 'jp_connected_user' );
 	}
 }

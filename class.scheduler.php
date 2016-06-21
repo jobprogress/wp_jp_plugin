@@ -3,7 +3,6 @@ class Scheduler extends JobProgress {
 
 	public function __construct() {
 		parent::__construct();
-
 		$this->cron_schedules();
 	}
 
@@ -20,11 +19,12 @@ class Scheduler extends JobProgress {
 		if (!wp_next_scheduled('jp_token_refresh_hook')) {
 			wp_schedule_event( time(), '1month', 'jp_token_refresh_hook' );
 		}
+
 		if(!wp_next_scheduled('jb_customer_sync_hook')) {
 			wp_schedule_event( time(), '2min', 'jb_customer_sync_hook' );	
 		}
-		add_action( 'jp_token_refresh_hook ', array( $this, 'update_token' ));
-		add_action( 'jb_customer_sync_hook ', array( $this, 'sync_jp_customer' ));
+		add_action( 'jp_token_refresh_hook', array( $this, 'update_token' ));
+		add_action( 'jb_customer_sync_hook', array( $this, 'sync_jp_customer' ));
 
 		return true;
 	}

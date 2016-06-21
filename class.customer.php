@@ -122,10 +122,11 @@ class Customer extends JobProgress {
 			$states = $this->get(JP_STATE_URL);
 			set_transient("jp_states", $states, 86400);
 		}
-
+		
 		if(($countries = get_transient("jp_countries")) === false 
 			|| $countries === '') {
-			$countries = $this->get(JP_COUNTRY_URL);
+			$user = $this->get_connected_user();
+			$countries = $this->get(JP_COUNTRY_URL.'?company_id='.$user['company_id']);
 			set_transient("jp_countries", $countries, 86400);
 		}
 		require_once(JP_PLUGIN_DIR. 'customer-template.php');

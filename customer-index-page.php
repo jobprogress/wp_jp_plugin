@@ -172,13 +172,11 @@ if($order == 'asc') {
 			</td>
 			<td class="date column-is-commercial">
 				<a>
-					<?php 
-					echo $customer->is_commercial;
-					?>
+					<?php echo $customer->is_commercial;?>
 				</a>
 			</td>
 			<td data-colname="Creation Time" class="date column-created-at">
-				<abbr><?php echo $customer->created_at; ?></abbr>
+				<abbr><?php echo date("Y/m/d", strtotime($customer->created_at)); ?></abbr>
 			</td>	
 		</tr>
 	<?php endforeach; ?>
