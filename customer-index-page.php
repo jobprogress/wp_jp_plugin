@@ -152,6 +152,9 @@ if($order == 'asc') {
 					if(ine($addressArray, 'address')) {
 						$address[] = $addressArray['address'];
 					}
+					if(ine($addressArray, 'address_line_1')) {
+						$address[] = $addressArray['address_line_1'];
+					}
 					if(ine($addressArray, 'city')) {
 						$address[] = $addressArray['city'];
 					}
