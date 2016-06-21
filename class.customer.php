@@ -76,7 +76,7 @@ class Customer extends JobProgress {
 		$sql .= " LIMIT $offset, $limit";
 		$customers = $this->wpdb->get_results( $sql );
 		
-		return require_once( JP_PLUGIN_DIR . 'customer-index-page.php' );
+		return require_once(JP_PLUGIN_DIR. 'customer-index-page.php');
 	}
 
 	/**
@@ -85,13 +85,12 @@ class Customer extends JobProgress {
 	 */
 	public function save_customer() {
 		if(isset($_POST) && !empty($_POST) && wp_verify_nonce( $_POST['_wpnonce'], 'submit_jp_customer_form' ) ) {
-			require_once( JP_PLUGIN_DIR . 'class.customer-validator.php' );
-			$validator = new Customer_Validator;
-		
+			require_once(JP_PLUGIN_DIR. 'class.customer-validator.php');
+			$validator = new Customer_Validator;		
 			if($validator->is_valid()) {
 				$input = $_POST;
 				$table_name = $this->wpdb->prefix . 'customers';
-				require_once( JP_PLUGIN_DIR . 'class.customer-data-map.php' );
+				require_once(JP_PLUGIN_DIR. 'class.customer-data-map.php');
 				$customer =  new Customer_Data_Map($input);
 				$plugin_input = $customer->get_plugin_input();
 				$this->wpdb->insert($table_name, $plugin_input);
@@ -130,7 +129,7 @@ class Customer extends JobProgress {
 			set_transient("jp_countries", $countries, 86400);
 		}
 		require_once(JP_PLUGIN_DIR. 'customer-template.php');
-		return require_once( JP_PLUGIN_DIR . 'customer-form-page.php' );
+		return require_once(JP_PLUGIN_DIR. 'customer-form-page.php');
 	}
 
 		
@@ -153,8 +152,7 @@ class Customer extends JobProgress {
 	 	$html = '<label id='.$id.' class="error" for='.$for.'>';
 	 	$html .= $this->wp_error->get_error_message($code);
 	 	$html .= '</label>';
+
 		return $html;
 	}
-	
 }
- ?>

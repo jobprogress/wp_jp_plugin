@@ -18,8 +18,8 @@ class JobProgress extends JP_Request {
 	 */
 	private function init_hooks() {
 		add_action('wp_footer', array($this, 'scripts'));
-		add_action( 'admin_menu',array($this, 'jp_admin_page') );
-		add_action( 'admin_enqueue_scripts', array($this, 'admin_script') );
+		add_action('admin_menu',array($this, 'jp_admin_page') );
+		add_action('admin_enqueue_scripts', array($this, 'admin_script'));
 	}
 
 	/**
@@ -52,7 +52,7 @@ class JobProgress extends JP_Request {
 			&& ine($_GET, 'expires_in')
 			&& ine($_GET, 'token_type')
 			&& ine($_GET, 'user_id')
-			&& wp_verify_nonce( $_GET['_wpnonce'], 'jp_connect_form' )
+			&& wp_verify_nonce($_GET['_wpnonce'], 'jp_connect_form')
 			&& ! $this->is_connected()
 		) {
 			$jp_token_data = array(
@@ -80,11 +80,11 @@ class JobProgress extends JP_Request {
 		}
 		$jp_user = $this->get_connected_user();
 		if($this->is_connected()) {
-			return require_once( JP_PLUGIN_DIR . 'disconnect-form.php' );	
+
+			return require_once(JP_PLUGIN_DIR. 'disconnect-form.php');	
 		}
 
-		return require_once( JP_PLUGIN_DIR . 'connect-form.php' );
-
+		return require_once(JP_PLUGIN_DIR. 'connect-form.php');
 	}
 
 	/**
@@ -152,17 +152,14 @@ class JobProgress extends JP_Request {
 	public function admin_script($hook){
 
 		if((string)$hook === 'toplevel_page_jp_admin_page') {
-			// wp_enqueue_script( 'jquery', plugin_dir_url( __FILE__ ) . 'js/jquery.min.js' );
-			wp_enqueue_script( 'jquery-ui', plugin_dir_url( __FILE__ ) . 'js/jquery-ui.js' );
-			wp_enqueue_script( 'custom-admin-side', plugin_dir_url( __FILE__ ) . 'js/custom-admin-side.js' );
-			wp_enqueue_style( 'jquery-ui', plugin_dir_url( __FILE__ ) . 'css/jquery-ui.css');
+			wp_enqueue_script('jquery-ui', plugin_dir_url( __FILE__ ) .'js/jquery-ui.js');
+			wp_enqueue_script('custom-admin-side', plugin_dir_url( __FILE__ ) .'js/custom-admin-side.js');
+			wp_enqueue_style('jquery-ui', plugin_dir_url( __FILE__ ) . 'css/jquery-ui.css');
 		}
 		if((string)$hook === 'toplevel_page_jp_admin_page'
 			|| (string)$hook === 'jobprogress_page_jp_customer_page' ) {
-
-			wp_enqueue_style( 'custom', plugin_dir_url( __FILE__ ) . 'css/admin-style.css');
+			wp_enqueue_style('custom', plugin_dir_url( __FILE__ ) . 'css/admin-style.css');
 		}
-
 	}
 
 	/**
@@ -207,7 +204,8 @@ class JobProgress extends JP_Request {
 	 * @return [array] [access token]
 	 */
 	public function get_access_token() {
-		return get_option( 'jp_token_options' );
+
+		return get_option('jp_token_options');
 	}
 
 	/**
@@ -215,7 +213,8 @@ class JobProgress extends JP_Request {
 	 * @return boolean [true or false]
 	 */
 	protected function is_connected() {
-		return (get_option( 'jp_token_options' )) ? true : false;
+
+		return (get_option('jp_token_options' )) ? true : false;
 	}
 
 	
@@ -225,7 +224,7 @@ class JobProgress extends JP_Request {
 	 * @return [type]        [description]
 	 */
 	protected function update_access_token($token) {
-		update_option( 'jp_token_options', $token);
+		update_option('jp_token_options', $token);
 	}
 
 	/**
@@ -238,6 +237,7 @@ class JobProgress extends JP_Request {
 		);
 		$response = $this->request(JP_DISCONNECT_URL, $data, JP_DELETE_REQUEST);
 		if(ine($response, 'status') && (int)$response['status'] != 200) {
+
 			return false;
 		}
 		delete_transient('jp_trades');
@@ -280,8 +280,8 @@ class JobProgress extends JP_Request {
     	return $url . '?page=jp_admin_page';
 	}
 
-	public function get_connected_user()
-	{
-		return get_option( 'jp_connected_user' );
+	public function get_connected_user() {
+
+		return get_option('jp_connected_user');
 	}
 }

@@ -1,5 +1,6 @@
 <?php 
 class Customer_Validator {
+
 	/**
 	 * [$validation_error validation of customer form
 	 * @var [array]
@@ -28,15 +29,18 @@ class Customer_Validator {
 			$error->add('company_name_commercial', 'Please enter the company name.');
 			$has_error = true;
 		} 
+
 		if (! $is_commercial && (sanitize_text_field($_POST['first_name']) === '')) {
 			$error->add('first_name', 'Please enter the first name.');
 			$has_error = true;
 		}
+
 		if (! $is_commercial && (sanitize_text_field($_POST['last_name']) === '')) {
 			$error->add('last_name', 'Please enter the last name.');
 			$has_error = true;
 		} 
-		 if(sanitize_text_field($_POST['email']) === '' ) {
+
+		if(sanitize_text_field($_POST['email']) === '' ) {
 			$error->add('email', 'Please enter the email.');
 			$has_error = true;
 		} else {
@@ -62,21 +66,23 @@ class Customer_Validator {
 				$error->add("job_trades", 'Please select the trades.');
 				$has_error = true;
 			}
+
 			if(! ine($_POST['job'], 'description')) {
 				$error->add("job_description", 'Please enter the description.');
 				$has_error = true;
 			}
+
 			if(ine($_POST['job'], 'trades') 
 				&& in_array(24, $_POST['job']['trades'])
 				&& !ine($_POST['job'], 'other_trade_type_description')) {
 				$error->add("other_trade_type_description", 'Please enter the note.');
 				$has_error = true;
 			}
+
 		}
 
 		if(count($_POST['phones'])) {
 			$phones = array_filter($_POST['phones']);
-
 			foreach ($phones as $key => $value) {
 				if(! ine($value, 'label')) {
 					$error->add("phones.$key.label", 'Please choose the phone label.');
@@ -120,7 +126,7 @@ class Customer_Validator {
 	 * @return [array] [validation errors]
 	 */
 	public function get_wp_error() {
+
 		return $this->wp_error;
 	}
-
 }

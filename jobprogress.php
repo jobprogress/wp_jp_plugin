@@ -7,7 +7,7 @@ Version: 1.0
 Author: Logiciel solutions
 Author URI: http://w3guy.com
 */
-define( 'JP_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+define('JP_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define('API_BASE_URL', 'http://staging.jobprogress.com/web_api/public/api/v1/');
 define('JP_CLIENT_ID', '123457');
 define('JP_CLIENT_SECRET', 'schs1EKRpLaS1auhTIc25JrlWSjkry1P');
@@ -24,15 +24,15 @@ define('JP_CUSTOMER_LIMIT_PAGINATION', 10);
 define('JP_DELETE_REQUEST', 'Delete');
 define('JP_MENU_ICON', 'https://staging.jobprogress.com/app/favicon.ico');
 define('JP_CUSTOMER_FORM_SAVED', 'Customer saved successfully.');
-require_once( JP_PLUGIN_DIR . 'class.jp-request.php' );
-require_once( JP_PLUGIN_DIR . 'class.jobprogress.php' );
-require_once( JP_PLUGIN_DIR . 'class.customer.php' );
-require_once( JP_PLUGIN_DIR . 'class.scheduler.php' );
+require_once(JP_PLUGIN_DIR. 'class.jp-request.php');
+require_once(JP_PLUGIN_DIR. 'class.jobprogress.php');
+require_once(JP_PLUGIN_DIR. 'class.customer.php');
+require_once(JP_PLUGIN_DIR. 'class.scheduler.php');
 
 $scheduler = New Scheduler;
 $customer  = New Customer;
-register_activation_hook( __FILE__, array( $customer, 'plugin_activation' ) );
-register_deactivation_hook( __FILE__, array( $customer, 'plugin_deactivation' ) );
+register_activation_hook(__FILE__, array($customer, 'plugin_activation'));
+register_deactivation_hook(__FILE__, array($customer, 'plugin_deactivation'));
 
 function ine($haystack,$needle){
 	return (isset($haystack[$needle]) && !empty($haystack[$needle]));

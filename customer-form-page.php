@@ -1,4 +1,3 @@
-
 <?php  if($this->customer_form_saved): ?>
 	<div class="alert-msg alert-msg-success">
 		<?php echo JP_CUSTOMER_FORM_SAVED; ?>
@@ -12,7 +11,6 @@
 		<label>Customer Type</label>
 		<input id="res" class= "jobprogress-customer-type" type="checkbox" value="0" name="jp_customer_type1" checked/> <label class="has-outer-label css-label checkbox-label radGroup1" for="res">Residential</label>
 		<input id="com" class= "jobprogress-customer-type" type="checkbox" value="1" name="jp_customer_type2" /> <label class="has-outer-label css-label checkbox-label radGroup1" for="com">Commercial</label>
-		
 		<?php echo $this->get_error_wrapper('customer_type'); ?>
 	</div>
 	<div class="form-group jobprogress-residential-type jp-name">
@@ -80,7 +78,7 @@
 	</div>
 
 	<div class="form-group">
-		<label>Address </label>
+		<label>Address</label>
 		<span>
 			<input type="text" placeholder="Address" name="address[address]" / >
 		</span>
@@ -213,5 +211,4 @@
 		<button type="submit" class="btn btn-blue">Save</button>
 		<button type="reset" class="btn btn-grey" onclick="location.reload()">Cancel</button>
 	</div>
-
 </form>

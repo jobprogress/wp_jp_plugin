@@ -1,5 +1,4 @@
 <?php 
-
 class Customer_Data_Map {
 
 	protected $input = array();
@@ -18,7 +17,6 @@ class Customer_Data_Map {
 		$data = $this->map_inputs($map);
 		$address['address'] = $this->mapFirstSubInputs($addressFields, 'address');
 
-
 		if(ine($this->input, 'same_as_customer_address')){
 			$address['same_as_customer_address'] = true;
 			$address['billing'] = $address['address'];
@@ -26,9 +24,10 @@ class Customer_Data_Map {
 			$address['billing']	= $this->mapFirstSubInputs($addressFields, 'billing');
 			$address['same_as_customer_address'] = false;
 		}
-		$data['address'] = json_encode($address, true);
 
+		$data['address'] = json_encode($address, true);
 		$data['is_commercial'] = false ;
+
 		if(ine($this->input, 'jp_customer_type2')) {
 			//in commercial case company name and last name should be null
 			$data['is_commercial']  = true;
@@ -45,7 +44,6 @@ class Customer_Data_Map {
 
 		return $data;
 	}
-
 	
 	/**
      *  Map  Model fields to inputs
@@ -60,6 +58,7 @@ class Customer_Data_Map {
 				$ret[$key] = isset($this->input[$inputKey][$value]) ? htmlentities($this->input[$inputKey][$value]) : "";
 			}
 		}
+
         return $ret;
     }
 
@@ -101,8 +100,8 @@ class Customer_Data_Map {
     	if(in_array(24, $jobInput['trades'])) {
     		$job['other_trade_type_description'] = htmlentities($jobInput['other_trade_type_description']);
     	}
-    	return $job;
 
+    	return $job;
     }
 
     /**
@@ -112,7 +111,6 @@ class Customer_Data_Map {
 	 */
 	private function map_inputs($map) {
 		$ret = array();
-
     	// empty the set default.
     	if(empty($input)) {
     		$input = $this->input;
@@ -139,6 +137,7 @@ class Customer_Data_Map {
     	foreach ($array_input as $key => $value) {
     		$ret[] = htmlentities($value);
     	}
+    	
     	return $ret;
 	}
 }
