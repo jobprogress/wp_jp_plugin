@@ -85,6 +85,7 @@ class Customer extends JobProgress {
 	 */
 	public function save_customer() {
 		if(isset($_POST) && !empty($_POST) && wp_verify_nonce( $_POST['_wpnonce'], 'submit_jp_customer_form' ) ) {
+
 			require_once(JP_PLUGIN_DIR. 'class.customer-validator.php');
 			$validator = new Customer_Validator;		
 			if($validator->is_valid()) {

@@ -40,15 +40,11 @@ class Customer_Validator {
 			$has_error = true;
 		} 
 
-		if(sanitize_text_field($_POST['email']) === '' ) {
-			$error->add('email', 'Please enter the email.');
+		if(! filter_var(sanitize_text_field($_POST['email']), FILTER_VALIDATE_EMAIL))	{
+			$error->add('email', 'The email must be a valid email address.');
 			$has_error = true;
-		} else {
-			if(! filter_var(sanitize_text_field($_POST['email']), FILTER_VALIDATE_EMAIL))	{
-				$error->add('email', 'The email must be a valid email address.');
-				$has_error = true;
-			}
 		}
+		
 		
 
 		if(isset($_POST['additional_emails']) 

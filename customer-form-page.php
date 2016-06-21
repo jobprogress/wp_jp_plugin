@@ -66,9 +66,9 @@
 	</div>
 
 	<div class="form-group additional-emails">
-		<label>Email <span class="required-sign">*</span></label>
+		<label>Email</label>
 		<span>
-			<input type="text" placeholder="Email" name="email" required/ >
+			<input type="text" placeholder="Email" name="email" />
 			<?php echo $this->get_error_wrapper('email'); ?>
 		</span>
 		
@@ -146,7 +146,7 @@
 	<div class="form-group col-5">
 		<label>City </label>
 		<span>
-			<input type="text" class="number" placeholder="city" name="billing[city]" minLength="5"/ >
+			<input type="text" placeholder="city" name="billing[city]" minLength="5"/ >
 		</span>
 	</div>
 	<div class="form-group col-5">
