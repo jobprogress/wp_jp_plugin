@@ -88,7 +88,7 @@
 	<div class="form-group">
 		<label>Address Line 2</label>
 		<span>
-			<input type="text" placeholder="Address" name="address[address_line_2]" / >
+			<input type="text" placeholder="Address" name="address[address_line_1]" / >
 		</span>
 	</div>
 	<div class="form-group col-5">
@@ -142,7 +142,7 @@
 	<div class="form-group">
 		<label>Address Line 2</label>
 		<span>
-			<input type="text" placeholder="Address" name="billing[address_line_2]" / >
+			<input type="text" placeholder="Address" name="billing[address_line_1]" / >
 		</span>
 	</div>
 	<div class="form-group col-5">
