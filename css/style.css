@@ -100,7 +100,9 @@
     border-color: #dadada;
 }
 .customer-page .select2-container .select2-selection--multiple {
-    height: 34px;
+    height: auto;
+    line-height: normal;
+    min-height: 34px;
     border-color: #dadada;
     border-radius: 0;
 }
