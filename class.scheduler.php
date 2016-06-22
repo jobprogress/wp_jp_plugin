@@ -117,7 +117,7 @@ class Scheduler extends JobProgress {
 		$input['address'] = $address['address'];
 		$input['phones']  = json_decode($customer->phones, true);
 		$input['is_commercial'] = $customer->is_commercial;
-		if(ine($input, 'billing')) {
+		if(ine($address, 'billing')) {
 			$input['billing'] = $address['billing'];
 		}
 		$input['billing']['same_as_customer_address'] = (int)$address['same_as_customer_address'];
