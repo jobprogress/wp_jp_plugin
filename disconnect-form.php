@@ -138,7 +138,7 @@
 						<label>Fax: </label>
 						<span class=""><?php echo format_number($jp_user['company_details']['office_fax']); ?></span>
 					</div>
-					<?php endif ?>
+					<?php endif; ?>
 				</div>
 			</div>
 		</div>

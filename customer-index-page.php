@@ -16,11 +16,8 @@ if($order == 'asc') {
 			</a>
 		</li>
 	</ul>
-	<form method="get" id="posts-filter" action="<?php echo $_SERVER['PHP_SELF'] . "?page=jp_customer_page" ?>">
-		<!-- <input type="hidden" value="jp_customer_page" name="page"> -->
-		
+	<form method="get" id="posts-filter" action="<?php echo $_SERVER['PHP_SELF'] . "?page=jp_customer_page"; ?>">
 		<div class="tablenav top">
-
 			<div class="alignleft actions">
 				<?php $args = array(
 					'base'               =>  add_query_arg( 'page_num', '%#%' ),
@@ -38,13 +35,15 @@ if($order == 'asc') {
 					'add_fragment'       => '',
 					'before_page_number' => '',
 					'after_page_number'  => ''
-					); ?>
-				<?php $page_links = paginate_links( $args ); 
+					); 
+				 $page_links = paginate_links( $args ); 
 				if ( $page_links ) {
 					echo '<div class="tablenav"><div class="tablenav-pages" style="margin: 1em 0">' . $page_links . '</div></div>';
-				}?></div>
+				}
+				?>
+			</div>
 
-			<br class="clear">
+		<br class="clear">
 		</div>
 		<h2 class="screen-reader-text">Pages list</h2>
 		<table class="wp-list-table widefat fixed striped pages">
@@ -52,7 +51,7 @@ if($order == 'asc') {
 				<tr>
 					<th class="manage-column column-title column-primary sortable desc" id="title" scope="col">
 
-						<a href="<?php echo $_SERVER['PHP_SELF'] . "?order=$order&order_by=first_name&page=jp_customer_page" ?>">
+						<a href="<?php echo $_SERVER['PHP_SELF']. "?order=$order&order_by=first_name&page=jp_customer_page"?>">
 							<span>Full Name</span>
 							<span class="sorting-indicator"></span>
 						</a>
@@ -71,7 +70,6 @@ if($order == 'asc') {
 							<span class="sorting-indicator"></span>
 						</a>
 					</th>
-
 					<th class="manage-column column-address column-primary" id="address" scope="col">
 						<a href="">
 							<span>Address</span>
@@ -87,22 +85,20 @@ if($order == 'asc') {
 					</th>
 
 					<th class="manage-column column-creation-date column-primary" id="creation-date" scope="col">
-						<a href="<?php echo $_SERVER['PHP_SELF'] . "?order=$order&order_by=created_at&page=jp_customer_page" ?>">
+						<a href="<?php echo $_SERVER['PHP_SELF']. "?order=$order&order_by=created_at&page=jp_customer_page"; ?>">
 							<span>Creation Date</span>
 							<span class="sorting-indicator"></span>
 						</a>
 					</th>
-
 				</tr>
 			</thead>
-
 			<tbody id="the-list">
 				<?php if(empty($customers)): ?>
 				<tr>
 					<td colspan="5"><center><b>No Customer Found.</b></center></td>
 				</tr>
 				<?php endif; ?>
-			<?php foreach ($customers as $key => $customer) :?>
+			<?php foreach ($customers as $key => $customer):?>
 			<tr class="iedit author-self level-0 post-2 type-page status-publish hentry" id="post-2">
 				<td data-colname="Title" class="title column-title has-row-actions column-primary page-title">
 					<strong>
@@ -125,7 +121,6 @@ if($order == 'asc') {
 						}else {
 							echo implode('<br>', $emails);
 						}
-
 					 ?></a>
 				</td>
 				<td data-colname="company-name" class="company-name column-company-name has-row-actions column-primary">
@@ -172,12 +167,11 @@ if($order == 'asc') {
 					$trades = array_values($job['trades']);
 					$jpTrades = get_transient("jp_trades");
 					$tradeName = array();
-					foreach ($trades as $key => $value) {
+					foreach ($trades as $key => $value){
 						$key = array_search($value, array_column($jpTrades, 'id'));
 						$name = $jpTrades[$key]['name'];
 						if((string)$value == 24) {
 							 $name .= ' ('.$job['other_trade_type_description'].')';
-
 						}
 						$tradeName[] = $name;
 					}
@@ -189,14 +183,11 @@ if($order == 'asc') {
 			</td>	
 		</tr>
 	<?php endforeach; ?>
-
 </tbody>
-
 <tfoot>
 	<tr>
 		<th class="manage-column column-title column-primary sortable desc" id="title" scope="col">
-
-			<a href="<?php echo $_SERVER['PHP_SELF'] . "?order=$order&order_by=first_name&page=jp_customer_page" ?>">
+			<a href="<?php echo $_SERVER['PHP_SELF'] . "?order=$order&order_by=first_name&page=jp_customer_page"; ?>">
 				<span>Full Name</span>
 				<span class="sorting-indicator"></span>
 			</a>
@@ -231,7 +222,7 @@ if($order == 'asc') {
 		</th>
 
 		<th class="manage-column column-creation-date column-primary" id="creation-date" scope="col">
-			<a href="<?php echo $_SERVER['PHP_SELF'] . "?order=$order&order_by=created_at&page=jp_customer_page" ?>">
+			<a href="<?php echo $_SERVER['PHP_SELF']. "?order=$order&order_by=created_at&page=jp_customer_page"; ?>">
 				<span>Creation Date</span>
 				<span class="sorting-indicator"></span>
 			</a>

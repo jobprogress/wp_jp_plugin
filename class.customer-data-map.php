@@ -1,4 +1,4 @@
-<?php 
+<?php
 class Customer_Data_Map {
 
 	protected $input = array();
@@ -141,4 +141,3 @@ class Customer_Data_Map {
     	return $ret;
 	}
 }
-

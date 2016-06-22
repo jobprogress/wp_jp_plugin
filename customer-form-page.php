@@ -5,12 +5,12 @@
 <?php endif; ?>
 <?php if($this->customer_form_wpdb_error): ?>
 <div class="alert-msg alert-msg-danger"><?php echo $this->customer_form_wpdb_error; ?></div>
-<?php endif ?>	
-<form class="customer-page" method="post" id = "jobprogrssCustomerSignupForm" action="<?php echo esc_url( $_SERVER['REQUEST_URI'] ) ?>">
+<?php endif; ?>
+<form class="customer-page" method="post" id = "jobprogrssCustomerSignupForm" action="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>">
 	<div class="form-group customer">
 		<label>Customer Type</label>
 		<input id="res" class= "jobprogress-customer-type" type="checkbox" value="0" name="jp_customer_type1" checked/> <label class="has-outer-label css-label checkbox-label radGroup1" for="res">Residential</label>
-		<input id="com" class= "jobprogress-customer-type" type="checkbox" value="1" name="jp_customer_type2" /> <label class="has-outer-label css-label checkbox-label radGroup1" for="com">Commercial</label>
+		<input id="com" class= "jobprogress-customer-type" type="checkbox" value="1" name="jp_customer_type2"/> <label class="has-outer-label css-label checkbox-label radGroup1" for="com">Commercial</label>
 		<?php echo $this->get_error_wrapper('customer_type'); ?>
 	</div>
 	<div class="form-group jobprogress-residential-type jp-name">
@@ -18,13 +18,13 @@
 		<div class="customer-name-section">
 				<div class="col-5">
 					<span>
-						<input type="text" name="first_name" placeholder="First Name" required>
+						<input type="text" name="first_name" placeholder="First Name" required/>
 						<?php echo $this->get_error_wrapper('first_name'); ?>
 					</span>
 				</div>
 				<div class="col-5">
 					<span>
-						<input type="text" name="last_name"  placeholder="Last Name"  >
+						<input type="text" name="last_name"  placeholder="Last Name"/>
 						<?php echo $this->get_error_wrapper('last_name'); ?>
 					</span>
 				</div>
@@ -33,7 +33,7 @@
 	<div class="form-group jobprogress-commercial-type" style="display:none;">
 		<label>Company name <span class="required-sign">*</span></label>
 		<span>
-			<input type="text" name="company_name_commercial" placeholder="Company Name" required>
+			<input type="text" name="company_name_commercial" placeholder="Company Name" required/>
 			<?php echo $this->get_error_wrapper('company_name_commercial'); ?>
 		</span>
 	</div>
@@ -50,7 +50,7 @@
 			<span>+</span>
 		</a>
 		<div class="form-combine-select">
-			<select class="phone-label select2" name="phones[0][label]" required>
+			<select class="phone-label select2" name="phones[0][label]" required/>
 				<option value="home">Home</option>
 				<option value="cell">Cell</option>
 				<option value="phone">Phone</option>
@@ -58,17 +58,19 @@
 				<option value="fax">Fax</option>
 				<option value="other">Other</option>
 			</select> 
-			<input type="text" class="phones  mask-select phone-number-field" name="phones[0][number]" placeholder="Phone" required > 
-			<input type="text" maxlength= "8" class="extension-field number" name="phones[0][ext]" placeholder="Extension" >
+			<input type="text" class="phones  mask-select phone-number-field" name="phones[0][number]" placeholder="Phone" required/> 
+			<input type="text" maxlength= "8" class="extension-field number" name="phones[0][ext]" placeholder="Extension"/>
 		</div>
-		<?php echo $this->get_error_wrapper('phones.0.label'); ?>
-		<?php echo $this->get_error_wrapper('phones.0.number'); ?>
+		<?php 
+			echo $this->get_error_wrapper('phones.0.label'); 
+			echo $this->get_error_wrapper('phones.0.number'); 
+		?>
 	</div>
 
 	<div class="form-group additional-emails">
 		<label>Email</label>
 		<span>
-			<input type="text" placeholder="Email" name="email" />
+			<input type="text" placeholder="Email" name="email"/>
 			<?php echo $this->get_error_wrapper('email'); ?>
 		</span>
 		
@@ -80,19 +82,19 @@
 	<div class="form-group">
 		<label>Address</label>
 		<span>
-			<input type="text" placeholder="Address" name="address[address]" / >
+			<input type="text" placeholder="Address" name="address[address]"/>
 		</span>
 	</div>
 	<div class="form-group">
 		<label>Address Line 2</label>
 		<span>
-			<input type="text" placeholder="Address" name="address[address_line_1]" / >
+			<input type="text" placeholder="Address" name="address[address_line_1]"/>
 		</span>
 	</div>
 	<div class="form-group col-5">
 		<label>City </label>
 		<span>
-			<input type="text" placeholder="city" name="address[city]" / >
+			<input type="text" placeholder="city" name="address[city]"/>
 		</span>
 	</div>
 	<div class="form-group col-5">
@@ -102,14 +104,14 @@
 				<option value="0">Select States</option>
 				<?php foreach ($states as $key => $state) : ?>
 				<option value="<?php echo $state['id'] .'_'.$state['name']; ?>"><?php echo $state['name']; ?></option>
-			<?php endforeach; ?>	
+			<?php endforeach; ?>
 			</select>
 		</span>
 	</div>
 	<div class="form-group col-5">
 		<label>zip </label>
 		<span>
-			<input type="text" class="number" placeholder="zip" name="address[zip]" minLength="5" / >
+			<input type="text" class="number" placeholder="zip" name="address[zip]" minLength="5"/>
 		</span>
 	</div>
 	<div class="form-group col-5">
@@ -173,7 +175,7 @@
 				<option value="0">Select Country</option>
 				<?php foreach ($countries as $key => $country) : ?>
 				<option value="<?php echo $country['id'] .'_'.$country['name']; ?>"><?php echo $country['name']; ?></option>
-			<?php endforeach; ?>	
+			<?php endforeach; ?>
 			</select>
 		</span>
 	</div>
@@ -183,7 +185,7 @@
 		<span>
 			<select name="job[trades][]" class="jp-trade" multiple="multiple" required>
 				<?php if($trades): ?>
-				<?php foreach ($trades as $key => $trade) : ?>
+				<?php foreach ($trades as $key => $trade): ?>
 				<option value="<?php echo $trade['id'] ?>"><?php echo $trade['name']; ?></option>
 				<?php endforeach; ?>
 				<?php endif; ?>
@@ -198,7 +200,8 @@
 			<input class="other-trade-note" type="text" name="job[other_trade_type_description]" required/>
 			<?php echo $this->get_error_wrapper('other_trade_type_description'); ?>
 		</span>
-	</div>
+	</div
+	>
 	<?php wp_nonce_field( 'submit_jp_customer_form' ); ?>
 	<div class="form-group">
 		<label>Description <span class="required-sign">*</span></label>
