@@ -112,7 +112,21 @@ if($order == 'asc') {
 					</strong>
 				</td>
 				<td data-colname="Email" class="email column-email">
-					<a><?php echo $customer->email; ?></a>
+					<a><?php 
+						$emails = array();
+						$email = $customer->email;
+						if(!empty($customer->additional_emails)) {
+							$emails = json_decode($customer->additional_emails, true);
+						}
+						array_unshift($emails, $email);
+						$emails = array_filter($emails);
+						if(empty($emails)) {
+							echo '--';
+						}else {
+							echo implode('<br>', $emails);
+						}
+
+					 ?></a>
 				</td>
 				<td data-colname="company-name" class="company-name column-company-name has-row-actions column-primary">
 					<strong>
