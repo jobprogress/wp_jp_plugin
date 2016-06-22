@@ -157,7 +157,7 @@ if($order == 'asc') {
 					$job = json_decode($customer->job, true);
 					$trades = array_values($job['trades']);
 					$jpTrades = get_transient("jp_trades");
-					$tradeName = [];
+					$tradeName = array();
 					foreach ($trades as $key => $value) {
 						$key = array_search($value, array_column($jpTrades, 'id'));
 						$name = $jpTrades[$key]['name'];
