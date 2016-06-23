@@ -64,12 +64,6 @@ if($order == 'asc') {
 						</a>
 					</th>
 
-					<th class="manage-column column-company-name column-primary" id="company-name" scope="col">
-						<a href="">
-							<span>Comany Name</span>
-							<span class="sorting-indicator"></span>
-						</a>
-					</th>
 					<th class="manage-column column-address column-primary" id="address" scope="col">
 						<a href="">
 							<span>Address</span>
@@ -123,15 +117,7 @@ if($order == 'asc') {
 						}
 					 ?></a>
 				</td>
-				<td data-colname="company-name" class="company-name column-company-name has-row-actions column-primary">
-					<strong>
-						<a class="row-title">
-							<?php if(! $customer->is_commercial) {
-								echo $customer->company_name; 
-							}?>
-						</a>
-					</strong>
-				</td>
+				
 				<td data-colname="Address" class="address column-address">
 
 					<a>	<?php  
@@ -158,7 +144,11 @@ if($order == 'asc') {
 						$country = explode('_', $addressArray['country_id']);
 						$address[] = $country[1];
 					}
-					echo implode(', ', $address);?>
+					if(empty($address)) {
+						echo '--';
+					} else {
+						echo implode(', ', $address);?>
+					}
 				</a>
 			</td>
 			<td data-colname="job-detail" class="column-job-detail">
@@ -196,13 +186,6 @@ if($order == 'asc') {
 		<th class="manage-column column-email column-primary" id="email" scope="col">
 			<a href="">
 				<span>Email</span>
-				<span class="sorting-indicator"></span>
-			</a>
-		</th>
-
-		<th class="manage-column column-company-name column-primary" id="company-name" scope="col">
-			<a href="">
-				<span>Comany Name</span>
 				<span class="sorting-indicator"></span>
 			</a>
 		</th>

@@ -279,6 +279,9 @@
     border-color: #d6e9c6;
     color: #3c763d;
 }
+.select2-results__options {
+ text-align:left;
+}
 @media(max-width: 768px) {
     .customer-page .form-group label, .customer-page .col-5 label.state, .customer-page .col-5 label.country {
         width: 100%;
