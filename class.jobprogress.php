@@ -44,7 +44,7 @@ class JobProgress extends JP_Request {
 	 */
 	public function authorization() {
 		//get domain
-		$domain = $this->get_domain();
+		$domain = get_domain();
 		$redirect_url = $this->get_redirect_url();
 
 		if(	ine($_GET, 'access_token')
@@ -233,7 +233,7 @@ class JobProgress extends JP_Request {
 	 */
 	private function disconnect() {
 		$data = array(
-			'domain' =>	$this->get_domain()
+			'domain' =>	get_domain()
 		);
 		$response = $this->request(JP_DISCONNECT_URL, $data, JP_DELETE_REQUEST);
 		if(ine($response, 'status') && (int)$response['status'] != 200) {
@@ -250,26 +250,11 @@ class JobProgress extends JP_Request {
 	}
 
 	/**
-	 * get domain
-	 * @return [url] [site domain]
-	 */
-	private function get_domain() {
-		$domain = ((!empty($_SERVER['HTTPS']) 
-				&& $_SERVER['HTTPS'] !== 'off')
-				|| $_SERVER['SERVER_PORT'] === 443)
-				? 'https://'
-				:'http://'
-				. $_SERVER['HTTP_HOST'];
-
-		return $domain;
-	}
-
-	/**
 	 * get redirect url
 	 * @return [url] [description]
 	 */
 	private function get_redirect_url() {
-		$url = $this->get_domain().$_SERVER['REQUEST_URI'];
+		$url = get_domain().$_SERVER['REQUEST_URI'];
 		$url_parts = parse_url($url);
     	$url = $url_parts['scheme'] 
     		. '://' . $url_parts['host'] 

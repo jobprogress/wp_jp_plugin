@@ -74,3 +74,19 @@ if (! function_exists('array_column')) {
         return $array;
     }
 }
+
+/**
+ * get domain
+ * @return [url] [site domain]
+ */
+
+ function get_domain() {
+    $domain = ((!empty($_SERVER['HTTPS']) 
+            && $_SERVER['HTTPS'] !== 'off')
+            || $_SERVER['SERVER_PORT'] === 443)
+            ? 'https://'
+            :'http://'
+            . $_SERVER['HTTP_HOST'];
+
+    return $domain;
+}

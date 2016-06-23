@@ -1,7 +1,9 @@
-<?php  if($this->customer_form_saved): ?>
+<?php
+if(get_transient("jp_form_submitted")): ?>
 	<div class="alert-msg alert-msg-success">
 		<?php echo JP_CUSTOMER_FORM_SAVED; ?>
 	</div>
+
 <?php endif; ?>
 <?php if($this->customer_form_wpdb_error): ?>
 <div class="alert-msg alert-msg-danger"><?php echo $this->customer_form_wpdb_error; ?></div>

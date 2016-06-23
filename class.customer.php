@@ -96,7 +96,7 @@ class Customer extends JobProgress {
 				$plugin_input = $customer->get_plugin_input();
 				$this->wpdb->insert($table_name, $plugin_input);
 				if(! $this->wpdb->last_error) {
-					$this->customer_form_saved = true;
+					$this->show_form(true);
 				}else {
 					$this->customer_form_wpdb_error = $this->wpdb->last_error;
 				}
@@ -110,7 +110,16 @@ class Customer extends JobProgress {
 	 * show add customer page
 	 * @return [html] [show customer page]
 	 */
-	public function show_form() {
+	public function show_form($refresh = false, $queryString = array()) {
+
+		if($refresh) {
+			set_transient("jp_form_submitted", 1, 5);
+			$url = get_domain() . $_SERVER['REQUEST_URI'];
+			echo '<script type="text/javascript">
+		           window.location = "'.$url.'"
+		      </script>';
+		}
+		
 		if(($trades = get_transient("jp_trades")) === false 
 			|| $trades === '' ) {
 			$trades = $this->get(JP_TRADE_URL);
