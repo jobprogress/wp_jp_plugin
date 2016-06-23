@@ -138,19 +138,19 @@ if(get_transient("jp_form_submitted")): ?>
 	<div class="form-group">
 		<label>Address </label>
 		<span>
-			<input type="text" placeholder="Address" name="billing[address]" / >
+			<input type="text" placeholder="Address" name="billing[address]"/>
 		</span>
 	</div>
 	<div class="form-group">
 		<label>Address Line 2</label>
 		<span>
-			<input type="text" placeholder="Address" name="billing[address_line_1]" / >
+			<input type="text" placeholder="Address" name="billing[address_line_1]"/>
 		</span>
 	</div>
 	<div class="form-group col-5">
 		<label>City </label>
 		<span>
-			<input type="text" placeholder="city" name="billing[city]" minLength="5"/ >
+			<input type="text" placeholder="city" name="billing[city]"/ >
 		</span>
 	</div>
 	<div class="form-group col-5">
@@ -167,7 +167,7 @@ if(get_transient("jp_form_submitted")): ?>
 	<div class="form-group col-5">
 		<label>zip </label>
 		<span>
-			<input type="text" placeholder="zip code" name="billing[zip]" / >
+			<input type="text" placeholder="zip code" name="billing[zip]"/>
 		</span>
 	</div>
 	<div class="form-group col-5">
