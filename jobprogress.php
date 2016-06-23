@@ -1,11 +1,11 @@
 <?php
 /*
-Plugin Name: jobprogress
+Plugin Name :  Contractor Contact Form Website to Workflow Tool
+Description: This useful plugin is a website to workflow tool that allows contractors to drive leads directly from their own website form inquiries directly into their JobProgress workcenters.  JobProgress is  a Cloud based Business Management Platform for Home Improvement Contractors. With this useful plugin, you can drive customers directly from your website into your JobProgress workflow stages and begin to populate both customer and job related leads and prospects for immediate and mistake free follow-up.  This is an automated Customer Relationship Management tool which will save you time and minimize mistakes. For more information about JobProgress, please visit our website.
 Plugin URI: http://example.com
-Description: plugin description here.
 Version: 1.0
-Author: Logiciel solutions
-Author URI: http://w3guy.com
+Author: JobProgress
+Author URI: http://www.jobprogress.com/
 */
 define('JP_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define('API_BASE_URL', 'http://staging.jobprogress.com/web_api/public/api/v1/');
@@ -23,7 +23,7 @@ define('JP_REFRESH_TOKEN_GRANT_TYPE', 'refresh_token');
 define('JP_CUSTOMER_LIMIT_PAGINATION', 10);
 define('JP_DELETE_REQUEST', 'Delete');
 define('JP_MENU_ICON', 'https://staging.jobprogress.com/app/favicon.ico');
-define('JP_CUSTOMER_FORM_SAVED', 'Customer saved successfully.');
+define('JP_CUSTOMER_FORM_SAVED', 'Your request sent successfully.');
 require_once(JP_PLUGIN_DIR. 'class.jp-request.php');
 require_once(JP_PLUGIN_DIR. 'class.jobprogress.php');
 require_once(JP_PLUGIN_DIR. 'class.customer.php');
