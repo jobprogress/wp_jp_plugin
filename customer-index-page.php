@@ -92,7 +92,7 @@ if($order == 'asc') {
 					<td colspan="5"><center><b>No Customer Found.</b></center></td>
 				</tr>
 				<?php endif; ?>
-			<?php foreach ($customers as $key => $customer):?>
+			<?php foreach ($customers as $key => $customer): ?>
 			<tr class="iedit author-self level-0 post-2 type-page status-publish hentry" id="post-2">
 				<td data-colname="Title" class="title column-title has-row-actions column-primary page-title">
 					<strong>
@@ -120,59 +120,69 @@ if($order == 'asc') {
 				
 				<td data-colname="Address" class="address column-address">
 
-					<a>	<?php  
-					$address = array();
-					$completeAddress = json_decode($customer->address, true);
-					$addressArray = $completeAddress['address'];
-					if(ine($addressArray, 'address')) {
-						$address[] = $addressArray['address'];
-					}
-					if(ine($addressArray, 'address_line_1')) {
-						$address[] = $addressArray['address_line_1'];
-					}
-					if(ine($addressArray, 'city')) {
-						$address[] = $addressArray['city'];
-					}
-					if(ine($addressArray, 'state_id')) {
-						$state = explode('_', $addressArray['state_id']);
-						$address[] = $state[1];
-					}
-					if(ine($addressArray, 'zip')) {
-						$address[] = $addressArray['zip'] . '<br>';
-					}
-					if(ine($addressArray, 'country_id')) {
-						$country = explode('_', $addressArray['country_id']);
-						$address[] = $country[1];
-					}
-					if(empty($address)) {
-						echo '--';
-					} else {
-						echo implode(', ', $address);?>
-					}
+					<a>	
+						<?php  
+						$address = array();
+						$completeAddress = json_decode($customer->address, true);
+						$addressArray = $completeAddress['address'];
+						if(ine($addressArray, 'address')) {
+							$address[] = $addressArray['address'];
+						}
+						if(ine($addressArray, 'address_line_1')) {
+							$address[] = $addressArray['address_line_1'];
+						}
+						if(ine($addressArray, 'city')) {
+							$address[] = $addressArray['city'];
+						}
+						if(ine($addressArray, 'state_id')) {
+							$state = explode('_', $addressArray['state_id']);
+							$address[] = $state[1];
+						}
+						if(ine($addressArray, 'zip')) {
+							$address[] = $addressArray['zip'] . '<br>';
+						}
+						if(ine($addressArray, 'country_id')) {
+							$country = explode('_', $addressArray['country_id']);
+							$address[] = $country[1];
+						}
+						if(empty($address)) {
+							echo '--';
+						} else {
+							echo implode(', ', $address);
+						}
+					?>
 				</a>
 			</td>
 			<td data-colname="job-detail" class="column-job-detail">
-				<a><?php
-					$job = json_decode($customer->job, true);
-					$trades = array_values($job['trades']);
-					$jpTrades = get_transient("jp_trades");
-					$tradeName = array();
-					foreach ($trades as $key => $value){
-						$key = array_search($value, array_column($jpTrades, 'id'));
-						$name = $jpTrades[$key]['name'];
-						if((string)$value == 24) {
-							 $name .= ' ('.$job['other_trade_type_description'].')';
+				<a>
+					<?php
+						$job = json_decode($customer->job, true);
+						$trades = array_values($job['trades']);
+						$jpTrades = get_transient("jp_trades");
+						$tradeName = array();
+
+						if( !empty($jpTrades) && !empty($trades)) {
+							foreach ($trades as $key => $value){
+								$key = array_search($value, array_column($jpTrades, 'id'));
+								$name = $jpTrades[$key]['name'];
+								if((string)$value == 24) {
+									 $name .= ' ('.$job['other_trade_type_description'].')';
+								}
+								$tradeName[] = $name;
+							}
+							echo implode(', ', $tradeName);
+						} else {
+							echo '--';
 						}
-						$tradeName[] = $name;
-					}
-					echo implode(', ', $tradeName);?>
-			</a>
-			</td>
-			<td data-colname="Creation Time" class="date column-created-at">
-				<abbr><?php echo date("Y/m/d", strtotime($customer->created_at)); ?></abbr>
-			</td>	
-		</tr>
-	<?php endforeach; ?>
+
+					?>
+				</a>
+				</td>
+				<td data-colname="Creation Time" class="date column-created-at">
+					<abbr><?php echo date("Y/m/d", strtotime($customer->created_at)); ?></abbr>
+				</td>	
+			</tr>
+		<?php endforeach; ?>
 </tbody>
 <tfoot>
 	<tr>
