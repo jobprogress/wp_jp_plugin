@@ -1,64 +1,56 @@
-<?php 
+<?php
 class Customer_Validator {
+
 	/**
 	 * [$validation_error validation of customer form
 	 * @var [array]
 	 */
-	public $validation_error = array();
+	public $wp_error = null;
 
 	/**
 	 * check customer form input value is valid
 	 * @return boolean [description]
 	 */
 	public function is_valid() {
-		$is_commercial = 0;
-		$hasError = false;
+		$is_commercial = false;
+		$has_error = false;
 		$error = new WP_Error;
 
-		if(ine($_POST, 'jobprogress_customer_type2')) {
-			$is_commercial = 1;
+		if(ine($_POST, 'jp_customer_type2')) {
+			$is_commercial = true;
 		}
 
-		if(!isset($_POST['jobprogress_customer_type1']) && !isset($_POST['jobprogress_customer_type2'])) {
+		if(!isset($_POST['jp_customer_type1']) && !isset($_POST['jp_customer_type2'])) {
 			$error->add('customer_type', 'This field is required.');
-			$hasError = true;
+			$has_error = true;
 		}
 
 		if( ($is_commercial) && ( sanitize_text_field($_POST['company_name_commercial']) === '') ) {
 			$error->add('company_name_commercial', 'Please enter the company name.');
-			$hasError = true;
+			$has_error = true;
 		} 
+
 		if (! $is_commercial && (sanitize_text_field($_POST['first_name']) === '')) {
 			$error->add('first_name', 'Please enter the first name.');
-			$hasError = true;
+			$has_error = true;
 		}
+
 		if (! $is_commercial && (sanitize_text_field($_POST['last_name']) === '')) {
 			$error->add('last_name', 'Please enter the last name.');
-			$hasError = true;
+			$has_error = true;
 		} 
-		 if(sanitize_text_field($_POST['email']) === '' ) {
-			$error->add('email', 'Please enter the email.');
-			$hasError = true;
-		} else {
-			if(! filter_var(sanitize_text_field($_POST['email']), FILTER_VALIDATE_EMAIL))	{
-				$error->add('email', 'The email must be a valid email address.');
-				$hasError = true;
-			}
+
+		if(ine($_POST, 'email') && ! filter_var(sanitize_text_field($_POST['email']), FILTER_VALIDATE_EMAIL))	{
+			$error->add('email', 'The email must be a valid email address.');
+			$has_error = true;
 		}
 		
-
 		if(isset($_POST['additional_emails']) 
-			&& !empty($additional_emails = $_POST['additional_emails']) ) {
-			foreach ($additional_emails as $key => $additional_email) {
-				if(! $additional_email) {
-					$error->add("additional_emails.$key", 'Please enter the additional email.');
-					$hasError = true;
-					continue;
-				}
+			&& !empty($_POST['additional_emails'])) {
+			$additionalEmails = array_filter($_POST['additional_emails']);
+			foreach ($additionalEmails as $key => $additional_email) {
 				if(! filter_var($additional_email, FILTER_VALIDATE_EMAIL))	{
-					$error->add("additional_emails.$key", 'The additional email must be a valid email 
-					address.');
-					$hasError = true;
+					unset($_POST['additional_emails'][$key]);
 				}
 			}
 		}
@@ -66,46 +58,56 @@ class Customer_Validator {
 		if(ine($_POST, 'job')) {
 			if(! ine($_POST['job'], 'trades')) {
 				$error->add("job_trades", 'Please select the trades.');
-				$hasError = true;
+				$has_error = true;
 			}
+
 			if(! ine($_POST['job'], 'description')) {
 				$error->add("job_description", 'Please enter the description.');
-				$hasError = true;
+				$has_error = true;
 			}
+
+			if(ine($_POST['job'], 'trades') 
+				&& in_array(24, $_POST['job']['trades'])
+				&& !ine($_POST['job'], 'other_trade_type_description')) {
+				$error->add("other_trade_type_description", 'Please enter the note.');
+				$has_error = true;
+			}
+
 		}
 
 		if(count($_POST['phones'])) {
 			$phones = array_filter($_POST['phones']);
-
 			foreach ($phones as $key => $value) {
-
 				if(! ine($value, 'label')) {
 					$error->add("phones.$key.label", 'Please choose the phone label.');
-					$hasError = true;
+					$has_error = true;
 				}
 				if(! ine($value, 'number')) {
 					$error->add("phones.$key.number", 'This field is required.');
-					$hasError = true;
+					$has_error = true;
 					continue;
 				}
-				if(!is_numeric($value['number'])) {
+				$number = str_replace(array( '(', ')',' ','-' ), '', $value['number']);
+				if(!is_numeric($number)) {
 					$error->add("phones.$key.number", 'The phone must be a number.');
-					$hasError = true;
+					$has_error = true;
 					continue;
 				}
-				if(strlen($value['number']) > 10) {
+
+				if(strlen($number) > 10) {
 					$error->add("phones.$key.number", 'The phone number may not be greater than 10 digit.');
-					$hasError = true;
-				} 
-				if(strlen($value['number']) < 10) {
+					$has_error = true;
+				}
+
+				if(strlen($number) < 10) {
 					$error->add("phones.$key.number", 'The phone number may not be less than than 10 
 					digit.');
-					$hasError = true;
+					$has_error = true;
 				}
 			}
 		}
-		$this->validation_error = $error;
-		if($hasError) {
+		$this->wp_error = $error;
+		if($has_error) {
 
 			return false;
 		}
@@ -117,8 +119,8 @@ class Customer_Validator {
 	 * get validation error
 	 * @return [array] [validation errors]
 	 */
-	public function get_validation_error() {
-		return $this->validation_error;
-	}
+	public function get_wp_error() {
 
+		return $this->wp_error;
+	}
 }
