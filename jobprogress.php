@@ -8,8 +8,8 @@ Author: JobProgress
 Author URI: http://www.jobprogress.com/
 */
 define('JP_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
-define('API_BASE_URL', 'http://staging.jobprogress.com/web_api/public/api/v1/');
-define('JP_CLIENT_ID', '123457');
+define('API_BASE_URL', 'http://jobprogress.com/api/public/api/v1/');
+define('JP_CLIENT_ID', '42766958');
 define('JP_CLIENT_SECRET', 'schs1EKRpLaS1auhTIc25JrlWSjkry1P');
 define('JP_AUTHORIZATION_URL', API_BASE_URL.'login_form');
 define('JP_DISCONNECT_URL', API_BASE_URL.'logout');
@@ -22,7 +22,7 @@ define('JP_USER_URL', API_BASE_URL.'company/users/');
 define('JP_REFRESH_TOKEN_GRANT_TYPE', 'refresh_token');
 define('JP_CUSTOMER_LIMIT_PAGINATION', 10);
 define('JP_DELETE_REQUEST', 'Delete');
-define('JP_MENU_ICON', 'https://staging.jobprogress.com/app/favicon.ico');
+define('JP_MENU_ICON', 'https://jobprogress.com/app/favicon.ico');
 define('JP_CUSTOMER_FORM_SAVED', 'Your request sent successfully.');
 require_once(JP_PLUGIN_DIR. 'class.jp-request.php');
 require_once(JP_PLUGIN_DIR. 'class.jobprogress.php');
