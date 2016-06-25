@@ -1,5 +1,6 @@
 jQuery(function($) {
 	
+	
 	// validate signup form on keyup and submit
 	$("#jobprogrssCustomerSignupForm").validate({
 		email:true,
