@@ -1,9 +1,11 @@
-=== Plugin Name ===
+=== Contractor Contact Form Website to Workflow Tool ===
 Contributors: jobprogress
 Donate link: http://www.jobprogress.com/
 Requires at least: 3.0.1
 Tested up to: 4.5.3
 Stable tag: 1.0.1
+Tags: customer-manager
+License: GPLv2 or later
 
 == Description ==
 
@@ -11,6 +13,10 @@ This useful plugin is a website to workflow tool that allows contractors to driv
 
 = Dedicated Support =
 We have an entire team of happiness engineers ready to help you.  Ask your questions in the support forum, or [contact us directly](http://www.jobprogress.com/#full-version).
+
+== Changelog ==
+= 1.0.1 =
+First Release
 
 
 == Installation ==
