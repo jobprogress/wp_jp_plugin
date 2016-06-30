@@ -285,3 +285,16 @@
     color: #fff;
     border-color: #2ea2cc;
 }
+.jp-disconnect-modal .ui-dialog-titlebar {
+    height: auto;
+    line-height: 1.4em;
+}
+.jp-disconnect-modal .ui-dialog-titlebar-close {
+    display: none;
+}
+.jp-disconnect-modal .ui-dialog-buttonpane .ui-button {
+    margin-left: 0;
+}
+.jp-disconnect-modal .ui-button {
+    height: auto;
+}

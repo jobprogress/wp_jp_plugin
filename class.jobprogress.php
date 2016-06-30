@@ -123,11 +123,8 @@ class JobProgress extends JP_Request {
 			array('jquery-validate')
 		);
 
-		wp_enqueue_script(
-			'underscore',
-			plugin_dir_url( __FILE__ ) . 'js/underscore-min.js',
-			array('underscore')
-		);
+		// Include Underscore Js
+		wp_enqueue_script( 'wp-util' );
 
 		wp_enqueue_style(
 			'select2',
@@ -152,9 +149,10 @@ class JobProgress extends JP_Request {
 	public function admin_script($hook){
 
 		if((string)$hook === 'toplevel_page_jp_admin_page') {
-			wp_enqueue_script('jquery-ui', plugin_dir_url( __FILE__ ) .'js/jquery-ui.js');
+
+			wp_enqueue_script('jquery-ui-dialog');
+			wp_enqueue_style('wp-jquery-ui-dialog');
 			wp_enqueue_script('custom-admin-side', plugin_dir_url( __FILE__ ) .'js/custom-admin-side.js');
-			wp_enqueue_style('jquery-ui', plugin_dir_url( __FILE__ ) . 'css/jquery-ui.css');
 		}
 		if((string)$hook === 'toplevel_page_jp_admin_page'
 			|| (string)$hook === 'jobprogress_page_jp_customer_page' ) {
