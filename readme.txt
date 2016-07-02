@@ -14,10 +14,15 @@ This useful plugin is a website to workflow tool that allows contractors to driv
 = Dedicated Support =
 We have an entire team of dedicated ready to help you.  Ask your questions in the support forum, or [contact us directly](http://www.jobprogress.com/#full-version).
 
+
+= Service =
+Customer Management Service through the plugin for JobProgress.
+
+
+
 == Changelog ==
 = 1.0.1 =
 First Release
-
 
 == Installation ==
 1. Upload the plugin files to the `/wp-content/plugins/plugin-name` directory, or install the plugin through the WordPress plugins screen directly.
