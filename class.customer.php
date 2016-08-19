@@ -138,6 +138,22 @@ class Customer extends JobProgress {
 			$countries = $this->get(JP_COUNTRY_URL.'?company_id='.$user['company_id']);
 			set_transient("jp_countries", $countries, 86400);
 		}
+
+		if(($referrals = get_transient("jp_referrals")) === false 
+			|| $referrals === '') {
+			$referrals = $this->get(JP_REFERRALS_URL);
+			set_transient("jp_referrals", $referrals, 86400);
+		}
+		$other_referr = array(
+			'id'   => 'other',
+			'name' => 'Other(Enter here)'
+		);
+		if($referrals) {
+			array_unshift($referrals, $other_referr);
+		} else{
+			$referrals[] = $other_referr;
+		}
+
 		require_once(JP_PLUGIN_DIR. 'customer-template.php');
 		return require_once(JP_PLUGIN_DIR. 'customer-form-page.php');
 	}

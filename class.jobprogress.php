@@ -165,24 +165,26 @@ class JobProgress extends JP_Request {
 	 * @return [type] [description]
 	 */
 	public  function plugin_activation() {
-			$customer_query = "CREATE TABLE IF NOT EXISTS ".$this->wpdb->prefix."customers(
-			  id int(10) unsigned NOT NULL AUTO_INCREMENT,
-			  first_name varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-			  last_name varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-			  company_name varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-			  email varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-			  additional_emails varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-			  address text NOT NULL,
-			  phones text,
-			  is_sync tinyint(1) NOT NULL DEFAULT '0',
-			  is_commercial tinyint(1) NOT NULL DEFAULT '0',
-			  created_at timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-			  job text NULL,
-			  customer_id int(10) DEFAULT NULL,
-			  PRIMARY KEY (id)
-			)";
+		$customer_query = "CREATE TABLE IF NOT EXISTS ".$this->wpdb->prefix."customers(
+		  id int(10) unsigned NOT NULL AUTO_INCREMENT,
+		  first_name varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+		  last_name varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+		  company_name varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+		  email varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+		  additional_emails varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+		  address text NOT NULL,
+		  phones text,
+		  is_sync tinyint(1) NOT NULL DEFAULT '0',
+		  is_commercial tinyint(1) NOT NULL DEFAULT '0',
+		  created_at timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+		  job text NULL,
+		  customer_id int(10) DEFAULT NULL,
+		  PRIMARY KEY (id)
+		)";
+        $sql = "ALTER TABLE `wp_customers` ADD referred_by_id int(12) NULL, ADD referred_by_type varchar(255) DEFAULT NULL, ADD referred_by_note text DEFAULT NULL;";
+		$this->wpdb->show_errors = false;
 		$this->wpdb->query($customer_query);
-		
+		$this->wpdb->query($sql);
 	}
 
 	/**
@@ -241,6 +243,7 @@ class JobProgress extends JP_Request {
 		delete_transient('jp_trades');
 		delete_transient('jp_states');
 		delete_transient('jp_countries');
+		delete_transient('jp_referrals');
 		delete_option('jp_token_options');
 		delete_option('jp_connected_user');
 		wp_clear_scheduled_hook('jp_token_refresh_hook');

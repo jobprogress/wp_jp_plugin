@@ -1,5 +1,10 @@
 jQuery(function($) {
 	
+	$("body").on("click", "#refreshimg", function(){
+		$("#captchaimage").load(plugin_dir_url+"image_req.php", { 'jp_plugin_dir_url':plugin_dir_url });
+		return false;
+	});
+	
 	// validate signup form on keyup and submit
 	$("#jobprogrssCustomerSignupForm").validate({
 		email:true,
@@ -9,14 +14,20 @@ jQuery(function($) {
 			email:{
 				email: true
 			},
+			captcha: {
+				required: true,
+				remote:  plugin_dir_url+"process.php"
+			}
 		},
 		messages: {
 			first_name: "Please enter the first name.",
 			last_name: "Please enter the last name.",
+			captcha: "Correct captcha is required. Click the captcha to generate a new one"
 		},
 		errorPlacement: function(error, element) {
 			error.insertAfter( element.parent());
-		}
+		},
+		onkeyup: false
 	});
 
 	// default customer type 1 selected first type is commercial
@@ -55,7 +66,7 @@ jQuery(function($) {
 	});
 
 	$(".jp-trade").select2({
-		minimumResultsForSearch: Infinity
+		placeholder: "Select Trade Type"
 	}).on('change', function (e) {
 		var input = $(this).parent().find('.extension-field');
 		if (e.currentTarget.value == "cell") {
@@ -70,6 +81,16 @@ jQuery(function($) {
 			$('.other-trade-note-container').hide();
 		} 
 		
+	});
+	
+	$(".jp-referral").select2({
+		placeholder: "Select Referrera",
+	}).on("select2:select", function(e) {
+		if($(this).val() == 'other') {
+			$('.referred-by-note-block').show();
+		} else {
+			$('.referred-by-note-block').hide();
+		}
 	});
 
 	$('.mask-select').mask("(000) 000-0000", {placeholder: "(xxx) xxx-xxxx"});

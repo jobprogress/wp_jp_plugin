@@ -124,6 +124,7 @@
 .customer-page .col-5 {
     width: 49.5%;
     display: inline-block;
+    vertical-align: top;
 }
 .customer-page .form-group.col-5 input {
     width: 50%;
@@ -281,6 +282,12 @@
 }
 .select2-results__options {
  text-align:left;
+}
+.form-group #captchaimage {
+    text-align: center;
+}
+img {
+    border: 1px solid #eee;
 }
 @media(max-width: 768px) {
     .customer-page .form-group label, .customer-page .col-5 label.state, .customer-page .col-5 label.country {
