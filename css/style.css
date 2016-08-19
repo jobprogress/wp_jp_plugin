@@ -22,7 +22,7 @@
     width: 100%;
 }
 .customer-page .form-group {
-    margin-bottom: 25px;
+    margin-bottom: 15px;
     position: relative;
 }
 .customer-page .form-group label {
@@ -47,9 +47,21 @@
 .customer-page .form-group input:focus, .customer-page .form-group textarea:focus { 
     border-color: #66afe9;
 }
-.customer-page .form-group.jobprogress-residential-type input {
-    width: 32%;
+.customer-name-section {
+    display: inline-block;
+    width: 65%;
+}
+.customer-page .form-group.jp-name input {
+    /*width: 32%;*/
+    width: 100%;
     margin-right: 7px;
+}
+.customer-page .form-group.jp-name .customer-name-label {
+    vertical-align: top;
+    padding-top: 6px;
+}
+.customer-page .form-group.jp-name label {
+    padding-left: 0;
 }
 .customer-page .form-group .jobprogress-customer-type {
 	width: auto;
@@ -88,7 +100,9 @@
     border-color: #dadada;
 }
 .customer-page .select2-container .select2-selection--multiple {
-    height: 34px;
+    height: auto;
+    line-height: normal;
+    min-height: 34px;
     border-color: #dadada;
     border-radius: 0;
 }
@@ -110,6 +124,7 @@
 .customer-page .col-5 {
     width: 49.5%;
     display: inline-block;
+    vertical-align: top;
 }
 .customer-page .form-group.col-5 input {
     width: 50%;
@@ -129,13 +144,22 @@
 .customer-page .form-group span {
     position: relative;
 }
-.customer-page .form-group label.error, .customer-page .form-group span label.error  {
-    bottom: 0;
+// .customer-page .form-group label.error, .customer-page .form-group span label.error  {
+//     bottom: 0;
+//     color: #c81b1b;
+//     left: 0;
+//     position: absolute;
+//     right: 0;
+//     top: 32px;
+//     width: auto;
+//     text-align: left;
+// }
+.customer-page label.error {
     color: #c81b1b;
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 32px;
+    margin: 5px 0;
+    padding-left: 23%;
+    display: block;
+    font-weight: normal;
     width: auto;
     text-align: left;
 }
@@ -233,13 +257,7 @@
     border: none; 
     border-left: 1px solid rgb(204, 204, 204); 
     float: right;
-} 
-// .customer-page .additional-email {
-//     margin-left: 23.4%;
-// }
-// .customer-page .additional-email input { 
-//     width: 84.5%;
-// }
+}
 .text-center {
     text-align: center;
 }
@@ -261,6 +279,15 @@
     background-color: #dff0d8;
     border-color: #d6e9c6;
     color: #3c763d;
+}
+.select2-results__options {
+ text-align:left;
+}
+.form-group #captchaimage {
+    text-align: center;
+}
+img {
+    border: 1px solid #eee;
 }
 @media(max-width: 768px) {
     .customer-page .form-group label, .customer-page .col-5 label.state, .customer-page .col-5 label.country {
@@ -284,9 +311,12 @@
     .customer-page .additional-email label {
         display: none;
     }
+    .customer-page .error {
+        padding-left: 0;
+    }
 }
 @media(max-width: 480px) {
-    .customer-page .form-group.jobprogress-residential-type input {
+    .customer-page .form-group.jp-name input {
         width: 100%;
         margin-bottom: 5px;
     }

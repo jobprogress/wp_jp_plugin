@@ -76,7 +76,7 @@ class Customer extends JobProgress {
 		$sql .= " LIMIT $offset, $limit";
 		$customers = $this->wpdb->get_results( $sql );
 		
-		return require_once( JP_PLUGIN_DIR . 'customer-index-page.php' );
+		return require_once(JP_PLUGIN_DIR. 'customer-index-page.php');
 	}
 
 	/**
@@ -85,18 +85,18 @@ class Customer extends JobProgress {
 	 */
 	public function save_customer() {
 		if(isset($_POST) && !empty($_POST) && wp_verify_nonce( $_POST['_wpnonce'], 'submit_jp_customer_form' ) ) {
-			require_once( JP_PLUGIN_DIR . 'class.customer-validator.php' );
-			$validator = new Customer_Validator;
-		
+
+			require_once(JP_PLUGIN_DIR. 'class.customer-validator.php');
+			$validator = new Customer_Validator;		
 			if($validator->is_valid()) {
 				$input = $_POST;
 				$table_name = $this->wpdb->prefix . 'customers';
-				require_once( JP_PLUGIN_DIR . 'class.customer-data-map.php' );
+				require_once(JP_PLUGIN_DIR. 'class.customer-data-map.php');
 				$customer =  new Customer_Data_Map($input);
 				$plugin_input = $customer->get_plugin_input();
 				$this->wpdb->insert($table_name, $plugin_input);
 				if(! $this->wpdb->last_error) {
-					$this->customer_form_saved = true;
+					$this->show_form(true);
 				}else {
 					$this->customer_form_wpdb_error = $this->wpdb->last_error;
 				}
@@ -110,7 +110,16 @@ class Customer extends JobProgress {
 	 * show add customer page
 	 * @return [html] [show customer page]
 	 */
-	public function show_form() {
+	public function show_form($refresh = false, $queryString = array()) {
+
+		if($refresh) {
+			set_transient("jp_form_submitted", 1, 5);
+			$url = get_domain() . $_SERVER['REQUEST_URI'];
+			echo '<script type="text/javascript">
+		           window.location = "'.$url.'"
+		      </script>';
+		}
+		
 		if(($trades = get_transient("jp_trades")) === false 
 			|| $trades === '' ) {
 			$trades = $this->get(JP_TRADE_URL);
@@ -122,14 +131,31 @@ class Customer extends JobProgress {
 			$states = $this->get(JP_STATE_URL);
 			set_transient("jp_states", $states, 86400);
 		}
-
+		
 		if(($countries = get_transient("jp_countries")) === false 
 			|| $countries === '') {
-			$countries = $this->get(JP_COUNTRY_URL);
+			$user = $this->get_connected_user();
+			$countries = $this->get(JP_COUNTRY_URL.'?company_id='.$user['company_id']);
 			set_transient("jp_countries", $countries, 86400);
 		}
+
+		if(($referrals = get_transient("jp_referrals")) === false 
+			|| $referrals === '') {
+			$referrals = $this->get(JP_REFERRALS_URL);
+			set_transient("jp_referrals", $referrals, 86400);
+		}
+		$other_referr = array(
+			'id'   => 'other',
+			'name' => 'Other(Enter here)'
+		);
+		if($referrals) {
+			array_unshift($referrals, $other_referr);
+		} else{
+			$referrals[] = $other_referr;
+		}
+
 		require_once(JP_PLUGIN_DIR. 'customer-template.php');
-		return require_once( JP_PLUGIN_DIR . 'customer-form-page.php' );
+		return require_once(JP_PLUGIN_DIR. 'customer-form-page.php');
 	}
 
 		
@@ -152,8 +178,7 @@ class Customer extends JobProgress {
 	 	$html = '<label id='.$id.' class="error" for='.$for.'>';
 	 	$html .= $this->wp_error->get_error_message($code);
 	 	$html .= '</label>';
+
 		return $html;
 	}
-	
 }
- ?>

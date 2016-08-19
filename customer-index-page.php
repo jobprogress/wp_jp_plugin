@@ -3,33 +3,22 @@ if($order == 'asc') {
 	$order = 'desc';
 } else {
 	$order ='asc';
-}
-?>
+}?>
 <div class="wrap">
-	<h1>Customers
+	<h1>
+		Customers
 	</h1>
-
 	<h2 class="screen-reader-text">Filter pages list</h2>
 	<ul class="subsubsub">
 		<li class="all">
 			<a class="current" href="edit.php?post_type=page">All 
-				<span class="count">(<?php echo $total ?>)</span>
+				<span class="count">(<?php echo $total; ?>)</span>
 			</a>
 		</li>
 	</ul>
-	<form method="get" id="posts-filter" action="<?php echo $_SERVER['PHP_SELF'] . "?page=jp_customer_page" ?>">
-		<input type="hidden" value="jp_customer" name="page">
-		
+	<form method="get" id="posts-filter" action="<?php echo $_SERVER['PHP_SELF'] . "?page=jp_customer_page"; ?>">
 		<div class="tablenav top">
-
 			<div class="alignleft actions">
-				<label class="screen-reader-text" for="filter-by-date">Filter by date</label>
-				<select id="filter-by-date" name="date">
-					<option value="0" selected="selected">All dates</option>
-					<?php $datetime = new DateTime() ?>
-					<option value="<?php echo $datetime->format('Y\-m\-d'); ?>"><?php echo $datetime->format('F Y'); ?></option>
-				</select>
-				<input type="submit" value="Filter" class="button" id="post-query-submit" name="filter_action">
 				<?php $args = array(
 					'base'               =>  add_query_arg( 'page_num', '%#%' ),
 					'format'             => '',
@@ -46,26 +35,23 @@ if($order == 'asc') {
 					'add_fragment'       => '',
 					'before_page_number' => '',
 					'after_page_number'  => ''
-					); ?>
-				<?php $page_links = paginate_links( $args ); 
+					); 
+				 $page_links = paginate_links( $args ); 
 				if ( $page_links ) {
 					echo '<div class="tablenav"><div class="tablenav-pages" style="margin: 1em 0">' . $page_links . '</div></div>';
 				}
 				?>
-
 			</div>
 
-			<br class="clear">
+		<br class="clear">
 		</div>
 		<h2 class="screen-reader-text">Pages list</h2>
 		<table class="wp-list-table widefat fixed striped pages">
 			<thead>
 				<tr>
-					
-					
 					<th class="manage-column column-title column-primary sortable desc" id="title" scope="col">
 
-						<a href="<?php echo $_SERVER['PHP_SELF'] . "?order=$order&order_by=first_name&page=jp_customer_page" ?>">
+						<a href="<?php echo $_SERVER['PHP_SELF']. "?order=$order&order_by=first_name&page=jp_customer_page"?>">
 							<span>Full Name</span>
 							<span class="sorting-indicator"></span>
 						</a>
@@ -78,13 +64,6 @@ if($order == 'asc') {
 						</a>
 					</th>
 
-					<th class="manage-column column-company-name column-primary" id="company-name" scope="col">
-						<a href="">
-							<span>Comany Name</span>
-							<span class="sorting-indicator"></span>
-						</a>
-					</th>
-
 					<th class="manage-column column-address column-primary" id="address" scope="col">
 						<a href="">
 							<span>Address</span>
@@ -92,104 +71,123 @@ if($order == 'asc') {
 						</a>
 					</th>
 
-					<th class="manage-column column-is-commercial column-primary" id="is-commercial" scope="col">
+					<th class="manage-column column-trade" id="trade" scope="col">
 						<a href="">
-							<span>Commercial</span>
+							<span>Trade</span>
 							<span class="sorting-indicator"></span>
 						</a>
 					</th>
 
 					<th class="manage-column column-creation-date column-primary" id="creation-date" scope="col">
-						<a href="<?php echo $_SERVER['PHP_SELF'] . "?order=$order&order_by=created_at&page=jp_customer_page" ?>">
+						<a href="<?php echo $_SERVER['PHP_SELF']. "?order=$order&order_by=created_at&page=jp_customer_page"; ?>">
 							<span>Creation Date</span>
 							<span class="sorting-indicator"></span>
 						</a>
 					</th>
 				</tr>
 			</thead>
-
 			<tbody id="the-list">
 				<?php if(empty($customers)): ?>
 				<tr>
 					<td colspan="5"><center><b>No Customer Found.</b></center></td>
 				</tr>
-			<?php endif; ?>
-			<?php foreach ($customers as $key => $customer) :?>
+				<?php endif; ?>
+			<?php foreach ($customers as $key => $customer): ?>
 			<tr class="iedit author-self level-0 post-2 type-page status-publish hentry" id="post-2">
 				<td data-colname="Title" class="title column-title has-row-actions column-primary page-title">
 					<strong>
 						<a class="row-title">
-
-							<?php if(! $customer->is_commercial) {
-								echo $customer->first_name . ' '. $customer->last_name; 
-							}
-							?>
+							<?php echo $customer->first_name . ' '. $customer->last_name; ?>
 						</a>
 					</strong>
 				</td>
 				<td data-colname="Email" class="email column-email">
-					<a><?php echo $customer->email; ?></a>
+					<a><?php 
+						$emails = array();
+						$email = $customer->email;
+						if(!empty($customer->additional_emails)) {
+							$emails = json_decode($customer->additional_emails, true);
+						}
+						array_unshift($emails, $email);
+						$emails = array_filter($emails);
+						if(empty($emails)) {
+							echo '--';
+						}else {
+							echo implode('<br>', $emails);
+						}
+					 ?></a>
 				</td>
-				<td data-colname="company-name" class="company-name column-company-name has-row-actions column-primary">
-					<strong>
-						<a class="row-title">
-							<?php
-							if(! $customer->is_commercial) {
-								echo $customer->company_name; 
-							} else{
-								echo $customer->first_name; 
-							}
-							?>
-						</a>
-					</strong>
-				</td>
+				
 				<td data-colname="Address" class="address column-address">
 
-					<a>	<?php  
-					$address = [];
-					$completeAddress = json_decode($customer->address, true);
-					$addressArray = $completeAddress['address'];
-					if(ine($addressArray, 'address')) {
-						$address[] = $addressArray['address'];
-					}
-					if(ine($addressArray, 'city')) {
-						$address[] = $addressArray['city'];
-					}
-					if(ine($addressArray, 'state_id')) {
-						$state = explode('_', $addressArray['state_id']);
-						$address[] = $state[1];
-					}
-					if(ine($addressArray, 'zip')) {
-						$address[] = $addressArray['zip'] . '<br>';
-					}
-					if(ine($addressArray, 'country_id')) {
-						$country = explode('_', $addressArray['country_id']);
-						$address[] = $country[1];
-					}
-					echo implode(', ', $address);
+					<a>	
+						<?php  
+						$address = array();
+						$completeAddress = json_decode($customer->address, true);
+						$addressArray = $completeAddress['address'];
+						if(ine($addressArray, 'address')) {
+							$address[] = $addressArray['address'];
+						}
+						if(ine($addressArray, 'address_line_1')) {
+							$address[] = $addressArray['address_line_1'];
+						}
+						if(ine($addressArray, 'city')) {
+							$address[] = $addressArray['city'];
+						}
+						if(ine($addressArray, 'state_id')) {
+							$state = explode('_', $addressArray['state_id']);
+							$address[] = $state[1];
+						}
+						if(ine($addressArray, 'zip')) {
+							$address[] = $addressArray['zip'] . '<br>';
+						}
+						if(ine($addressArray, 'country_id')) {
+							$country = explode('_', $addressArray['country_id']);
+							$address[] = $country[1];
+						}
+						if(empty($address)) {
+							echo '--';
+						} else {
+							echo implode(', ', $address);
+						}
 					?>
 				</a>
 			</td>
-			<td class="date column-is-commercial">
+			<td data-colname="job-detail" class="column-job-detail">
 				<a>
-					<?php 
-					echo $customer->is_commercial;
+					<?php
+						$job = json_decode($customer->job, true);
+						$trades = array_values($job['trades']);
+						$jpTrades = get_transient("jp_trades");
+						$tradeName = array();
+
+						if( !empty($jpTrades) && !empty($trades)) {
+							foreach ($trades as $key => $value){
+								$key = array_search($value, array_column($jpTrades, 'id'));
+								$name = $jpTrades[$key]['name'];
+								if((string)$value == 24) {
+									 $name .= ' ('.$job['other_trade_type_description'].')';
+								}
+								$tradeName[] = $name;
+							}
+							echo implode(', ', $tradeName);
+						} else {
+							echo '--';
+						}
+
 					?>
 				</a>
-			</td>
-			<td data-colname="Creation Time" class="date column-created-at">
-				<abbr><?php echo $customer->created_at; ?></abbr>
-			</td>	
-		</tr>
-	<?php endforeach; ?>
-
+				</td>
+				<td data-colname="Creation Time" class="date column-created-at">
+					<abbr><?php echo date("Y/m/d", strtotime($customer->created_at)); ?></abbr>
+				</td>	
+			</tr>
+		<?php endforeach; ?>
 </tbody>
-
 <tfoot>
 	<tr>
 		<th class="manage-column column-title column-primary sortable desc" id="title" scope="col">
-
-			<a href="<?php echo $_SERVER['PHP_SELF'] . "?order=$order&order_by=first_name&page=jp_customer_page" ?>">
+			<a href="<?php echo $_SERVER['PHP_SELF'] . "?order=$order&order_by=first_name&page=jp_customer_page"; ?>">
 				<span>Full Name</span>
 				<span class="sorting-indicator"></span>
 			</a>
@@ -202,13 +200,6 @@ if($order == 'asc') {
 			</a>
 		</th>
 
-		<th class="manage-column column-company-name column-primary" id="company-name" scope="col">
-			<a href="">
-				<span>Comany Name</span>
-				<span class="sorting-indicator"></span>
-			</a>
-		</th>
-
 		<th class="manage-column column-address column-primary" id="address" scope="col">
 			<a href="">
 				<span>Address</span>
@@ -216,29 +207,23 @@ if($order == 'asc') {
 			</a>
 		</th>
 
-		<th class="manage-column column-is-commercial column-primary" id="is-commercial" scope="col">
-						<a href="">
-							<span>Commercial</span>
-							<span class="sorting-indicator"></span>
-						</a>
-					</th>
+		<th class="manage-column column-trade" id="trade" scope="col">
+			<a href="">
+				<span>Trade</span>
+				<span class="sorting-indicator"></span>
+			</a>
+		</th>
 
 		<th class="manage-column column-creation-date column-primary" id="creation-date" scope="col">
-			<a href="<?php echo $_SERVER['PHP_SELF'] . "?order=$order&order_by=created_at&page=jp_customer_page" ?>">
+			<a href="<?php echo $_SERVER['PHP_SELF']. "?order=$order&order_by=created_at&page=jp_customer_page"; ?>">
 				<span>Creation Date</span>
 				<span class="sorting-indicator"></span>
 			</a>
 		</th>
 	</tr>
 </tfoot>
-
 </table>
-
-
 </form>
-
-
-
 <div id="ajax-response"></div>
 <br class="clear">
 </div>

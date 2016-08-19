@@ -1,20 +1,33 @@
 jQuery(function($) {
+	
+	$("body").on("click", "#refreshimg", function(){
+		$("#captchaimage").load(plugin_dir_url+"image_req.php", { 'jp_plugin_dir_url':plugin_dir_url });
+		return false;
+	});
+	
 	// validate signup form on keyup and submit
 	$("#jobprogrssCustomerSignupForm").validate({
+		email:true,
 		rules: {
 			first_name: "required",
 			last_name: "required",
 			email:{
 				email: true
 			},
-			'additional_emails[]' : {
-				email: true
-			},
+			captcha: {
+				required: true,
+				remote:  plugin_dir_url+"process.php"
+			}
 		},
 		messages: {
 			first_name: "Please enter the first name.",
 			last_name: "Please enter the last name.",
+			captcha: "Correct captcha is required. Click the captcha to generate a new one"
 		},
+		errorPlacement: function(error, element) {
+			error.insertAfter( element.parent());
+		},
+		onkeyup: false
 	});
 
 	// default customer type 1 selected first type is commercial
@@ -27,9 +40,15 @@ jQuery(function($) {
 		if($(this).attr('name') === 'jp_customer_type2') {
 			$('.jobprogress-residential-type').hide();
 			$('.jobprogress-commercial-type').show();
+			$('#first_name-error').hide();
+			$('#last_name-error').hide();
+			$('#company_name_commercial-error').show();
 		} else {
 			$('.jobprogress-commercial-type').hide();
 			$('.jobprogress-residential-type').show();
+			$('#first_name-error').show();
+			$('#last_name-error').show();
+			$('#company_name_commercial-error').hide();
 		}
 		$(all_customer_types).prop("checked", false);
 		$(this).prop("checked", true);
@@ -37,8 +56,43 @@ jQuery(function($) {
 
 	$(".select2").select2({
 		minimumResultsForSearch: Infinity
+	}).on('change', function (e) {
+		var input = $(this).parent().find('.extension-field');
+		if (e.currentTarget.value == "cell") {
+			input.attr('disabled', true);
+		} else {
+			input.attr('disabled', false);	
+		}
 	});
-	//$('.mask-select').mask("(xxx) xxx-xxxx", {selectOnFocus: true});
+
+	$(".jp-trade").select2({
+		placeholder: "Select Trade Type"
+	}).on('change', function (e) {
+		var input = $(this).parent().find('.extension-field');
+		if (e.currentTarget.value == "cell") {
+			input.attr('disabled', true);
+		} else {
+			input.attr('disabled', false);	
+		}
+
+		if($.inArray('24', $(this).val()) > -1 ) {
+			$('.other-trade-note-container').show();
+		} else {
+			$('.other-trade-note-container').hide();
+		} 
+		
+	});
+	
+	$(".jp-referral").select2({
+		placeholder: "Select Referrera",
+	}).on("select2:select", function(e) {
+		if($(this).val() == 'other') {
+			$('.referred-by-note-block').show();
+		} else {
+			$('.referred-by-note-block').hide();
+		}
+	});
+
 	$('.mask-select').mask("(000) 000-0000", {placeholder: "(xxx) xxx-xxxx"});
 	$('.form-combine-select input').focus(function(){
 		$(this).parent().addClass('active');
@@ -52,9 +106,10 @@ jQuery(function($) {
 	  interpolate: /\{\{(.+?)\}\}/g
 	};
 
-	var template = _.template($('.billing-address').html());
-	$("input:checkbox[name='same_as_customer_address']").parent().parent().after(template);
+	// var template = _.template($('.billing-address').html());
+	// $("input:checkbox[name='same_as_customer_address']").after(template);
 
+	var y = 1;
 	// add first additional email
 	$('.start-additional-emails').on('click', function(e) {
 		if($('.additional-emails').length === 4) {
@@ -62,8 +117,10 @@ jQuery(function($) {
 		}
 		
 		var template = _.template($('.additional-email').html());
-		$('.additional-emails').last().after(template);
-
+		$('.additional-emails').last().after(template({
+			index : y
+		}));
+		y++;
 	});
 	
 	//remove additional email
@@ -83,10 +140,26 @@ jQuery(function($) {
 		
 		var template = _.template($('.additional-phone').html());
 
-		$('.jobprogress-customer-phone').last().after(template(
-			{
-				index: x
-			}));
+		$('.jobprogress-customer-phone')
+			.last()
+			.after(
+				template({
+					index: x,
+					className: 'jp-select-' + x
+				})
+			);
+
+		$('.jp-select-' + x).find('.select-input').select2({
+			minimumResultsForSearch: Infinity
+		}).on('change', function (e) {
+			var input = $(this).parent().find('.extension-field');
+			if (e.currentTarget.value == "cell") {
+				input.attr('disabled', true);
+			} else {
+				input.attr('disabled', false);	
+			}
+		});
+
 		x++;
 
 	});
@@ -97,23 +170,9 @@ jQuery(function($) {
 	});
 
 	$("input:checkbox[name='same_as_customer_address']").on('change', function(){
-		$('.billing-address-container').hide();
-		if(! ($("input:checkbox[name='same_as_customer_address']").prop("checked")) ){
-			address = $("input:text[name='address[address]']").val();
-			city = $("input:text[name='address[city]']").val();
-			country_id = $("#address-country").select2("val");
-			console.log(country_id);
-			state_id = $("#address-state").select2("val");
-			zip = $("input:text[name='address[zip]']").val();
-			
-			$('#billing-country').val(country_id).trigger("change");
-			$("input:text[name='billing[address]']").val(address);
-			$("input:text[name='billing[city]']").val(city);
-			$("input:checkbox[name='billing[state_id]']").val();
-			$("#billing-state").val(state_id).trigger("change");
-			$("input:text[name='billing[zip]']").val(zip);
-			$('.billing-address-container').show();
+		$('.billing-address-container').show();
+		if( ($("input:checkbox[name='same_as_customer_address']").prop("checked")) ){
+			$('.billing-address-container').hide();
 		}
 	});
-	
 });

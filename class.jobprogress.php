@@ -18,8 +18,8 @@ class JobProgress extends JP_Request {
 	 */
 	private function init_hooks() {
 		add_action('wp_footer', array($this, 'scripts'));
-		add_action( 'admin_menu',array($this, 'jp_admin_page') );
-		add_action( 'admin_enqueue_scripts', array($this, 'admin_script') );
+		add_action('admin_menu',array($this, 'jp_admin_page') );
+		add_action('admin_enqueue_scripts', array($this, 'admin_script'));
 	}
 
 	/**
@@ -44,7 +44,7 @@ class JobProgress extends JP_Request {
 	 */
 	public function authorization() {
 		//get domain
-		$domain = $this->get_domain();
+		$domain = get_domain();
 		$redirect_url = $this->get_redirect_url();
 
 		if(	ine($_GET, 'access_token')
@@ -52,21 +52,21 @@ class JobProgress extends JP_Request {
 			&& ine($_GET, 'expires_in')
 			&& ine($_GET, 'token_type')
 			&& ine($_GET, 'user_id')
-			&& wp_verify_nonce( $_GET['_wpnonce'], 'jp_connect_form' )
+			&& wp_verify_nonce($_GET['_wpnonce'], 'jp_connect_form')
 			&& ! $this->is_connected()
 		) {
-			$jp_token_data = [
+			$jp_token_data = array(
 				'access_token'  => $_GET['access_token'],
 				'refresh_token' => $_GET['refresh_token'],
 				'expires_in'    => $_GET['expires_in'],
 				'token_type'    => $_GET['token_type']
-			];
+			);
 
 			update_option('jp_token_options', $jp_token_data);
 
-			$body = [
+			$body = array(
 				'includes[]' => 'company_details'
-			];
+			);
 
 			// get user detail from jobprogress
 			$user = $this->get(JP_USER_URL.$_GET['user_id'] .'?'. http_build_query($body));
@@ -78,13 +78,13 @@ class JobProgress extends JP_Request {
 		if(ine($_POST, 'disconnect')) {
 			$this->disconnect();
 		}
-		$jp_user = get_option( 'jp_connected_user' );
+		$jp_user = $this->get_connected_user();
 		if($this->is_connected()) {
-			return require_once( JP_PLUGIN_DIR . 'disconnect-form.php' );	
+
+			return require_once(JP_PLUGIN_DIR. 'disconnect-form.php');	
 		}
 
-		return require_once( JP_PLUGIN_DIR . 'connect-form.php' );
-
+		return require_once(JP_PLUGIN_DIR. 'connect-form.php');
 	}
 
 	/**
@@ -123,11 +123,8 @@ class JobProgress extends JP_Request {
 			array('jquery-validate')
 		);
 
-		wp_enqueue_script(
-			'underscore',
-			plugin_dir_url( __FILE__ ) . 'js/underscore-min.js',
-			array('underscore')
-		);
+		// Include Underscore Js
+		wp_enqueue_script( 'wp-util' );
 
 		wp_enqueue_style(
 			'select2',
@@ -152,17 +149,15 @@ class JobProgress extends JP_Request {
 	public function admin_script($hook){
 
 		if((string)$hook === 'toplevel_page_jp_admin_page') {
-			// wp_enqueue_script( 'jquery', plugin_dir_url( __FILE__ ) . 'js/jquery.min.js' );
-			wp_enqueue_script( 'jquery-ui', plugin_dir_url( __FILE__ ) . 'js/jquery-ui.js' );
-			wp_enqueue_script( 'custom-admin-side', plugin_dir_url( __FILE__ ) . 'js/custom-admin-side.js' );
-			wp_enqueue_style( 'jquery-ui', plugin_dir_url( __FILE__ ) . 'css/jquery-ui.css');
+
+			wp_enqueue_script('jquery-ui-dialog');
+			wp_enqueue_style('wp-jquery-ui-dialog');
+			wp_enqueue_script('custom-admin-side', plugin_dir_url( __FILE__ ) .'js/custom-admin-side.js');
 		}
 		if((string)$hook === 'toplevel_page_jp_admin_page'
 			|| (string)$hook === 'jobprogress_page_jp_customer_page' ) {
-
-			wp_enqueue_style( 'custom', plugin_dir_url( __FILE__ ) . 'css/admin-style.css');
+			wp_enqueue_style('custom', plugin_dir_url( __FILE__ ) . 'css/admin-style.css');
 		}
-
 	}
 
 	/**
@@ -170,24 +165,26 @@ class JobProgress extends JP_Request {
 	 * @return [type] [description]
 	 */
 	public  function plugin_activation() {
-			$customer_query = "CREATE TABLE IF NOT EXISTS ".$this->wpdb->prefix."customers(
-			  id int(10) unsigned NOT NULL AUTO_INCREMENT,
-			  first_name varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-			  last_name varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-			  company_name varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-			  email varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-			  additional_emails varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-			  address text NOT NULL,
-			  phones text,
-			  is_sync tinyint(1) NOT NULL DEFAULT '0',
-			  is_commercial tinyint(1) NOT NULL DEFAULT '0',
-			  created_at timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-			  job text NULL,
-			  customer_id int(10) DEFAULT NULL,
-			  PRIMARY KEY (id)
-			)";
+		$customer_query = "CREATE TABLE IF NOT EXISTS ".$this->wpdb->prefix."customers(
+		  id int(10) unsigned NOT NULL AUTO_INCREMENT,
+		  first_name varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+		  last_name varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+		  company_name varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+		  email varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+		  additional_emails varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+		  address text NOT NULL,
+		  phones text,
+		  is_sync tinyint(1) NOT NULL DEFAULT '0',
+		  is_commercial tinyint(1) NOT NULL DEFAULT '0',
+		  created_at timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+		  job text NULL,
+		  customer_id int(10) DEFAULT NULL,
+		  PRIMARY KEY (id)
+		)";
+        $sql = "ALTER TABLE `wp_customers` ADD referred_by_id int(12) NULL, ADD referred_by_type varchar(255) DEFAULT NULL, ADD referred_by_note text DEFAULT NULL;";
+		$this->wpdb->show_errors = false;
 		$this->wpdb->query($customer_query);
-		
+		$this->wpdb->query($sql);
 	}
 
 	/**
@@ -207,7 +204,8 @@ class JobProgress extends JP_Request {
 	 * @return [array] [access token]
 	 */
 	public function get_access_token() {
-		return get_option( 'jp_token_options' );
+
+		return get_option('jp_token_options');
 	}
 
 	/**
@@ -215,7 +213,8 @@ class JobProgress extends JP_Request {
 	 * @return boolean [true or false]
 	 */
 	protected function is_connected() {
-		return (get_option('jp_token_options')) ? true : false;
+
+		return (get_option('jp_token_options' )) ? true : false;
 	}
 
 	
@@ -225,7 +224,7 @@ class JobProgress extends JP_Request {
 	 * @return [type]        [description]
 	 */
 	protected function update_access_token($token) {
-		update_option( 'jp_token_options', $token);
+		update_option('jp_token_options', $token);
 	}
 
 	/**
@@ -233,16 +232,18 @@ class JobProgress extends JP_Request {
 	 * @return [type] [description]
 	 */
 	private function disconnect() {
-		$data = [
-			'domain' =>	$this->get_domain()
-		];
+		$data = array(
+			'domain' =>	get_domain()
+		);
 		$response = $this->request(JP_DISCONNECT_URL, $data, JP_DELETE_REQUEST);
 		if(ine($response, 'status') && (int)$response['status'] != 200) {
+
 			return false;
 		}
 		delete_transient('jp_trades');
 		delete_transient('jp_states');
 		delete_transient('jp_countries');
+		delete_transient('jp_referrals');
 		delete_option('jp_token_options');
 		delete_option('jp_connected_user');
 		wp_clear_scheduled_hook('jp_token_refresh_hook');
@@ -250,26 +251,11 @@ class JobProgress extends JP_Request {
 	}
 
 	/**
-	 * get domain
-	 * @return [url] [site domain]
-	 */
-	private function get_domain() {
-		$domain = ((!empty($_SERVER['HTTPS']) 
-				&& $_SERVER['HTTPS'] !== 'off')
-				|| $_SERVER['SERVER_PORT'] === 443)
-				? 'https://'
-				:'http://'
-				. $_SERVER['HTTP_HOST'];
-
-		return $domain;
-	}
-
-	/**
 	 * get redirect url
 	 * @return [url] [description]
 	 */
 	private function get_redirect_url() {
-		$url = $this->get_domain().$_SERVER['REQUEST_URI'];
+		$url = get_domain().$_SERVER['REQUEST_URI'];
 		$url_parts = parse_url($url);
     	$url = $url_parts['scheme'] 
     		. '://' . $url_parts['host'] 
@@ -278,5 +264,10 @@ class JobProgress extends JP_Request {
     		:'');
     		
     	return $url . '?page=jp_admin_page';
+	}
+
+	public function get_connected_user() {
+
+		return get_option('jp_connected_user');
 	}
 }

@@ -1,5 +1,4 @@
-<?php 
-
+<?php
 class Customer_Data_Map {
 
 	protected $input = array();
@@ -12,13 +11,11 @@ class Customer_Data_Map {
 	 * @return [array] [customer data]
 	 */
 	public function get_plugin_input() {
-		$map = ['email', 'first_name', 'last_name', 'company_name', 'is_sync'];
-
-		$addressFields = ['address','address_line_1','city','state_id','country_id','zip'];
-
+		$map = array('email', 'first_name', 'last_name', 'company_name', 'is_sync', 'referred_by_id', 'referred_by_note');
+		$addressFields = array('address','address_line_1','city','state_id','country_id','zip');
+		$address = array();
 		$data = $this->map_inputs($map);
 		$address['address'] = $this->mapFirstSubInputs($addressFields, 'address');
-
 
 		if(ine($this->input, 'same_as_customer_address')){
 			$address['same_as_customer_address'] = true;
@@ -27,9 +24,10 @@ class Customer_Data_Map {
 			$address['billing']	= $this->mapFirstSubInputs($addressFields, 'billing');
 			$address['same_as_customer_address'] = false;
 		}
-		$data['address'] = json_encode($address, true);
 
+		$data['address'] = json_encode($address, true);
 		$data['is_commercial'] = false ;
+
 		if(ine($this->input, 'jp_customer_type2')) {
 			//in commercial case company name and last name should be null
 			$data['is_commercial']  = true;
@@ -43,10 +41,16 @@ class Customer_Data_Map {
 		$data['created_at'] = current_time('mysql');
 		$job = $this->map_job_input();
 		$data['job'] = json_encode($job, true);
-
+		if($this->input['referred_by_id'] === 'other') {
+			$data['referred_by_note'] = $this->input['referred_by_note'];
+			$data['referred_by_type'] = 'other';
+		} else {
+			$data['referred_by_type'] = 'referral';
+			$data['referred_by_id'] = $this->input['referred_by_id'];
+		}
+		
 		return $data;
 	}
-
 	
 	/**
      *  Map  Model fields to inputs
@@ -61,6 +65,7 @@ class Customer_Data_Map {
 				$ret[$key] = isset($this->input[$inputKey][$value]) ? htmlentities($this->input[$inputKey][$value]) : "";
 			}
 		}
+
         return $ret;
     }
 
@@ -70,7 +75,7 @@ class Customer_Data_Map {
      */
     private function map_phone_inputs() {
     	$phones = $this->input['phones'];
-    	$ret = [];
+    	$ret = array();
     	foreach ($phones as $key => $phone) {
     		$ret[$key]['label'] = isset($phone['label']) ? htmlentities($phone['label']) : '';
     		$ret[$key]['number'] = isset($phone['number']) ? htmlentities($phone['number']) : '';
@@ -85,7 +90,7 @@ class Customer_Data_Map {
      * @return [arrat] [additional email input]
      */
     private function map_additional_mail_input() {
-    	if(! ine($this->input, 'additional_emails')) return [];
+    	if(! ine($this->input, 'additional_emails')) return array();
     	$additional_emails = $this->input['additional_emails'];
     	return $this->map_numeric_array_inputs($additional_emails);
     }
@@ -95,12 +100,15 @@ class Customer_Data_Map {
      * @return [array] [job input]
      */
     private function map_job_input() {
-    	$job = $this->input['job'];
-    	$job['trades'] = $this->map_numeric_array_inputs($job['trades']);
-    	$job['description'] = htmlentities($job['description']);
+    	$jobInput = $this->input['job'];
+    	$job['trades'] = $this->map_numeric_array_inputs($jobInput['trades']);
+    	$job['description'] = htmlentities($jobInput['description']);
+    	$job['other_trade_type_description'] = null;
+    	if(in_array(24, $jobInput['trades'])) {
+    		$job['other_trade_type_description'] = htmlentities($jobInput['other_trade_type_description']);
+    	}
 
     	return $job;
-
     }
 
     /**
@@ -110,7 +118,6 @@ class Customer_Data_Map {
 	 */
 	private function map_inputs($map) {
 		$ret = array();
-
     	// empty the set default.
     	if(empty($input)) {
     		$input = $this->input;
@@ -133,11 +140,11 @@ class Customer_Data_Map {
 	 * @return [type]              [description]
 	 */
 	private function map_numeric_array_inputs($array_input) {
-		$ret = [];
+		$ret = array();
     	foreach ($array_input as $key => $value) {
     		$ret[] = htmlentities($value);
     	}
+    	
     	return $ret;
 	}
 }
-

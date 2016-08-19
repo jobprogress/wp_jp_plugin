@@ -1,5 +1,6 @@
-<?php 
+<?php
 class Customer_Validator {
+
 	/**
 	 * [$validation_error validation of customer form
 	 * @var [array]
@@ -28,32 +29,66 @@ class Customer_Validator {
 			$error->add('company_name_commercial', 'Please enter the company name.');
 			$has_error = true;
 		} 
+
 		if (! $is_commercial && (sanitize_text_field($_POST['first_name']) === '')) {
 			$error->add('first_name', 'Please enter the first name.');
 			$has_error = true;
 		}
+
 		if (! $is_commercial && (sanitize_text_field($_POST['last_name']) === '')) {
 			$error->add('last_name', 'Please enter the last name.');
 			$has_error = true;
 		} 
-		 if(sanitize_text_field($_POST['email']) === '' ) {
-			$error->add('email', 'Please enter the email.');
+
+		if(!ine($_POST, 'email')) {
+			$error->add('email', 'Please enter the email');
 			$has_error = true;
-		} else {
-			if(! filter_var(sanitize_text_field($_POST['email']), FILTER_VALIDATE_EMAIL))	{
-				$error->add('email', 'The email must be a valid email address.');
-				$has_error = true;
-			}
+		}
+
+		if(ine($_POST, 'email') && ! filter_var(sanitize_text_field($_POST['email']), FILTER_VALIDATE_EMAIL)){
+			$error->add('email', 'The email must be a valid email address.');
+			$has_error = true;
 		}
 		
-
 		if(isset($_POST['additional_emails']) 
-			&& !empty($additional_emails = array_filter($_POST['additional_emails'])) ) {
-			foreach (array_filter($additional_emails) as $key => $additional_email) {
+			&& !empty($_POST['additional_emails'])) {
+			$additionalEmails = array_filter($_POST['additional_emails']);
+			foreach ($additionalEmails as $key => $additional_email) {
 				if(! filter_var($additional_email, FILTER_VALIDATE_EMAIL))	{
 					unset($_POST['additional_emails'][$key]);
 				}
 			}
+		}
+
+		if(ine($_POST, 'address')) {
+			$address = $_POST['address'];
+			if(!ine($address, 'address')) {
+				$error->add('address', 'Please enter the address.');
+				$has_error = true;
+			}
+			if(!ine($address, 'city')) {
+				$error->add('city', 'Please enter the city.');
+				$has_error = true;
+			}
+			if(!ine($address, 'zip')) {
+				$error->add('zip', 'Please enter the zip code.');	
+				$has_error = true;
+			}
+			if(!ine($address, 'country_id')) {
+				$error->add('country_id', 'Please select the country.');
+				$has_error = true;
+			}
+			if(!ine($address, 'state_id')) {
+				$error->add('state_id', 'Please select the state.');
+				$has_error = true;
+			}
+		} else {
+			$error->add('address', 'Please enter the address.');
+			$error->add('city', 'Please enter the city.');
+			$error->add('zip', 'Please enter the zip code.');	
+			$error->add('country_id', 'Please select the country.');
+			$error->add('state_id', 'Please select the state.');
+			$has_error = true;
 		}
 
 		if(ine($_POST, 'job')) {
@@ -61,15 +96,35 @@ class Customer_Validator {
 				$error->add("job_trades", 'Please select the trades.');
 				$has_error = true;
 			}
+
 			if(! ine($_POST['job'], 'description')) {
 				$error->add("job_description", 'Please enter the description.');
 				$has_error = true;
 			}
+
+			if(ine($_POST['job'], 'trades') 
+				&& in_array(24, $_POST['job']['trades'])
+				&& !ine($_POST['job'], 'other_trade_type_description')) {
+				$error->add("other_trade_type_description", 'Please enter the note.');
+				$has_error = true;
+			}
+
 		}
 
+		if(!ine($_POST, 'referred_by_id')) {
+			$error->add('referred_by_id', 'Please select the referred by.');
+			$has_error = true;
+		}
+
+		if(ine($_POST, 'referred_by_id') 
+			&& $_POST['referred_by_id'] === 'other' 
+			&& !ine($_POST, 'referred_by_note')) {
+			$error->add('referred_by_note', 'Note field field is required');
+			$has_error = true;
+		}
+		
 		if(count($_POST['phones'])) {
 			$phones = array_filter($_POST['phones']);
-
 			foreach ($phones as $key => $value) {
 				if(! ine($value, 'label')) {
 					$error->add("phones.$key.label", 'Please choose the phone label.');
@@ -113,7 +168,7 @@ class Customer_Validator {
 	 * @return [array] [validation errors]
 	 */
 	public function get_wp_error() {
+
 		return $this->wp_error;
 	}
-
 }
