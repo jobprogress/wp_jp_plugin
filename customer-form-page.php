@@ -205,10 +205,10 @@ if($this->customer_form_wpdb_error): ?>
 			<?php echo $this->get_error_wrapper('referred_by_id'); ?>
 		</span>
 	</div>
-	<div class="form-group referred-by-note-block" style="display:none;" required>
+	<div class="form-group referred-by-note-block" style="display:none;">
 		<label><span class="required-sign"></span></label>
 		<span>
-			<input type="text" name="referred_by_note" placeholder="Note"/>
+			<input type="text" name="referred_by_note" placeholder="Note" required/>
 			<?php echo $this->get_error_wrapper('referred_by_note'); ?>
 		</span>
 	</div>
