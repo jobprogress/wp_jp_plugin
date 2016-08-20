@@ -120,7 +120,7 @@ if($this->customer_form_wpdb_error): ?>
 	<div class="form-group col-5 address-field-col">
 		<label>zip <span class="required-sign">*</span></label>
 		<span>
-			<input type="text" class="number" placeholder="zip" name="address[zip]" minLength="5" required/>
+			<input type="text" class="number" placeholder="zip" name="address[zip]" maxLength="5" required/>
 			<?php echo $this->get_error_wrapper('zip'); ?>
 		</span>
 	</div>
@@ -176,7 +176,7 @@ if($this->customer_form_wpdb_error): ?>
 	<div class="form-group col-5 address-field-col">
 		<label>zip </label>
 		<span>
-			<input type="text" placeholder="zip code" name="billing[zip]"/>
+			<input type="text" placeholder="zip code" name="billing[zip]" maxLength="5" />
 		</span>
 	</div>
 	<div class="form-group col-5">
