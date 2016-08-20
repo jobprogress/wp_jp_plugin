@@ -71,7 +71,32 @@ class JobProgress extends JP_Request {
 			// get user detail from jobprogress
 			$user = $this->get(JP_USER_URL.$_GET['user_id'] .'?'. http_build_query($body));
 			if(ine($user, 'id')) {
-				update_option('jp_connected_user', $user);			
+				update_option('jp_connected_user', $user);	
+			}
+			
+			if(($trades = get_transient("jp_trades")) === false 
+				|| $trades === '' ) {
+				$trades = $this->get(JP_TRADE_URL);
+				set_transient("jp_trades", $trades, 86400);
+			}
+			
+			if(($states = get_transient("jp_states")) === false 
+				|| $states === '') {
+				$states = $this->get(JP_STATE_URL);
+				set_transient("jp_states", $states, 86400);
+			}
+			
+			if(($countries = get_transient("jp_countries")) === false 
+				|| $countries === '') {
+				$user = $this->get_connected_user();
+				$countries = $this->get(JP_COUNTRY_URL.'?company_id='.$user['company_id']);
+				set_transient("jp_countries", $countries, 86400);
+			}
+
+			if(($referrals = get_transient("jp_referrals")) === false 
+				|| $referrals === '') {
+				$referrals = $this->get(JP_REFERRALS_URL);
+				set_transient("jp_referrals", $referrals, 86400);
 			}
 		}
 
