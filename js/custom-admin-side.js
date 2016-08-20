@@ -11,6 +11,7 @@ jQuery(function($) {
           autoOpen: false,
           dialogClass: "jp-disconnect-modal",
           modal: true,
+          draggable: false,
           buttons: {
             Yes: function() {
                 $( this ).dialog( "close" );

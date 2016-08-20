@@ -84,7 +84,7 @@ jQuery(function($) {
 	});
 	
 	$(".jp-referral").select2({
-		placeholder: "Select Referrera",
+		placeholder: "Select Referral",
 	}).on("select2:select", function(e) {
 		if($(this).val() == 'other') {
 			$('.referred-by-note-block').show();

@@ -98,7 +98,7 @@ if($this->customer_form_wpdb_error): ?>
 			<input type="text" placeholder="Address" name="address[address_line_1]"/>
 		</span>
 	</div>
-	<div class="form-group col-5">
+	<div class="form-group col-5 address-field-col">
 		<label>City <span class="required-sign">*</span></label>
 		<span>
 			<input type="text" placeholder="city" name="address[city]" required/>
@@ -117,7 +117,7 @@ if($this->customer_form_wpdb_error): ?>
 			<?php echo $this->get_error_wrapper('state_id'); ?>
 		</span>
 	</div>
-	<div class="form-group col-5">
+	<div class="form-group col-5 address-field-col">
 		<label>zip <span class="required-sign">*</span></label>
 		<span>
 			<input type="text" class="number" placeholder="zip" name="address[zip]" minLength="5" required/>
@@ -156,7 +156,7 @@ if($this->customer_form_wpdb_error): ?>
 			<input type="text" placeholder="Address" name="billing[address_line_1]"/>
 		</span>
 	</div>
-	<div class="form-group col-5">
+	<div class="form-group col-5 address-field-col">
 		<label>City </label>
 		<span>
 			<input type="text" placeholder="city" name="billing[city]"/ >
@@ -173,7 +173,7 @@ if($this->customer_form_wpdb_error): ?>
 			</select>
 		</span>
 	</div>
-	<div class="form-group col-5">
+	<div class="form-group col-5 address-field-col">
 		<label>zip </label>
 		<span>
 			<input type="text" placeholder="zip code" name="billing[zip]"/>
@@ -244,7 +244,7 @@ if($this->customer_form_wpdb_error): ?>
 	</div>
 
 	<div class="form-group">
-		<label><span class="required-sign"></span></label>
+		<label>Enter Captcha<span class="required-sign">*</span></label>
 		<div id="captchaimage">
 				<a href="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>" id="refreshimg" title="Click to refresh image"><img src="<?php echo plugin_dir_url( __FILE__ ); ?>captcha_image/image.php?<?php echo time(); ?>" width="132" height="46"></a>
 		</div>
