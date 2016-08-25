@@ -34,6 +34,7 @@ class Customer_Data_Map {
 			$data['first_name']   = htmlentities($this->input['company_name_commercial']);
 			$data['company_name']    = '';
 			$data['last_name']     = '';
+			$data['contact']  = json_encode($this->input['contact']);
 		}
 		
 		$data['phones'] = json_encode($this->map_phone_inputs(), true);
@@ -48,7 +49,6 @@ class Customer_Data_Map {
 			$data['referred_by_type'] = 'referral';
 			$data['referred_by_id'] = $this->input['referred_by_id'];
 		}
-		
 		return $data;
 	}
 	

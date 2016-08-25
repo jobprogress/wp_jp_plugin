@@ -30,8 +30,25 @@ if($this->customer_form_wpdb_error): ?>
 				</div>
 				<div class="col-5">
 					<span>
-						<input type="text" name="last_name"  placeholder="Last Name"/>
+						<input type="text" name="last_name"  placeholder="Last Name" required />
 						<?php echo $this->get_error_wrapper('last_name'); ?>
+					</span>
+				</div>
+		</div>
+	</div>
+	<div class="form-group jobprogress-commercial-type" style="display:none;">
+		<label class="customer-name-label">Name</label>
+		<div class="customer-name-section">
+				<div class="col-5">
+					<span>
+						<input type="text" name="contact[0][first_name]" placeholder="First Name"/>
+						<?php echo $this->get_error_wrapper('contact_first_name'); ?>
+					</span>
+				</div>
+				<div class="col-5">
+					<span>
+						<input type="text" name="contact[0][last_name]"  placeholder="Last Name"/>
+						<?php echo $this->get_error_wrapper('contact_last_name'); ?>
 					</span>
 				</div>
 		</div>
@@ -120,7 +137,7 @@ if($this->customer_form_wpdb_error): ?>
 	<div class="form-group col-5 address-field-col">
 		<label>zip <span class="required-sign">*</span></label>
 		<span>
-			<input type="text" class="number" placeholder="zip" name="address[zip]" minLength="5" required/>
+			<input type="text" class="number" placeholder="zip" name="address[zip]" maxLength="5" required/>
 			<?php echo $this->get_error_wrapper('zip'); ?>
 		</span>
 	</div>
@@ -176,7 +193,7 @@ if($this->customer_form_wpdb_error): ?>
 	<div class="form-group col-5 address-field-col">
 		<label>zip </label>
 		<span>
-			<input type="text" placeholder="zip code" name="billing[zip]"/>
+			<input type="text" placeholder="zip code" name="billing[zip]" maxLength="5" />
 		</span>
 	</div>
 	<div class="form-group col-5">
@@ -205,10 +222,10 @@ if($this->customer_form_wpdb_error): ?>
 			<?php echo $this->get_error_wrapper('referred_by_id'); ?>
 		</span>
 	</div>
-	<div class="form-group referred-by-note-block" style="display:none;" required>
+	<div class="form-group referred-by-note-block" style="display:none;">
 		<label><span class="required-sign"></span></label>
 		<span>
-			<input type="text" name="referred_by_note" placeholder="Note"/>
+			<input type="text" name="referred_by_note" placeholder="Note" required/>
 			<?php echo $this->get_error_wrapper('referred_by_note'); ?>
 		</span>
 	</div>
