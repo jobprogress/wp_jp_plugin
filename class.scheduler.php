@@ -125,7 +125,9 @@ class Scheduler extends JobProgress {
 		$input['referred_by_id']   = $customer->referred_by_id;
 		$input['referred_by_type'] = $customer->referred_by_type;
 		$input['referred_by_note'] = $customer->referred_by_note;
-		
+		if(!empty($customer->contact)) {
+			$input['customer_contacts'] = json_decode($customer->contact, true);
+		}	
 		return $input;
 	}
 }
