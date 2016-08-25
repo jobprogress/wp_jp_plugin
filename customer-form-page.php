@@ -30,8 +30,25 @@ if($this->customer_form_wpdb_error): ?>
 				</div>
 				<div class="col-5">
 					<span>
-						<input type="text" name="last_name"  placeholder="Last Name"/>
+						<input type="text" name="last_name"  placeholder="Last Name" required />
 						<?php echo $this->get_error_wrapper('last_name'); ?>
+					</span>
+				</div>
+		</div>
+	</div>
+	<div class="form-group jobprogress-commercial-type" style="display:none;">
+		<label class="customer-name-label">Name</label>
+		<div class="customer-name-section">
+				<div class="col-5">
+					<span>
+						<input type="text" name="contact[0][first_name]" placeholder="First Name"/>
+						<?php echo $this->get_error_wrapper('contact_first_name'); ?>
+					</span>
+				</div>
+				<div class="col-5">
+					<span>
+						<input type="text" name="contact[0][last_name]"  placeholder="Last Name"/>
+						<?php echo $this->get_error_wrapper('contact_last_name'); ?>
 					</span>
 				</div>
 		</div>
