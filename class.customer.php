@@ -113,7 +113,7 @@ class Customer extends JobProgress {
 	public function show_form($refresh = false, $queryString = array()) {
 
 		if($refresh) {
-			set_transient("jp_form_submitted", 1, 5);
+			set_transient("jp_form_submitted", 1, 10);
 			$url = get_domain() . $_SERVER['REQUEST_URI'];
 			echo '<script type="text/javascript">
 		           window.location = "'.$url.'"
