@@ -125,8 +125,9 @@ if($this->customer_form_wpdb_error): ?>
 	<div class="form-group col-5">
 		<label class="state">State <span class="required-sign">*</span></label>
 		<span>
-			<select name="address[state_id]" id="address-state" class="select2" required>
-				<option value="0">Select States</option>
+			<select 
+				placeholder="Select States"
+				name="address[state_id]" id="address-state" class="select2" required>
 				<?php foreach ($states as $key => $state) : ?>
 				<option value="<?php echo $state['id'] .'_'.$state['name']; ?>"><?php echo $state['name']; ?></option>
 			<?php endforeach; ?>
@@ -145,7 +146,6 @@ if($this->customer_form_wpdb_error): ?>
 		<label class="country">Country <span class="required-sign">*</span></label>
 		<span>
 			<select name="address[country_id]" id="address-country" class="select2" required>
-				<option value="0" >Select Country</option>
 				<?php foreach ($countries as $key => $country) : ?>
 				<option value="<?php echo $country['id'] .'_'.$country['name']; ?>"><?php echo $country['name']; ?></option>
 			<?php endforeach; ?>	

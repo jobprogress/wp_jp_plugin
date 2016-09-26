@@ -9,14 +9,21 @@ jQuery(function($) {
 	$("#jobprogrssCustomerSignupForm").validate({
 		email:true,
 		rules: {
-			first_name: "required",
-			last_name: "required",
-			email:{
+			'first_name': {
+				"required": true	
+			},
+			'last_name':  {
+				'required': true
+			},
+			'email':{
 				email: true
 			},
-			captcha: {
+			'captcha': {
 				required: true,
 				remote:  plugin_dir_url+"process.php"
+			},
+			'address[country_id]':  {
+				required: true
 			}
 		},
 		messages: {
@@ -59,6 +66,7 @@ jQuery(function($) {
 	}).on('change', function (e) {
 		var input = $(this).parent().find('.extension-field');
 		if (e.currentTarget.value == "cell") {
+			input.val(null);
 			input.attr('disabled', true);
 		} else {
 			input.attr('disabled', false);	
