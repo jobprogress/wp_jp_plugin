@@ -1,4 +1,11 @@
 jQuery(function($) {
+
+	$(window).on('load', function() {
+		setTimeout(function() {
+			$('#jp-message').slideUp(800);
+			console.log('Work');
+		}, 4000);
+	});
 	
 	$("body").on("click", "#refreshimg", function(){
 		$("#captchaimage").load(plugin_dir_url+"image_req.php", { 'jp_plugin_dir_url':plugin_dir_url });
@@ -162,6 +169,7 @@ jQuery(function($) {
 		}).on('change', function (e) {
 			var input = $(this).parent().find('.extension-field');
 			if (e.currentTarget.value == "cell") {
+				input.val(null);
 				input.attr('disabled', true);
 			} else {
 				input.attr('disabled', false);	
