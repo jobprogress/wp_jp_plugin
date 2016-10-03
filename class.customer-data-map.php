@@ -11,7 +11,7 @@ class Customer_Data_Map {
 	 * @return [array] [customer data]
 	 */
 	public function get_plugin_input() {
-		$map = array('email', 'first_name', 'last_name', 'company_name', 'is_sync');
+		$map = array('email', 'first_name', 'last_name', 'company_name', 'is_sync', 'referred_by_id', 'referred_by_note');
 		$addressFields = array('address','address_line_1','city','state_id','country_id','zip');
 		$address = array();
 		$data = $this->map_inputs($map);
@@ -34,6 +34,7 @@ class Customer_Data_Map {
 			$data['first_name']   = htmlentities($this->input['company_name_commercial']);
 			$data['company_name']    = '';
 			$data['last_name']     = '';
+			$data['contact']  = json_encode($this->input['contact']);
 		}
 		
 		$data['phones'] = json_encode($this->map_phone_inputs(), true);
@@ -41,7 +42,13 @@ class Customer_Data_Map {
 		$data['created_at'] = current_time('mysql');
 		$job = $this->map_job_input();
 		$data['job'] = json_encode($job, true);
-
+		if($this->input['referred_by_id'] === 'other') {
+			$data['referred_by_note'] = $this->input['referred_by_note'];
+			$data['referred_by_type'] = 'other';
+		} else {
+			$data['referred_by_type'] = 'referral';
+			$data['referred_by_id'] = $this->input['referred_by_id'];
+		}
 		return $data;
 	}
 	

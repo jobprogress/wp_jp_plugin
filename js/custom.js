@@ -1,22 +1,47 @@
 jQuery(function($) {
+
+	$(window).on('load', function() {
+		setTimeout(function() {
+			$('#jp-message').slideUp(800);
+			console.log('Work');
+		}, 4000);
+	});
+	
+	$("body").on("click", "#refreshimg", function(){
+		$("#captchaimage").load(plugin_dir_url+"image_req.php", { 'jp_plugin_dir_url':plugin_dir_url });
+		return false;
+	});
 	
 	// validate signup form on keyup and submit
 	$("#jobprogrssCustomerSignupForm").validate({
 		email:true,
 		rules: {
-			first_name: "required",
-			last_name: "required",
-			email:{
+			'first_name': {
+				"required": true	
+			},
+			'last_name':  {
+				'required': true
+			},
+			'email':{
 				email: true
 			},
+			'captcha': {
+				required: true,
+				remote:  plugin_dir_url+"process.php"
+			},
+			'address[country_id]':  {
+				required: true
+			}
 		},
 		messages: {
 			first_name: "Please enter the first name.",
 			last_name: "Please enter the last name.",
+			captcha: "Correct captcha is required. Click the captcha to generate a new one"
 		},
 		errorPlacement: function(error, element) {
 			error.insertAfter( element.parent());
-		}
+		},
+		onkeyup: false
 	});
 
 	// default customer type 1 selected first type is commercial
@@ -48,6 +73,7 @@ jQuery(function($) {
 	}).on('change', function (e) {
 		var input = $(this).parent().find('.extension-field');
 		if (e.currentTarget.value == "cell") {
+			input.val(null);
 			input.attr('disabled', true);
 		} else {
 			input.attr('disabled', false);	
@@ -55,7 +81,7 @@ jQuery(function($) {
 	});
 
 	$(".jp-trade").select2({
-		minimumResultsForSearch: Infinity
+		placeholder: "Select Trade Type"
 	}).on('change', function (e) {
 		var input = $(this).parent().find('.extension-field');
 		if (e.currentTarget.value == "cell") {
@@ -70,6 +96,16 @@ jQuery(function($) {
 			$('.other-trade-note-container').hide();
 		} 
 		
+	});
+	
+	$(".jp-referral").select2({
+		placeholder: "Select Referral",
+	}).on("select2:select", function(e) {
+		if($(this).val() == 'other') {
+			$('.referred-by-note-block').show();
+		} else {
+			$('.referred-by-note-block').hide();
+		}
 	});
 
 	$('.mask-select').mask("(000) 000-0000", {placeholder: "(xxx) xxx-xxxx"});
@@ -133,6 +169,7 @@ jQuery(function($) {
 		}).on('change', function (e) {
 			var input = $(this).parent().find('.extension-field');
 			if (e.currentTarget.value == "cell") {
+				input.val(null);
 				input.attr('disabled', true);
 			} else {
 				input.attr('disabled', false);	

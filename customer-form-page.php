@@ -1,11 +1,15 @@
+
+<script type="text/javascript">
+	var plugin_dir_url = "<?php echo plugin_dir_url( __FILE__ ); ?>";
+</script>
 <?php
 if(get_transient("jp_form_submitted")): ?>
-	<div class="alert-msg alert-msg-success">
+	<div id="jp-message" class="alert-msg alert-msg-success">
 		<?php echo JP_CUSTOMER_FORM_SAVED; ?>
 	</div>
-
-<?php endif; ?>
-<?php if($this->customer_form_wpdb_error): ?>
+<?php 
+endif; 
+if($this->customer_form_wpdb_error): ?>
 <div class="alert-msg alert-msg-danger"><?php echo $this->customer_form_wpdb_error; ?></div>
 <?php endif; ?>
 <form class="customer-page" method="post" id = "jobprogrssCustomerSignupForm" action="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>">
@@ -26,8 +30,25 @@ if(get_transient("jp_form_submitted")): ?>
 				</div>
 				<div class="col-5">
 					<span>
-						<input type="text" name="last_name"  placeholder="Last Name"/>
+						<input type="text" name="last_name"  placeholder="Last Name" required />
 						<?php echo $this->get_error_wrapper('last_name'); ?>
+					</span>
+				</div>
+		</div>
+	</div>
+	<div class="form-group jobprogress-commercial-type" style="display:none;">
+		<label class="customer-name-label">Name</label>
+		<div class="customer-name-section">
+				<div class="col-5">
+					<span>
+						<input type="text" name="contact[0][first_name]" placeholder="First Name"/>
+						<?php echo $this->get_error_wrapper('contact_first_name'); ?>
+					</span>
+				</div>
+				<div class="col-5">
+					<span>
+						<input type="text" name="contact[0][last_name]"  placeholder="Last Name"/>
+						<?php echo $this->get_error_wrapper('contact_last_name'); ?>
 					</span>
 				</div>
 		</div>
@@ -70,9 +91,9 @@ if(get_transient("jp_form_submitted")): ?>
 	</div>
 
 	<div class="form-group additional-emails">
-		<label>Email</label>
+		<label>Email <span class="required-sign">*</span></label>
 		<span>
-			<input type="text" placeholder="Email" name="email"/>
+			<input type="text" placeholder="Email" name="email" required />
 			<?php echo $this->get_error_wrapper('email'); ?>
 		</span>
 		
@@ -82,9 +103,10 @@ if(get_transient("jp_form_submitted")): ?>
 	</div>
 
 	<div class="form-group">
-		<label>Address</label>
+		<label>Address <span class="required-sign">*</span></label>
 		<span>
-			<input type="text" placeholder="Address" name="address[address]"/>
+			<input type="text" placeholder="Address" name="address[address]" required/>
+			<?php echo $this->get_error_wrapper('address'); ?>
 		</span>
 	</div>
 	<div class="form-group">
@@ -93,38 +115,42 @@ if(get_transient("jp_form_submitted")): ?>
 			<input type="text" placeholder="Address" name="address[address_line_1]"/>
 		</span>
 	</div>
-	<div class="form-group col-5">
-		<label>City </label>
+	<div class="form-group col-5 address-field-col">
+		<label>City <span class="required-sign">*</span></label>
 		<span>
-			<input type="text" placeholder="city" name="address[city]"/>
+			<input type="text" placeholder="city" name="address[city]" required/>
+			<?php echo $this->get_error_wrapper('city'); ?>
 		</span>
 	</div>
 	<div class="form-group col-5">
-		<label class="state">State </label>
+		<label class="state">State <span class="required-sign">*</span></label>
 		<span>
-			<select name="address[state_id]" id="address-state" class="select2">
-				<option value="0">Select States</option>
+			<select 
+				placeholder="Select States"
+				name="address[state_id]" id="address-state" class="select2" required>
 				<?php foreach ($states as $key => $state) : ?>
 				<option value="<?php echo $state['id'] .'_'.$state['name']; ?>"><?php echo $state['name']; ?></option>
 			<?php endforeach; ?>
 			</select>
+			<?php echo $this->get_error_wrapper('state_id'); ?>
+		</span>
+	</div>
+	<div class="form-group col-5 address-field-col">
+		<label>zip <span class="required-sign">*</span></label>
+		<span>
+			<input type="text" class="number" placeholder="zip" name="address[zip]" maxLength="5" required/>
+			<?php echo $this->get_error_wrapper('zip'); ?>
 		</span>
 	</div>
 	<div class="form-group col-5">
-		<label>zip </label>
+		<label class="country">Country <span class="required-sign">*</span></label>
 		<span>
-			<input type="text" class="number" placeholder="zip" name="address[zip]" minLength="5"/>
-		</span>
-	</div>
-	<div class="form-group col-5">
-		<label class="country">Country </label>
-		<span>
-			<select name="address[country_id]" id="address-country" class="select2">
-				<option value="0" >Select Country</option>
+			<select name="address[country_id]" id="address-country" class="select2" required>
 				<?php foreach ($countries as $key => $country) : ?>
 				<option value="<?php echo $country['id'] .'_'.$country['name']; ?>"><?php echo $country['name']; ?></option>
 			<?php endforeach; ?>	
 			</select>
+			<?php echo $this->get_error_wrapper('country_id'); ?>
 		</span>
 	</div>
 
@@ -147,7 +173,7 @@ if(get_transient("jp_form_submitted")): ?>
 			<input type="text" placeholder="Address" name="billing[address_line_1]"/>
 		</span>
 	</div>
-	<div class="form-group col-5">
+	<div class="form-group col-5 address-field-col">
 		<label>City </label>
 		<span>
 			<input type="text" placeholder="city" name="billing[city]"/ >
@@ -164,10 +190,10 @@ if(get_transient("jp_form_submitted")): ?>
 			</select>
 		</span>
 	</div>
-	<div class="form-group col-5">
+	<div class="form-group col-5 address-field-col">
 		<label>zip </label>
 		<span>
-			<input type="text" placeholder="zip code" name="billing[zip]"/>
+			<input type="text" placeholder="zip code" name="billing[zip]" maxLength="5" />
 		</span>
 	</div>
 	<div class="form-group col-5">
@@ -183,6 +209,28 @@ if(get_transient("jp_form_submitted")): ?>
 	</div>
 </div>
 	<div class="form-group">
+		<label>Referred By <span class="required-sign">*</span></label>
+		<span>
+			<select name="referred_by_id" class="jp-referral" required>
+				<option></option>
+				<?php if($referrals): ?>
+				<?php foreach ($referrals as $key => $referral): ?>
+				<option value="<?php echo $referral['id'] ?>"><?php echo $referral['name']; ?></option>
+				<?php endforeach; ?>
+				<?php endif; ?>
+			</select>
+			<?php echo $this->get_error_wrapper('referred_by_id'); ?>
+		</span>
+	</div>
+	<div class="form-group referred-by-note-block" style="display:none;">
+		<label><span class="required-sign"></span></label>
+		<span>
+			<input type="text" name="referred_by_note" placeholder="Note" required/>
+			<?php echo $this->get_error_wrapper('referred_by_note'); ?>
+		</span>
+	</div>
+
+	<div class="form-group">
 		<label>Trades <span class="required-sign">*</span></label>
 		<span>
 			<select name="job[trades][]" class="jp-trade" multiple="multiple" required>
@@ -191,9 +239,8 @@ if(get_transient("jp_form_submitted")): ?>
 				<option value="<?php echo $trade['id'] ?>"><?php echo $trade['name']; ?></option>
 				<?php endforeach; ?>
 				<?php endif; ?>
-				<?php echo $this->get_error_wrapper('job_trades'); ?>
 			</select>
-			
+			<?php echo $this->get_error_wrapper('job_trades'); ?>
 		</span>
 	</div>
 	<div class="form-group other-trade-note-container" style="display:none;">
@@ -202,8 +249,8 @@ if(get_transient("jp_form_submitted")): ?>
 			<input class="other-trade-note" type="text" name="job[other_trade_type_description]" required/>
 			<?php echo $this->get_error_wrapper('other_trade_type_description'); ?>
 		</span>
-	</div
-	>
+	</div>
+
 	<?php wp_nonce_field( 'submit_jp_customer_form' ); ?>
 	<div class="form-group">
 		<label>Description <span class="required-sign">*</span></label>
@@ -212,6 +259,15 @@ if(get_transient("jp_form_submitted")): ?>
 			<?php echo $this->get_error_wrapper('job_description'); ?>
 		</span>
 	</div>
+
+	<div class="form-group">
+		<label>Enter Captcha<span class="required-sign">*</span></label>
+		<div id="captchaimage">
+				<a href="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>" id="refreshimg" title="Click to refresh image"><img src="<?php echo plugin_dir_url( __FILE__ ); ?>captcha_image/image.php?<?php echo time(); ?>" width="132" height="46"></a>
+		</div>
+		<input type="text" maxlength="6" name="captcha" id="captcha" required>
+	</div>
+
 	<div class="text-center">
 		<button type="submit" class="btn btn-blue">Save</button>
 		<button type="reset" class="btn btn-grey" onclick="location.reload()">Cancel</button>

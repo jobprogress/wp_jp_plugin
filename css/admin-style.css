@@ -71,7 +71,7 @@
 }
 .subsDetail-container .profile-header {
     padding: 30px 20px;
-    width: 45%;
+    width: 50%;
     background: #fff;
     box-shadow: 1px 1px 5px #ccc;
     margin: 20px 0;
@@ -297,4 +297,14 @@
 }
 .jp-disconnect-modal .ui-button {
     height: auto;
+}
+@media(max-width: 991px) {
+    .subsDetail-container .profile-header {
+        width: 65%;
+    }
+}
+@media(max-width: 768px) { 
+    .subsDetail-container .profile-header {
+        width: 90%;
+    }
 }

@@ -83,6 +83,7 @@
 .customer-page textarea {
     width: 65%;
     min-height: 100px;
+    margin-bottom: 0;
 }
 .customer-page .form-combine-select .select2-container {
     width: 25% !important;
@@ -124,6 +125,7 @@
 .customer-page .col-5 {
     width: 49.5%;
     display: inline-block;
+    vertical-align: top;
 }
 .customer-page .form-group.col-5 input {
     width: 50%;
@@ -156,11 +158,14 @@
 .customer-page label.error {
     color: #c81b1b;
     margin: 5px 0;
-    padding-left: 23%;
+    padding-left: 22%;
     display: block;
     font-weight: normal;
     width: auto;
     text-align: left;
+}
+.customer-page .col-5.address-field-col label.error {
+    padding-left: 45%;
 }
 .customer-page .required-sign {
     color: #c81b1b;
@@ -282,11 +287,33 @@
 .select2-results__options {
  text-align:left;
 }
+.form-group #captchaimage, .form-group #captcha {
+    width: 65%;
+    margin-bottom: 5px;
+    display: inline-block;
+}
+.form-group #captcha { 
+    width: 250px;
+    margin-left: 22%;
+}
+img {
+    border: 1px solid #eee;
+}
 @media(max-width: 768px) {
     .customer-page .form-group label, .customer-page .col-5 label.state, .customer-page .col-5 label.country {
         width: 100%;
         text-align: left;
         margin-bottom: 5px;
+    }
+    .customer-page .customer-name-section .col-5 {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+    .customer-page .col-5.address-field-col label.error {
+        padding-left: 0;
+    }
+    .form-group #captcha {
+        margin-left: 0;
     }
     .customer-page .form-group label.has-outer-label {
         width: auto;
@@ -304,7 +331,7 @@
     .customer-page .additional-email label {
         display: none;
     }
-    .customer-page .error {
+    .customer-page .error, .customer-page label.error {
         padding-left: 0;
     }
 }
@@ -344,5 +371,11 @@
     }
     .customer-page .form-combine-select .select2-container--default .select2-selection--single {
         border: none;
+    }
+    .customer-name-section {
+        width: 100%;
+    }
+    .customer-page .form-group.additional-emails input {
+        width: 65%;
     }
 }

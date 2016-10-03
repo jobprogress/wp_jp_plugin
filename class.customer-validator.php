@@ -40,7 +40,12 @@ class Customer_Validator {
 			$has_error = true;
 		} 
 
-		if(ine($_POST, 'email') && ! filter_var(sanitize_text_field($_POST['email']), FILTER_VALIDATE_EMAIL))	{
+		if(!ine($_POST, 'email')) {
+			$error->add('email', 'Please enter the email');
+			$has_error = true;
+		}
+
+		if(ine($_POST, 'email') && ! filter_var(sanitize_text_field($_POST['email']), FILTER_VALIDATE_EMAIL)){
 			$error->add('email', 'The email must be a valid email address.');
 			$has_error = true;
 		}
@@ -53,6 +58,37 @@ class Customer_Validator {
 					unset($_POST['additional_emails'][$key]);
 				}
 			}
+		}
+
+		if(ine($_POST, 'address')) {
+			$address = $_POST['address'];
+			if(!ine($address, 'address')) {
+				$error->add('address', 'Please enter the address.');
+				$has_error = true;
+			}
+			if(!ine($address, 'city')) {
+				$error->add('city', 'Please enter the city.');
+				$has_error = true;
+			}
+			if(!ine($address, 'zip')) {
+				$error->add('zip', 'Please enter the zip code.');	
+				$has_error = true;
+			}
+			if(!ine($address, 'country_id')) {
+				$error->add('country_id', 'Please select the country.');
+				$has_error = true;
+			}
+			if(!ine($address, 'state_id')) {
+				$error->add('state_id', 'Please select the state.');
+				$has_error = true;
+			}
+		} else {
+			$error->add('address', 'Please enter the address.');
+			$error->add('city', 'Please enter the city.');
+			$error->add('zip', 'Please enter the zip code.');	
+			$error->add('country_id', 'Please select the country.');
+			$error->add('state_id', 'Please select the state.');
+			$has_error = true;
 		}
 
 		if(ine($_POST, 'job')) {
@@ -75,6 +111,18 @@ class Customer_Validator {
 
 		}
 
+		if(!ine($_POST, 'referred_by_id')) {
+			$error->add('referred_by_id', 'Please select the referred by.');
+			$has_error = true;
+		}
+
+		if(ine($_POST, 'referred_by_id') 
+			&& $_POST['referred_by_id'] === 'other' 
+			&& !ine($_POST, 'referred_by_note')) {
+			$error->add('referred_by_note', 'Note field field is required');
+			$has_error = true;
+		}
+		
 		if(count($_POST['phones'])) {
 			$phones = array_filter($_POST['phones']);
 			foreach ($phones as $key => $value) {

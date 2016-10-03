@@ -7,7 +7,9 @@ Version: 1.0
 Author: JobProgress
 Author URI: http://www.jobprogress.com/
 */
-define('JP_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+// exit;
+define('JP_PLUGIN_DIR', plugin_dir_path( __FILE__ ));
+define('JP_PLUGIN_DIR_URL', plugin_dir_url( __FILE__ ));
 define('API_BASE_URL', 'http://jobprogress.com/api/public/api/v1/');
 define('JP_CLIENT_ID', '42766958');
 define('JP_CLIENT_SECRET', 'schs1EKRpLaS1auhTIc25JrlWSjkry1P');
@@ -19,6 +21,7 @@ define('JP_STATE_URL', API_BASE_URL.'company/states');
 define('JP_COUNTRY_URL', API_BASE_URL.'countries');
 define('JP_ADD_CUSTOMER_URL', API_BASE_URL.'customers/save_customer_third_party');
 define('JP_USER_URL', API_BASE_URL.'company/users/');
+define('JP_REFERRALS_URL', API_BASE_URL.'referrals');
 define('JP_REFRESH_TOKEN_GRANT_TYPE', 'refresh_token');
 define('JP_CUSTOMER_LIMIT_PAGINATION', 10);
 define('JP_DELETE_REQUEST', 'Delete');
@@ -28,7 +31,6 @@ require_once(JP_PLUGIN_DIR. 'class.jp-request.php');
 require_once(JP_PLUGIN_DIR. 'class.jobprogress.php');
 require_once(JP_PLUGIN_DIR. 'class.customer.php');
 require_once(JP_PLUGIN_DIR. 'class.scheduler.php');
-
 $scheduler = New Scheduler;
 $customer  = New Customer;
 register_activation_hook(__FILE__, array($customer, 'plugin_activation'));
