@@ -83,12 +83,11 @@ if (! function_exists('array_column')) {
  */
 
  function get_domain() {
-    $domain = ((!empty($_SERVER['HTTPS']) 
+    $host = ((!empty($_SERVER['HTTPS']) 
             && $_SERVER['HTTPS'] !== 'off')
             || $_SERVER['SERVER_PORT'] === 443)
             ? 'https://'
-            :'http://'
-            . $_SERVER['HTTP_HOST'];
+            :'http://';
 
-    return $domain;
+    return $host . $_SERVER['HTTP_HOST'];
 }
