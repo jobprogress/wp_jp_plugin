@@ -3,7 +3,6 @@ jQuery(function($) {
 	$(window).on('load', function() {
 		setTimeout(function() {
 			$('#jp-message').slideUp(800);
-			console.log('Work');
 		}, 4000);
 	});
 	
