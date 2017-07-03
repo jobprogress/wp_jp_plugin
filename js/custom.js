@@ -21,16 +21,16 @@ jQuery(function($) {
 			'last_name':  {
 				'required': true
 			},
-			'email':{
-				email: true
-			},
+			// 'email':{
+			// 	email: true
+			// },
 			'captcha': {
 				required: true,
 				remote:  plugin_dir_url+"process.php"
 			},
-			'address[country_id]':  {
-				required: true
-			}
+			// 'address[country_id]':  {
+			// 	required: true
+			// }
 		},
 		messages: {
 			first_name: "Please enter the first name.",
@@ -171,7 +171,7 @@ jQuery(function($) {
 				input.val(null);
 				input.attr('disabled', true);
 			} else {
-				input.attr('disabled', false);	
+				input.attr('disabled', false);
 			}
 		});
 
