@@ -172,7 +172,7 @@ jQuery(function($) {
 // 				input.attr('disabled', true);
 // 			} else {
 // 				input.attr('disabled', false);
-			}
+// 			}
 		});
 
 		x++;
