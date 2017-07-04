@@ -71,23 +71,23 @@ jQuery(function($) {
 		minimumResultsForSearch: Infinity
 	}).on('change', function (e) {
 		var input = $(this).parent().find('.extension-field');
-		if (e.currentTarget.value == "cell") {
-			input.val(null);
-			input.attr('disabled', true);
-		} else {
-			input.attr('disabled', false);	
-		}
+// 		if (e.currentTarget.value == "cell") {
+// 			input.val(null);
+// 			input.attr('disabled', true);
+// 		} else {
+// 			input.attr('disabled', false);	
+// 		}
 	});
 
 	$(".jp-trade").select2({
 		placeholder: "Select Trade Type"
 	}).on('change', function (e) {
 		var input = $(this).parent().find('.extension-field');
-		if (e.currentTarget.value == "cell") {
-			input.attr('disabled', true);
-		} else {
-			input.attr('disabled', false);	
-		}
+// 		if (e.currentTarget.value == "cell") {
+// 			input.attr('disabled', true);
+// 		} else {
+// 			input.attr('disabled', false);	
+// 		}
 
 		if($.inArray('24', $(this).val()) > -1 ) {
 			$('.other-trade-note-container').show();
@@ -167,11 +167,11 @@ jQuery(function($) {
 			minimumResultsForSearch: Infinity
 		}).on('change', function (e) {
 			var input = $(this).parent().find('.extension-field');
-			if (e.currentTarget.value == "cell") {
-				input.val(null);
-				input.attr('disabled', true);
-			} else {
-				input.attr('disabled', false);
+// 			if (e.currentTarget.value == "cell") {
+// 				input.val(null);
+// 				input.attr('disabled', true);
+// 			} else {
+// 				input.attr('disabled', false);
 			}
 		});
 
