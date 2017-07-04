@@ -379,3 +379,8 @@ img {
         width: 65%;
     }
 }
+.customer-page .additional-val{
+    position: absolute;
+    right: 0;
+    top: 0;
+}
