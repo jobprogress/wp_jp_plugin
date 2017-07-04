@@ -82,7 +82,7 @@ if($this->customer_form_wpdb_error): ?>
 				<option value="other">Other</option>
 			</select> 
 			<input type="text" class="phones  mask-select phone-number-field" name="phones[0][number]" placeholder="Phone" required/> 
-			<input type="text" maxlength= "8" class="extension-field number" name="phones[0][ext]" placeholder="Extension"/>
+			<input type="text" maxlength= "12" class="extension-field number" name="phones[0][ext]" placeholder="Extension"/>
 		</div>
 		<?php 
 			echo $this->get_error_wrapper('phones.0.label'); 
