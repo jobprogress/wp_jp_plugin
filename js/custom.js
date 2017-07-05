@@ -21,6 +21,16 @@ jQuery(function($) {
 			'last_name':  {
 				'required': true
 			},
+			'contact[0][last_name]': {
+			    required: function(element){
+			            return $("input[name='contact[0][first_name]']").val()!="" && $('input[name="jp_customer_type2"]').is(':checked');
+			        }
+			},
+			'contact[0][first_name]': {
+			    required: function(element){
+			            return $("input[name='contact[0][last_name]']").val()!="" && $('input[name="jp_customer_type2"]').is(':checked') ;
+			        }
+			},
 			// 'email':{
 			// 	email: true
 			// },
