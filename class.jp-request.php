@@ -31,7 +31,6 @@ class JP_Request {
 		    'headers'     => $this->get_header(),
 		    'body'        => $body,
 		); 
-		dd($args);
 
 		$response =  wp_remote_post($url, $args);
 		$response_body = wp_remote_retrieve_body($response);
