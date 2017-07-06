@@ -82,7 +82,7 @@ if($this->customer_form_wpdb_error): ?>
 				<option value="other">Other</option>
 			</select> 
 			<input type="text" class="phones  mask-select phone-number-field" name="phones[0][number]" placeholder="Phone" required/> 
-			<input type="text" maxlength= "8" class="extension-field number" name="phones[0][ext]" placeholder="Extension"/>
+			<input type="text" maxlength= "12" class="extension-field" name="phones[0][ext]" placeholder="Extension"/>
 		</div>
 		<?php 
 			echo $this->get_error_wrapper('phones.0.label'); 
@@ -91,9 +91,9 @@ if($this->customer_form_wpdb_error): ?>
 	</div>
 
 	<div class="form-group additional-emails">
-		<label>Email <span class="required-sign">*</span></label>
+		<label>Email <!-- <span class="required-sign">*</span> --></label>
 		<span>
-			<input type="text" placeholder="Email" name="email" required />
+			<input type="text" placeholder="Email" name="email"/>
 			<?php echo $this->get_error_wrapper('email'); ?>
 		</span>
 		
@@ -103,9 +103,9 @@ if($this->customer_form_wpdb_error): ?>
 	</div>
 
 	<div class="form-group">
-		<label>Address <span class="required-sign">*</span></label>
+		<label>Address <!-- <span class="required-sign">*</span> --></label>
 		<span>
-			<input type="text" placeholder="Address" name="address[address]" required/>
+			<input type="text" placeholder="Address" name="address[address]" />
 			<?php echo $this->get_error_wrapper('address'); ?>
 		</span>
 	</div>
@@ -116,18 +116,18 @@ if($this->customer_form_wpdb_error): ?>
 		</span>
 	</div>
 	<div class="form-group col-5 address-field-col">
-		<label>City <span class="required-sign">*</span></label>
+		<label>City <!-- <span class="required-sign">*</span> --></label>
 		<span>
-			<input type="text" placeholder="city" name="address[city]" required/>
+			<input type="text" placeholder="city" name="address[city]" />
 			<?php echo $this->get_error_wrapper('city'); ?>
 		</span>
 	</div>
 	<div class="form-group col-5">
-		<label class="state">State <span class="required-sign">*</span></label>
+		<label class="state">State <!-- <span class="required-sign">*</span> --></label>
 		<span>
 			<select 
 				placeholder="Select States"
-				name="address[state_id]" id="address-state" class="select2" required>
+				name="address[state_id]" id="address-state" class="select2">
 				<?php foreach ($states as $key => $state) : ?>
 				<option value="<?php echo $state['id'] .'_'.$state['name']; ?>"><?php echo $state['name']; ?></option>
 			<?php endforeach; ?>
@@ -136,16 +136,16 @@ if($this->customer_form_wpdb_error): ?>
 		</span>
 	</div>
 	<div class="form-group col-5 address-field-col">
-		<label>zip <span class="required-sign">*</span></label>
+		<label>zip <!-- <span class="required-sign">*</span> --></label>
 		<span>
-			<input type="text" class="number" placeholder="zip" name="address[zip]" maxLength="5" required/>
+			<input type="text" class="number" placeholder="zip" name="address[zip]" maxLength="5" />
 			<?php echo $this->get_error_wrapper('zip'); ?>
 		</span>
 	</div>
 	<div class="form-group col-5">
-		<label class="country">Country <span class="required-sign">*</span></label>
+		<label class="country">Country <!-- <span class="required-sign">*</span> --></label>
 		<span>
-			<select name="address[country_id]" id="address-country" class="select2" required>
+			<select name="address[country_id]" id="address-country" class="select2" >
 				<?php foreach ($countries as $key => $country) : ?>
 				<option value="<?php echo $country['id'] .'_'.$country['name']; ?>"><?php echo $country['name']; ?></option>
 			<?php endforeach; ?>	
@@ -209,9 +209,9 @@ if($this->customer_form_wpdb_error): ?>
 	</div>
 </div>
 	<div class="form-group">
-		<label>Referred By <span class="required-sign">*</span></label>
+		<label>Referred By </label>
 		<span>
-			<select name="referred_by_id" class="jp-referral" required>
+			<select name="referred_by_id" class="jp-referral">
 				<option></option>
 				<?php if($referrals): ?>
 				<?php foreach ($referrals as $key => $referral): ?>

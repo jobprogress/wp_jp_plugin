@@ -30,7 +30,7 @@
 			<span aria-hidden="true" class="dropdown-wrapper"></span>
 			</span>  -->
 		<input type="text"  placeholder="(xxx) xxx-xxxx" name="phones[{{ index }}][number]" class="phones mask-select phone-number-field" aria-required="true" required /> 
-		<input type="text" placeholder="Extension" name="phones[{{ index }}][ext]" class="extension-field number" maxlength="12" aria-required="true">
+		<input type="text" placeholder="Extension" name="phones[{{ index }}][ext]" class="extension-field" maxlength="12" aria-required="true">
 		</div>
 		<?php echo $this->get_error_wrapper('phones.{{ index }}.number'); ?>
 	</div>	

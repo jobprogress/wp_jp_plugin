@@ -3,7 +3,6 @@ jQuery(function($) {
 	$(window).on('load', function() {
 		setTimeout(function() {
 			$('#jp-message').slideUp(800);
-			console.log('Work');
 		}, 4000);
 	});
 	
@@ -22,16 +21,26 @@ jQuery(function($) {
 			'last_name':  {
 				'required': true
 			},
-			'email':{
-				email: true
+			'contact[0][last_name]': {
+			    required: function(element){
+			            return $("input[name='contact[0][first_name]']").val()!="" && $('input[name="jp_customer_type2"]').is(':checked');
+			        }
 			},
+			'contact[0][first_name]': {
+			    required: function(element){
+			            return $("input[name='contact[0][last_name]']").val()!="" && $('input[name="jp_customer_type2"]').is(':checked') ;
+			        }
+			},
+			// 'email':{
+			// 	email: true
+			// },
 			'captcha': {
 				required: true,
 				remote:  plugin_dir_url+"process.php"
 			},
-			'address[country_id]':  {
-				required: true
-			}
+			// 'address[country_id]':  {
+			// 	required: true
+			// }
 		},
 		messages: {
 			first_name: "Please enter the first name.",
@@ -72,23 +81,23 @@ jQuery(function($) {
 		minimumResultsForSearch: Infinity
 	}).on('change', function (e) {
 		var input = $(this).parent().find('.extension-field');
-		if (e.currentTarget.value == "cell") {
-			input.val(null);
-			input.attr('disabled', true);
-		} else {
-			input.attr('disabled', false);	
-		}
+// 		if (e.currentTarget.value == "cell") {
+// 			input.val(null);
+// 			input.attr('disabled', true);
+// 		} else {
+// 			input.attr('disabled', false);	
+// 		}
 	});
 
 	$(".jp-trade").select2({
 		placeholder: "Select Trade Type"
 	}).on('change', function (e) {
 		var input = $(this).parent().find('.extension-field');
-		if (e.currentTarget.value == "cell") {
-			input.attr('disabled', true);
-		} else {
-			input.attr('disabled', false);	
-		}
+// 		if (e.currentTarget.value == "cell") {
+// 			input.attr('disabled', true);
+// 		} else {
+// 			input.attr('disabled', false);	
+// 		}
 
 		if($.inArray('24', $(this).val()) > -1 ) {
 			$('.other-trade-note-container').show();
@@ -168,12 +177,12 @@ jQuery(function($) {
 			minimumResultsForSearch: Infinity
 		}).on('change', function (e) {
 			var input = $(this).parent().find('.extension-field');
-			if (e.currentTarget.value == "cell") {
-				input.val(null);
-				input.attr('disabled', true);
-			} else {
-				input.attr('disabled', false);	
-			}
+// 			if (e.currentTarget.value == "cell") {
+// 				input.val(null);
+// 				input.attr('disabled', true);
+// 			} else {
+// 				input.attr('disabled', false);
+// 			}
 		});
 
 		x++;
