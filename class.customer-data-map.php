@@ -46,10 +46,10 @@ class Customer_Data_Map {
 		if($this->input['referred_by_id'] === 'other') {
 			$data['referred_by_note'] = $this->input['referred_by_note'];
 			$data['referred_by_type'] = 'other';
-		} 
-
-		if(($this->input['referred_by_id'] === 'referral') 
-			&& !empty($this->input['referred_by_id'])) {
+		
+		} else if(!empty($this->input['referred_by_id']) 
+			&& $this->input['referred_by_id'] != 'other'
+			&& $this->input['referred_by_id'] > 0) {
 			$data['referred_by_type'] = 'referral';
 			$data['referred_by_id'] = $this->input['referred_by_id'];
 		}
