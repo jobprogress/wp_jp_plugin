@@ -27,7 +27,7 @@ class JP_Request {
 	 */
 	public function post($url, $body) {
 		$args = array(
-		    'timeout'     => 5,
+		    'timeout'     => 60,
 		    'headers'     => $this->get_header(),
 		    'body'        => $body,
 		); 
@@ -47,7 +47,7 @@ class JP_Request {
 	 */
 	public function request($url, $body, $method = 'GET') {
 		$arg = array(
-			'timeout' => 5,
+			'timeout' => 60,
 			'headers' => $this->get_header(),
 			'body'	  => $body,
 			'method'  => $method

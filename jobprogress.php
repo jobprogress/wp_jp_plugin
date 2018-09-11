@@ -10,7 +10,7 @@ Author URI: http://www.jobprogress.com/
 // exit;
 define('JP_PLUGIN_DIR', plugin_dir_path( __FILE__ ));
 define('JP_PLUGIN_DIR_URL', plugin_dir_url( __FILE__ ));
-define('API_BASE_URL', 'http://jobprogress.com/api/public/api/v1/');
+define('API_BASE_URL', 'https://jobprogress.com/api/public/api/v1/');
 define('JP_CLIENT_ID', '42766958');
 define('JP_CLIENT_SECRET', 'schs1EKRpLaS1auhTIc25JrlWSjkry1P');
 define('JP_AUTHORIZATION_URL', API_BASE_URL.'login_form');
