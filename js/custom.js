@@ -81,16 +81,46 @@ jQuery(function($) {
 		minimumResultsForSearch: Infinity
 	}).on('change', function (e) {
 		var input = $(this).parent().find('.extension-field');
-// 		if (e.currentTarget.value == "cell") {
-// 			input.val(null);
-// 			input.attr('disabled', true);
-// 		} else {
-// 			input.attr('disabled', false);	
-// 		}
+	});
+
+	$(".main-phone").select2({
+		minimumResultsForSearch: Infinity,
+		dropdownParent: $(".main-phone-container")
+	}).on('change', function (e) {
+		var input = $(this).parent().find('.extension-field');
+	});
+
+	$(".billing-state").select2({
+		minimumResultsForSearch: Infinity,
+		dropdownParent: $(".billing-state-container")
+	}).on('change', function (e) {
+		var input = $(this).parent().find('.extension-field');
+	});
+
+	$(".billing-country").select2({
+		minimumResultsForSearch: Infinity,
+		dropdownParent: $(".billing-country-container")
+	}).on('change', function (e) {
+		var input = $(this).parent().find('.extension-field');
+	});
+
+	$(".state-list").select2({
+		minimumResultsForSearch: Infinity,
+		dropdownParent: $(".state-list-container")
+	}).on('change', function (e) {
+		var input = $(this).parent().find('.extension-field');
+	});
+
+	$(".country-list").select2({
+		minimumResultsForSearch: Infinity,
+		dropdownParent: $(".country-list-container")
+	}).on('change', function (e) {
+		var input = $(this).parent().find('.extension-field');
 	});
 
 	$(".jp-trade").select2({
-		placeholder: "Select Trade Type"
+		placeholder: "Select Trade Type",
+		dropdownParent: $(".jp-trade-container")
 	}).on('change', function (e) {
 		var input = $(this).parent().find('.extension-field');
 // 		if (e.currentTarget.value == "cell") {
@@ -109,6 +139,7 @@ jQuery(function($) {
 	
 	$(".jp-referral").select2({
 		placeholder: "Select Referral",
+		dropdownParent: $(".jp-referral-container")
 	}).on("select2:select", function(e) {
 		if($(this).val() == 'other') {
 			$('.referred-by-note-block').show();
@@ -174,7 +205,8 @@ jQuery(function($) {
 			);
 
 		$('.jp-select-' + x).find('.select-input').select2({
-			minimumResultsForSearch: Infinity
+			minimumResultsForSearch: Infinity,
+			dropdownParent: $('.jp-select-' + x)
 		}).on('change', function (e) {
 			var input = $(this).parent().find('.extension-field');
 // 			if (e.currentTarget.value == "cell") {

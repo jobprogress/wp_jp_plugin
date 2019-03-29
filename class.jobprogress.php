@@ -157,13 +157,18 @@ class JobProgress extends JP_Request {
 			array(),
 			'1.0'
 		);
-
 		wp_enqueue_style(
-			'style',
-			plugin_dir_url( __FILE__ ) . 'css/style.css',
+			'custom-style',
+			plugin_dir_url( __FILE__ ) . 'css/custom.css',
 			array(),
 			'1.0'
 		);
+		// wp_enqueue_style(
+		// 	'style',
+		// 	plugin_dir_url( __FILE__ ) . 'css/style.css',
+		// 	array(),
+		// 	'1.0'
+		// );
 	}
 
 	/**
