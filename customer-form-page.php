@@ -4,16 +4,16 @@
 </script>
 <?php
 if(get_transient("jp_form_submitted")): ?>
-	<div id="jp-message" class="alert-msg alert-msg-success">
+	<div id="jp-message" class="alert alert-success alert-msg alert-msg-success text-center">
 		<?php echo JP_CUSTOMER_FORM_SAVED; ?>
 	</div>
 <?php 
 endif; 
 if($this->customer_form_wpdb_error): ?>
-<div class="alert-msg alert-msg-danger"><?php echo $this->customer_form_wpdb_error; ?></div>
+<div class="alert alert-danger alert-msg alert-msg-danger text-center"><?php echo $this->customer_form_wpdb_error; ?></div>
 <?php endif; ?>
 
-<form class="customer-page" method="post" id = "jobprogrssCustomerSignupForm" action="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>">
+<form class="customer-page customer-page-container" method="post" id = "jobprogrssCustomerSignupForm" action="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>">
 	<div class="form-group form-group-input">
 		<label class="absolute-label">Customer Type</label>
 		<div class="form-group-inner">
