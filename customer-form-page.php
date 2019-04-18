@@ -28,8 +28,8 @@ if($this->customer_form_wpdb_error): ?>
 			<?php echo $this->get_error_wrapper('customer_type'); ?>
 		</div>
 	</div>
-	<div class="row inline-fields-row">
-		<div class="col-sm-6 inline-fields-col">
+	<div class="inline-fields-row">
+		<div class="inline-fields-col">
 			<div class="form-group form-group-input jobprogress-residential-type jp-name">
 				<label class="absolute-label">First Name <span class="required-sign">*</span></label>
 				<div>
@@ -38,7 +38,7 @@ if($this->customer_form_wpdb_error): ?>
 				</div>
 			</div>
 		</div>
-		<div class="col-sm-6 inline-fields-col">
+		<div class="inline-fields-col">
 			<div class="form-group form-group-input jobprogress-residential-type jp-name">
 				<label class="absolute-label">Last Name <span class="required-sign">*</span></label>
 				<div>
@@ -48,9 +48,9 @@ if($this->customer_form_wpdb_error): ?>
 			</div>
 		</div>
 	</div>
-	<div class="row inline-fields-row">
-		<div class="col-sm-6 inline-fields-col">
-			<div class="form-group form-group-input jobprogress-commercial-type" style="display:none;">
+	<div class="inline-fields-row jobprogress-commercial-type" style="display:none;">
+		<div class="inline-fields-col">
+			<div class="form-group form-group-input">
 				<label class="absolute-label">First Name</label>
 				<div>
 					<input type="text" class="form-control" name="contact[0][first_name]" placeholder="First Name"/>
@@ -58,8 +58,8 @@ if($this->customer_form_wpdb_error): ?>
 				</div>
 			</div>
 		</div>
-		<div class="col-sm-6 inline-fields-col">
-			<div class="form-group form-group-input jobprogress-commercial-type" style="display:none;">
+		<div class="inline-fields-col">
+			<div class="form-group form-group-input">
 				<label class="absolute-label">Last Name</label>
 				<div>
 					<input type="text" class="form-control" name="contact[0][last_name]"  placeholder="Last Name"/>
@@ -134,8 +134,8 @@ if($this->customer_form_wpdb_error): ?>
 			<input type="text" class="form-control" placeholder="Address" name="address[address_line_1]"/>
 		</div>
 	</div>
-	<div class="row inline-fields-row">
-		<div class="col-sm-6 inline-fields-col">
+	<div class="inline-fields-row">
+		<div class="inline-fields-col">
 			<div class="form-group form-group-input address-field-col">
 				<label class="absolute-label">City <!-- <span class="required-sign">*</span> --></label>
 				<div>
@@ -144,7 +144,7 @@ if($this->customer_form_wpdb_error): ?>
 				</div>
 			</div>
 		</div>
-		<div class="col-sm-6 inline-fields-col">
+		<div class="inline-fields-col">
 			<div class="form-group form-group-input state-list-container">
 				<label class="state absolute-label">State <!-- <span class="required-sign">*</span> --></label>
 				<div>
@@ -160,8 +160,8 @@ if($this->customer_form_wpdb_error): ?>
 			</div>
 		</div>
 	</div>
-	<div class="row inline-fields-row">
-		<div class="col-sm-6 inline-fields-col">
+	<div class="inline-fields-row">
+		<div class="inline-fields-col">
 			<div class="form-group form-group-input address-field-col">
 				<label class="absolute-label">zip <!-- <span class="required-sign">*</span> --></label>
 				<div>
@@ -170,7 +170,7 @@ if($this->customer_form_wpdb_error): ?>
 				</div>
 			</div>
 		</div>
-		<div class="col-sm-6 inline-fields-col">
+		<div class="inline-fields-col">
 			<div class="form-group form-group-input country-list-container">
 				<label class="country absolute-label">Country <!-- <span class="required-sign">*</span> --></label>
 				<div>
@@ -205,8 +205,8 @@ if($this->customer_form_wpdb_error): ?>
 				<input type="text" class="form-control" placeholder="Address" name="billing[address_line_1]"/>
 			</div>
 		</div>
-		<div class="row inline-fields-row">
-			<div class="col-sm-6 inline-fields-col">
+		<div class="inline-fields-row">
+			<div class="inline-fields-col">
 				<div class="form-group form-group-input address-field-col">
 					<label class="absolute-label">City</label>
 					<div>
@@ -214,7 +214,7 @@ if($this->customer_form_wpdb_error): ?>
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-6 inline-fields-col">
+			<div class="inline-fields-col">
 				<div class="form-group form-group-input billing-state-container">
 					<label class="state absolute-label">State</label>
 					<div>
@@ -228,8 +228,8 @@ if($this->customer_form_wpdb_error): ?>
 				</div>
 			</div>
 		</div>
-		<div class="row inline-fields-row">
-			<div class="col-sm-6 inline-fields-col">
+		<div class="inline-fields-row">
+			<div class="inline-fields-col">
 				<div class="form-group form-group-input address-field-col">
 					<label class="absolute-label">zip</label>
 					<div>
@@ -237,7 +237,7 @@ if($this->customer_form_wpdb_error): ?>
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-6 inline-fields-col">
+			<div class="inline-fields-col">
 				<div class="form-group form-group-input billing-country-container">
 					<label class="country absolute-label">Country</label>
 					<div>

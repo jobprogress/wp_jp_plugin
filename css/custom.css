@@ -3,6 +3,10 @@
     margin: auto;
     color: #555;
 }
+.customer-page-container * {
+    text-transform: initial !important;
+    letter-spacing: normal !important;
+}
 .customer-page {
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important;
     font-size: 14px;
@@ -63,8 +67,15 @@
 }
 .customer-page-container input:focus,
 .customer-page-container textarea:focus,
-.customer-page-container .form-control:focus {
+.customer-page-container .form-control:focus,
+textarea:focus,
+input[type="text"]:focus,
+input[type="number"]:focus, 
+input[type="email"]:focus, 
+input[type="search"]:focus, 
+input[type="tel"]:focus {
     box-shadow: unset !important;
+    outline: 0 !important;
 }
 .customer-page-container .form-group-inner {
     padding: 10px 7px 4px;
@@ -129,6 +140,7 @@
     text-decoration: none !important;
     font-weight: 400 !important;
     cursor: pointer;
+    box-shadow: unset !important;
 }
 .customer-page-container a.add-item-repeat img {
     width: 11px;
@@ -338,19 +350,30 @@
     color: red;
 }
 .customer-page-container .inline-fields-row {
-    margin-left: -8px !important;
-    margin-right: -8px !important;
+    display: table;
+    width: 100%;
 }
 .customer-page-container .inline-fields-col {
-    padding-left: 8px !important;
-    padding-right: 8px !important;
+    display: table-cell;
+    width: 50%;
+}
+.customer-page-container .inline-fields-col:first-child {
+    padding-right: 8px;
+}
+.customer-page-container .inline-fields-col:last-child {
+    padding-left: 8px;
 }
 .customer-page-container .jp-trade-container .select2-container .select2-results__option {
     font-size: 11px;
 }
 /* Mobile view */
+.form-mobile-view .inline-fields-row {
+    display: block;
+}
 .form-mobile-view .inline-fields-col {
+    display: block;
     width: 100% !important;
+    padding: 0 !important;
 }
 .form-mobile-view .form-combine-select {
     display: block;
