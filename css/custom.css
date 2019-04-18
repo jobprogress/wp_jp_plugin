@@ -4,7 +4,7 @@
     color: #555;
 }
 .customer-page {
-    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important;
     font-size: 14px;
     padding: 20px 0;
     line-height: 1.42857;
@@ -61,8 +61,10 @@
     margin-bottom: 0;
     color: #555 !important;
 }
+.customer-page-container input:focus,
+.customer-page-container textarea:focus,
 .customer-page-container .form-control:focus {
-    box-shadow: unset;
+    box-shadow: unset !important;
 }
 .customer-page-container .form-group-inner {
     padding: 10px 7px 4px;
@@ -72,6 +74,9 @@
     display: inline-block;
     margin-right: 30px; 
     margin-bottom: 5px;
+}
+.customer-page-container .selection-col:last-child {
+    margin-right: 0;
 }
 .customer-page-container .selection-col input {
     position: absolute;
@@ -140,7 +145,7 @@
 .customer-page-container .additional-val.remove {
     position: absolute;
     top: 50%;
-    right: 8px;
+    right: -20px;
     cursor: pointer;
     transform: translateY(-50%);
 }
@@ -197,7 +202,7 @@
     box-shadow: unset;
     border-color: #b8d3eb;
     padding: 3px 25px 2px 5px;
-    font-size: 12px;
+    font-size: 11px;
     margin: 2px 5px 2px 0;
 }
 .customer-page-container .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
@@ -227,16 +232,15 @@
     color: #C81B1B;
     font-size: 11px;
     font-weight: 400;
-    bottom: -16px;
+    bottom: -14px;
     left: 0;
     margin: 0;
+    line-height: normal;
 }
 .customer-page-container .sm-select {
-    display: inline-block;
+    display: table-cell;
+    vertical-align: middle;
     width: 70px;
-    vertical-align: top;
-    margin-right: 5px; 
-    margin-bottom: 5px;
 }
 .customer-page-container .sm-select .select2-container .select2-selection--single {
     background-color: #f1f2f6;
@@ -250,13 +254,15 @@
     height: 26px;
 }
 .customer-page-container .form-combine-select {
+    display: table;
+    width: 100%;
     padding: 6px 8px 3px;
 }
 .customer-page-container .ext-field {
+    display: table-cell;
+    vertical-align: middle;
     background: #F1F2F6;
     width: 100px;
-    display: inline-block;
-    margin-right: 15px;
     border-radius: 1px;
     margin-bottom: 5px;
 }
@@ -266,14 +272,12 @@
     padding-right: 0;
 }
 .customer-page-container .phone-number-field {
-    display: inline-block;
-    width: auto;
-    vertical-align: top;
+    display: table-cell;
+    vertical-align: middle;
     height: 26px;
     line-height: 26px;
-    width: 100px !important;
-    padding-left: 0 !important;
-    margin-bottom: 5px;
+    width: 95% !important;
+    padding-left: 10px !important;
 }
 .customer-page-container .billing-label {
     font-size: 13px;
@@ -332,4 +336,36 @@
 }
 .customer-page-container .required-sign {
     color: red;
+}
+.customer-page-container .inline-fields-row {
+    margin-left: -8px !important;
+    margin-right: -8px !important;
+}
+.customer-page-container .inline-fields-col {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+}
+.customer-page-container .jp-trade-container .select2-container .select2-results__option {
+    font-size: 11px;
+}
+/* Mobile view */
+.form-mobile-view .inline-fields-col {
+    width: 100% !important;
+}
+.form-mobile-view .form-combine-select {
+    display: block;
+}
+.form-mobile-view .form-combine-select .sm-select,
+.form-mobile-view .form-combine-select .phone-number-field,
+.form-mobile-view .form-combine-select .ext-field {
+    display: block;
+    width: 100%;
+}
+.form-mobile-view .form-combine-select .phone-number-field {
+    padding-left: 0 !important;
+    height: 32px;
+    line-height: 31px;
+}
+.form-mobile-view #captcha-error {
+    bottom: -25px;
 }

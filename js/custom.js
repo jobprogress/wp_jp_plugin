@@ -5,6 +5,13 @@ jQuery(function($) {
 			$('#jp-message').slideUp(800);
 		}, 4000);
 	});
+
+	var containerWidth = $(".customer-page-container").width();
+	if(containerWidth < 350) {
+		$(".customer-page-container").addClass("form-mobile-view");
+	} else {
+		$(".customer-page-container").removeClass("form-mobile-view");
+	}
 	
 	$("body").on("click", "#refreshimg", function(){
 		$("#captchaimage").load(plugin_dir_url+"image_req.php", { 'jp_plugin_dir_url':plugin_dir_url });
