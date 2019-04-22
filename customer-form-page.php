@@ -131,7 +131,7 @@ if($this->customer_form_wpdb_error): ?>
 	<div class="form-group form-group-input">
 		<label class="absolute-label">Address Line 2</label>
 		<div>
-			<input type="text" class="form-control" placeholder="Address" name="address[address_line_1]"/>
+			<input type="text" class="form-control" placeholder="Address Line 2" name="address[address_line_1]"/>
 		</div>
 	</div>
 	<div class="inline-fields-row">
@@ -163,9 +163,9 @@ if($this->customer_form_wpdb_error): ?>
 	<div class="inline-fields-row">
 		<div class="inline-fields-col">
 			<div class="form-group form-group-input address-field-col">
-				<label class="absolute-label">zip <!-- <span class="required-sign">*</span> --></label>
+				<label class="absolute-label">Zip <!-- <span class="required-sign">*</span> --></label>
 				<div>
-					<input type="text" class="number form-control" placeholder="zip" name="address[zip]" maxLength="5" />
+					<input type="text" class="number form-control" placeholder="Zip" name="address[zip]" maxLength="5" />
 					<?php echo $this->get_error_wrapper('zip'); ?>
 				</div>
 			</div>

@@ -6,9 +6,10 @@
 .customer-page-container * {
     text-transform: initial !important;
     letter-spacing: normal !important;
+    font-family: "Roboto", sans-serif !important;
 }
 .customer-page {
-    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important;
+    font-family: "Roboto", sans-serif !important;
     font-size: 14px;
     padding: 20px 0;
     line-height: 1.42857;
