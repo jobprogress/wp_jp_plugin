@@ -5,6 +5,13 @@ jQuery(function($) {
 			$('#jp-message').slideUp(800);
 		}, 4000);
 	});
+
+	var containerWidth = $(".customer-page-container").width();
+	if(containerWidth < 350) {
+		$(".customer-page-container").addClass("form-mobile-view");
+	} else {
+		$(".customer-page-container").removeClass("form-mobile-view");
+	}
 	
 	$("body").on("click", "#refreshimg", function(){
 		$("#captchaimage").load(plugin_dir_url+"image_req.php", { 'jp_plugin_dir_url':plugin_dir_url });
@@ -81,16 +88,46 @@ jQuery(function($) {
 		minimumResultsForSearch: Infinity
 	}).on('change', function (e) {
 		var input = $(this).parent().find('.extension-field');
-// 		if (e.currentTarget.value == "cell") {
-// 			input.val(null);
-// 			input.attr('disabled', true);
-// 		} else {
-// 			input.attr('disabled', false);	
-// 		}
+	});
+
+	$(".main-phone").select2({
+		minimumResultsForSearch: Infinity,
+		dropdownParent: $(".main-phone-container")
+	}).on('change', function (e) {
+		var input = $(this).parent().find('.extension-field');
+	});
+
+	$(".billing-state").select2({
+		minimumResultsForSearch: Infinity,
+		dropdownParent: $(".billing-state-container")
+	}).on('change', function (e) {
+		var input = $(this).parent().find('.extension-field');
+	});
+
+	$(".billing-country").select2({
+		minimumResultsForSearch: Infinity,
+		dropdownParent: $(".billing-country-container")
+	}).on('change', function (e) {
+		var input = $(this).parent().find('.extension-field');
+	});
+
+	$(".state-list").select2({
+		minimumResultsForSearch: Infinity,
+		dropdownParent: $(".state-list-container")
+	}).on('change', function (e) {
+		var input = $(this).parent().find('.extension-field');
+	});
+
+	$(".country-list").select2({
+		minimumResultsForSearch: Infinity,
+		dropdownParent: $(".country-list-container")
+	}).on('change', function (e) {
+		var input = $(this).parent().find('.extension-field');
 	});
 
 	$(".jp-trade").select2({
-		placeholder: "Select Trade Type"
+		placeholder: "Select Trade Type",
+		dropdownParent: $(".jp-trade-container")
 	}).on('change', function (e) {
 		var input = $(this).parent().find('.extension-field');
 // 		if (e.currentTarget.value == "cell") {
@@ -109,6 +146,7 @@ jQuery(function($) {
 	
 	$(".jp-referral").select2({
 		placeholder: "Select Referral",
+		dropdownParent: $(".jp-referral-container")
 	}).on("select2:select", function(e) {
 		if($(this).val() == 'other') {
 			$('.referred-by-note-block').show();
@@ -137,7 +175,7 @@ jQuery(function($) {
 	// add first additional email
 	$('.start-additional-emails').on('click', function(e) {
 		if($('.additional-emails').length === 4) {
-			$('.start-additional-emails').css('pointer-events', 'none');
+			$('.start-additional-emails').css('display', 'none');
 		}
 		
 		var template = _.template($('.additional-email').html());
@@ -150,7 +188,7 @@ jQuery(function($) {
 	//remove additional email
 	$('body').delegate('.additional-email-remove', 'click', function(e) {
 		$(this).parent().remove();
-		$('.start-additional-emails').css('pointer-events', 'auto');
+		$('.start-additional-emails').css('display', 'inline-block');
 	});
 
 	/**
@@ -159,7 +197,7 @@ jQuery(function($) {
 	var x = 1;
 	$('body').delegate('.add-additional-phone', 'click', function(e) {
 		if($('.jobprogress-customer-phone').length === 4) {
-			$('.add-additional-phone').css('pointer-events', 'none');
+			$('.add-additional-phone').css('display', 'none');
 		}
 		
 		var template = _.template($('.additional-phone').html());
@@ -174,7 +212,8 @@ jQuery(function($) {
 			);
 
 		$('.jp-select-' + x).find('.select-input').select2({
-			minimumResultsForSearch: Infinity
+			minimumResultsForSearch: Infinity,
+			dropdownParent: $('.jp-select-' + x)
 		}).on('change', function (e) {
 			var input = $(this).parent().find('.extension-field');
 // 			if (e.currentTarget.value == "cell") {
@@ -191,7 +230,7 @@ jQuery(function($) {
 
 	$('body').delegate('.remove-additional-phone', 'click', function(e) {
 		$(this).parent().remove();
-		$('.add-additional-phone').css('pointer-events', 'auto');
+		$('.add-additional-phone').css('display', 'inline-block');
 	});
 
 	$("input:checkbox[name='same_as_customer_address']").on('change', function(){
