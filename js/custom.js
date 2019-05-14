@@ -5,6 +5,13 @@ jQuery(function($) {
 			$('#jp-message').slideUp(800);
 		}, 4000);
 	});
+
+	var containerWidth = $(".customer-page-container").width();
+	if(containerWidth < 350) {
+		$(".customer-page-container").addClass("form-mobile-view");
+	} else {
+		$(".customer-page-container").removeClass("form-mobile-view");
+	}
 	
 	$("body").on("click", "#refreshimg", function(){
 		$("#captchaimage").load(plugin_dir_url+"image_req.php", { 'jp_plugin_dir_url':plugin_dir_url });
@@ -168,7 +175,7 @@ jQuery(function($) {
 	// add first additional email
 	$('.start-additional-emails').on('click', function(e) {
 		if($('.additional-emails').length === 4) {
-			$('.start-additional-emails').css('pointer-events', 'none');
+			$('.start-additional-emails').css('display', 'none');
 		}
 		
 		var template = _.template($('.additional-email').html());
@@ -181,7 +188,7 @@ jQuery(function($) {
 	//remove additional email
 	$('body').delegate('.additional-email-remove', 'click', function(e) {
 		$(this).parent().remove();
-		$('.start-additional-emails').css('pointer-events', 'auto');
+		$('.start-additional-emails').css('display', 'inline-block');
 	});
 
 	/**
@@ -190,7 +197,7 @@ jQuery(function($) {
 	var x = 1;
 	$('body').delegate('.add-additional-phone', 'click', function(e) {
 		if($('.jobprogress-customer-phone').length === 4) {
-			$('.add-additional-phone').css('pointer-events', 'none');
+			$('.add-additional-phone').css('display', 'none');
 		}
 		
 		var template = _.template($('.additional-phone').html());
@@ -223,7 +230,7 @@ jQuery(function($) {
 
 	$('body').delegate('.remove-additional-phone', 'click', function(e) {
 		$(this).parent().remove();
-		$('.add-additional-phone').css('pointer-events', 'auto');
+		$('.add-additional-phone').css('display', 'inline-block');
 	});
 
 	$("input:checkbox[name='same_as_customer_address']").on('change', function(){
