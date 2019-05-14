@@ -13,7 +13,7 @@ if($this->customer_form_wpdb_error): ?>
 <div class="alert-msg alert-msg-danger"><?php echo $this->customer_form_wpdb_error; ?></div>
 <?php endif; ?>
 
-<form class="customer-page" method="post" id = "jobprogrssCustomerSignupForm" action="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>">
+<form class="customer-page customer-page-container" method="post" id = "jobprogrssCustomerSignupForm" action="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>">
 	<div class="form-group form-group-input">
 		<label class="absolute-label">Customer Type</label>
 		<div class="form-group-inner">
