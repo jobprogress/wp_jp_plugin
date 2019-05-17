@@ -393,3 +393,23 @@ input[type="tel"]:focus {
 .form-mobile-view #captcha-error {
     bottom: -25px;
 }
+.captcha-wrap {
+    text-align: center !important;
+}
+#jp_captcha {
+    position: relative;
+    padding: 10px !important;
+    display: inline-block;
+}
+.captcha-invalid {
+    display: block !important;
+}
+.refresh-captcha {
+    position: absolute;
+    cursor: pointer;
+    right: 15px;
+    bottom: 45px;
+}
+.refresh-captcha img {
+    width: 15px;
+}
