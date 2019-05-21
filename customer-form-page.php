@@ -165,7 +165,7 @@ if($this->customer_form_wpdb_error): ?>
 			<div class="form-group form-group-input address-field-col">
 				<label class="absolute-label">Zip <!-- <span class="required-sign">*</span> --></label>
 				<div>
-					<input type="text" class="number form-control" placeholder="Zip" name="address[zip]" maxLength="10" />
+					<input type="text" class="form-control" placeholder="Zip" name="address[zip]" maxLength="10" />
 					<?php echo $this->get_error_wrapper('zip'); ?>
 				</div>
 			</div>
@@ -233,7 +233,7 @@ if($this->customer_form_wpdb_error): ?>
 				<div class="form-group form-group-input address-field-col">
 					<label class="absolute-label">zip</label>
 					<div>
-						<input type="text" class="form-control" placeholder="zip code" name="billing[zip]" maxLength="5" />
+						<input type="text" class="form-control" placeholder="zip code" name="billing[zip]" maxLength="10" />
 					</div>
 				</div>
 			</div>

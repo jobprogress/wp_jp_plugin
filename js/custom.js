@@ -13,6 +13,10 @@ jQuery(function($) {
 		$(".customer-page-container").removeClass("form-mobile-view");
 	}
 	
+	jQuery.validator.addMethod("alphanumeric", function(value, element) {
+	    return this.optional(element) || /^[a-z0-9\\-]+$/i.test(value);
+	}, "Only letters and numbers are allowed");
+
 	// validate signup form on keyup and submit
 	$("#jobprogrssCustomerSignupForm").validate({
 		email:true,
@@ -32,6 +36,12 @@ jQuery(function($) {
 			    required: function(element){
 			            return $("input[name='contact[0][last_name]']").val()!="" && $('input[name="jp_customer_type2"]').is(':checked') ;
 			        }
+			},
+			'address[zip]': {
+                alphanumeric: true
+			},
+			'billing[zip]': {
+                alphanumeric: true
 			},
 			'cpatchaTextBox': {
 				required: true
