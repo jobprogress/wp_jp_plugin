@@ -17,9 +17,9 @@ class JobProgress extends JP_Request {
 	 * Initializes WordPress hooks
 	 */
 	private function init_hooks() {
+		add_action('admin_enqueue_scripts', array($this, 'admin_script'));
 		add_action('wp_footer', array($this, 'scripts'));
 		add_action('admin_menu',array($this, 'jp_admin_page') );
-		add_action('admin_enqueue_scripts', array($this, 'admin_script'));
 	}
 
 	/**

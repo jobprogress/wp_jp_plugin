@@ -165,7 +165,7 @@ if($this->customer_form_wpdb_error): ?>
 			<div class="form-group form-group-input address-field-col">
 				<label class="absolute-label">Zip <!-- <span class="required-sign">*</span> --></label>
 				<div>
-					<input type="text" class="number form-control" placeholder="Zip" name="address[zip]" maxLength="5" />
+					<input type="text" class="form-control" placeholder="Zip" name="address[zip]" maxLength="10" />
 					<?php echo $this->get_error_wrapper('zip'); ?>
 				</div>
 			</div>
@@ -233,7 +233,7 @@ if($this->customer_form_wpdb_error): ?>
 				<div class="form-group form-group-input address-field-col">
 					<label class="absolute-label">zip</label>
 					<div>
-						<input type="text" class="form-control" placeholder="zip code" name="billing[zip]" maxLength="5" />
+						<input type="text" class="form-control" placeholder="zip code" name="billing[zip]" maxLength="10" />
 					</div>
 				</div>
 			</div>
@@ -305,13 +305,15 @@ if($this->customer_form_wpdb_error): ?>
 	</div>
 	
 	<div style="position: relative;">
-		<div class="form-group form-group-input">
+		<div class="captcha-wrap form-group form-group-input">
 			<label class="absolute-label">Enter Captcha<span class="required-sign">*</span></label>
-			<div id="captchaimage">
-				<a href="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>" id="refreshimg" title="Click to refresh image"><img src="<?php echo plugin_dir_url( __FILE__ ); ?>captcha_image/image.php?<?php echo time(); ?>" width="132" height="46"></a>
-			</div>
-			<input type="text" class="form-control captcha-input" maxlength="6" name="captcha" id="captcha" placeholder="Enter Captcha" required>
+			<div id="jp_captcha"></div>
+			<input type="text" class="form-control captcha-input" placeholder="Enter Captcha" name="cpatchaTextBox" id="cpatchaTextBox"/>
+			<span class="refresh-captcha" title="Refresh captcha">
+				<img src="<?php echo plugin_dir_url( __FILE__ ); ?>img/sync-alt.svg">
+			</span>
 		</div>
+		<label class="error captcha-invalid"></label>
 	</div>
 
 	<div class="text-center form-btn">
