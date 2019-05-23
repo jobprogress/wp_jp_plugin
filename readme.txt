@@ -2,8 +2,8 @@
 Contributors: jobprogress
 Donate link: http://www.jobprogress.com/
 Requires at least: 3.0.1
-Tested up to: 4.5.3
-Stable tag: 1.0.1
+Tested up to: 5.1
+Stable tag: 3.0.2
 Tags: customer-manager
 License: GPLv2 or later
 
@@ -18,9 +18,35 @@ We have an entire team of dedicated ready to help you.  Ask your questions in th
 = Service =
 Customer Management Service through the plugin for JobProgress.
 
+== Changelog ==
+= 3.0.3 =
+1. Enable Canadaian Zip Code
+2. Captcha Changed due to security reason
 
+= 3.0.2 =
+1. UI/UX Improvements
 
 == Changelog ==
+= 3.0.1 =
+1. Compatibility Upto 5.1
+
+== Changelog ==
+= 3.0.0 =
+1. Compatibility Upto 5.0.3
+
+= 2.0.1 =
+1. Increase timeout for Get and Post request.
+2. Set SSL Request
+
+= 2.0 =
+1. Change Fields validation as Web APP
+
+= 1.0.2 =
+1. Made Email Mandatory
+2. Add New Field Refferd By
+3. Add Captcha For Security Reason
+4. Made Address Mandatory
+
 = 1.0.1 =
 First Release
 
