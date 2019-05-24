@@ -20,7 +20,7 @@ Customer Management Service through the plugin for JobProgress.
 
 == Changelog ==
 = 3.0.3 =
-1. Enable Canadaian Zip Code
+1. Enable Canadian Zip Code
 2. Captcha Changed due to security reason
 
 = 3.0.2 =
