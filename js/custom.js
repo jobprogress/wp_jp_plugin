@@ -245,7 +245,7 @@ jQuery(function($) {
 	var code;
 	function createCaptcha() {
 	  	//clear the contents of captcha div first 
-	  	if(document.getElementById('jp_captcha') !=null) {
+	  	if(document.getElementById('jp_captcha')) {
 		  	document.getElementById('jp_captcha').innerHTML = "";
 		  	var charsArray =
 		  	"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@!#$%^&*";
