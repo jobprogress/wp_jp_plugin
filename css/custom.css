@@ -357,6 +357,7 @@ input[type="tel"]:focus {
 .customer-page-container .inline-fields-col {
     display: table-cell;
     width: 50%;
+    vertical-align: top;
 }
 .customer-page-container .inline-fields-col:first-child {
     padding-right: 8px;
