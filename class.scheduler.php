@@ -112,9 +112,7 @@ class Scheduler extends JobProgress {
 		$input['last_name']  = $customer->last_name;
 		$input['company_name'] = $customer->company_name;
 
-		if($customer->email) {
-			$input['email'] = trim($customer->email);
-		}
+		$input['email'] = trim($customer->email);
 		$input['additional_emails'] = json_decode($customer->additional_emails, true);
 		$address = json_decode($customer->address, true);
 		$input['address'] = $address['address'];
