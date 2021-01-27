@@ -30,11 +30,17 @@ define('JP_CUSTOMER_FORM_SAVED', 'Your request sent successfully.');
 require_once(JP_PLUGIN_DIR. 'class.jp-request.php');
 require_once(JP_PLUGIN_DIR. 'class.jobprogress.php');
 require_once(JP_PLUGIN_DIR. 'class.customer.php');
+require_once(JP_PLUGIN_DIR. 'class.form_settings.php');
 require_once(JP_PLUGIN_DIR. 'class.scheduler.php');
 $scheduler = New Scheduler;
 $customer  = New Customer;
+$settings = New Form_Settings;
 register_activation_hook(__FILE__, array($customer, 'plugin_activation'));
 register_deactivation_hook(__FILE__, array($customer, 'plugin_deactivation'));
+
+// For form settings page
+register_activation_hook(__FILE__, array($settings, 'plugin_activation'));
+register_deactivation_hook(__FILE__, array($settings, 'plugin_deactivation'));
 
 function ine($haystack,$needle){
 	return (isset($haystack[$needle]) && !empty($haystack[$needle]));

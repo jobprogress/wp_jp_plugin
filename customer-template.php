@@ -37,7 +37,7 @@
 			<img src="<?php echo plugin_dir_url( __FILE__ ); ?>/img/close-icon-red.png" alt="close">
 		</a>
 		<?php echo $this->get_error_wrapper('phones.{{ index }}.number'); ?>
-	</div>	
+	</div>
 </script>
 
 <script type="text/template" class="additional-email">

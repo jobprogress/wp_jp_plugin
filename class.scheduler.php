@@ -124,6 +124,7 @@ class Scheduler extends JobProgress {
 		$input['billing']['same_as_customer_address'] = (int)$address['same_as_customer_address'];
 		$input['job'] = json_decode($customer->job, true);
 		$input['referred_by_id']   = $customer->referred_by_id;
+		$input['referred_source']   = $customer->referred_source;
 		$input['referred_by_type'] = $customer->referred_by_type;
 		$input['referred_by_note'] = $customer->referred_by_note;
 		if(!empty($customer->contact) && ($customer->is_commercial) ) {

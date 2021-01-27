@@ -185,8 +185,14 @@ class JobProgress extends JP_Request {
 			wp_enqueue_script('custom-admin-side', plugin_dir_url( __FILE__ ) .'js/custom-admin-side.js');
 		}
 		if((string)$hook === 'toplevel_page_jp_admin_page'
-			|| (string)$hook === 'jobprogress_page_jp_customer_page' ) {
+		|| (string)$hook === 'jobprogress_page_jp_customer_page' ) {
 			wp_enqueue_style('custom', plugin_dir_url( __FILE__ ) . 'css/admin-style.css');
+		}
+		if((string)$hook === 'jobprogress_page_jp_settings_page' ) {
+			wp_enqueue_style('custom-ui', '//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css');
+			wp_enqueue_style('form-settings', plugin_dir_url( __FILE__ ) . 'css/form-settings.css');
+			wp_enqueue_script('form-settings', plugin_dir_url( __FILE__ ) .'js/form-settings.js');
+			wp_enqueue_script('jquery-sort', plugin_dir_url( __FILE__ ) .'js/jquery-ui.min.js');
 		}
 	}
 
@@ -211,7 +217,7 @@ class JobProgress extends JP_Request {
 		  customer_id int(10) DEFAULT NULL,
 		  PRIMARY KEY (id)
 		)";
-        $sql = "ALTER TABLE ".$this->wpdb->prefix."customers ADD referred_by_id int(12) NULL, ADD referred_by_type varchar(255) DEFAULT NULL, ADD referred_by_note text DEFAULT NULL;";
+        $sql = "ALTER TABLE ".$this->wpdb->prefix."customers ADD referred_by_id int(12) NULL, ADD referred_source varchar(255) DEFAULT NULL, ADD referred_by_type varchar(255) DEFAULT NULL, ADD referred_by_note text DEFAULT NULL;";
 
         $addContactField = "ALTER TABLE ". $this->wpdb->prefix."customers ADD contact text DEFAULT NULL;";
 		$this->wpdb->show_errors = false;
@@ -278,6 +284,7 @@ class JobProgress extends JP_Request {
 		delete_transient('jp_countries');
 		delete_transient('jp_referrals');
 		delete_option('jp_token_options');
+		delete_option('jp_customer_form_fields');
 		delete_option('jp_connected_user');
 		wp_clear_scheduled_hook('jp_token_refresh_hook');
 		wp_clear_scheduled_hook('jp_customer_sync_hook');

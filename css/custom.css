@@ -52,9 +52,6 @@
 .customer-page-container .input-group-addon {
     border: 0;
     background: #fff;
-    a {
-        padding: 6px;
-    }
 }
 .customer-page-container .form-control {
     width: 100%;
@@ -413,4 +410,14 @@ input[type="tel"]:focus {
 }
 .refresh-captcha img {
     width: 15px;
+}
+/* form ordering */
+.jp-customer-form-wrap {
+    display: flex;
+    flex-direction: column;
+}
+.referred-src-col {
+    background-color: #f9f9f9;
+    cursor: not-allowed;
+    opacity: 0.7;
 }

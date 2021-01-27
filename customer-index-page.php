@@ -70,6 +70,12 @@ if($order == 'asc') {
 							<span class="sorting-indicator"></span>
 						</a>
 					</th>
+					<th class="manage-column column-referred_source column-primary" id="referred_source" scope="col">
+						<a href="">
+							<span>Referred Source</span>
+							<span class="sorting-indicator"></span>
+						</a>
+					</th>
 
 					<th class="manage-column column-trade" id="trade" scope="col">
 						<a href="">
@@ -89,7 +95,7 @@ if($order == 'asc') {
 			<tbody id="the-list">
 				<?php if(empty($customers)): ?>
 				<tr>
-					<td colspan="5"><center><b>No Customer Found.</b></center></td>
+					<td colspan="6"><center><b>No Customer Found.</b></center></td>
 				</tr>
 				<?php endif; ?>
 			<?php foreach ($customers as $key => $customer): ?>
@@ -152,6 +158,9 @@ if($order == 'asc') {
 						}
 					?>
 				</a>
+			</td>
+			<td data-colname="referred_source" class="referred_source column-referred_source">
+				<?php echo $customer->referred_source ?>
 			</td>
 			<td data-colname="job-detail" class="column-job-detail">
 				<a>
