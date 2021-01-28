@@ -1,10 +1,4 @@
 /* sortable fields ui */
-.sortable-fields-wrap {
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: column;
-    flex-direction: column;
-}
 .sortable-fields-wrap .ui-sortable-placeholder {
     height: 32px;
     border-radius: 6px;
@@ -156,4 +150,15 @@
 }
 .field-visiblity-checkbox input[type="checkbox"]:disabled + .checkbox-style:before {
     opacity: 0.4;
+}
+.form-settings-submit p {
+    display: inline-block;
+}
+.form-settings-submit .settings-loader {
+    display: none;
+    vertical-align: middle;
+}
+.form-settings-submit .settings-loader img {
+    width: 44px;
+    height: 44px;
 }

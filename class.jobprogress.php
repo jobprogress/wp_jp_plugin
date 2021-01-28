@@ -98,6 +98,71 @@ class JobProgress extends JP_Request {
 				$referrals = $this->get(JP_REFERRALS_URL);
 				set_transient("jp_referrals", $referrals, 86400);
 			}
+
+			// customer form settings
+			$settings = array(
+				'field1' => array(
+					'name' => 'customer_type',
+					'title' => 'Customer Type',
+					'isHide' => '0'
+				),
+				'field2' => array(
+					'name' => 'customer_name',
+					'title' => 'Customer Name',
+					'isHide' => '0',
+					'isCommercial' => array(
+						'name' => 'customer_name_commercial',
+						'title' => 'Commercial',
+						'isHide' => '0'
+					)
+				),
+				'field3' => array(
+					'name' => 'company_name',
+					'title' => 'Company Name',
+					'isHide' => '0',
+					'isCommercial' => array(
+						'name' => 'company_name_commercial',
+						'title' => 'Commercial',
+						'isHide' => '0'
+					)
+				),
+				'field4' => array(
+					'name' => 'customer_phone',
+					'title' => 'Customer Phone',
+					'isHide' => '0'
+				),
+				'field5' => array(
+					'name' => 'customer_email',
+					'title' => 'Customer Email',
+					'isHide' => '0'
+				),
+				'field6' => array(
+					'name' => 'customer_address',
+					'title' => 'Customer address',
+					'isHide' => '0'
+				),
+				'field7' => array(
+					'name' => 'billing_address',
+					'title' => 'Billing address',
+					'isHide' => '0'
+				),
+				'field8' => array(
+					'name' => 'referred_by',
+					'title' => 'Referred By',
+					'isHide' => '0'
+				),
+				'field9' => array(
+					'name' => 'trades',
+					'title' => 'Trades',
+					'isHide' => '0'
+				),
+				'field10' => array(
+					'name' => 'description',
+					'title' => 'Description',
+					'isHide' => '0'
+				)
+			);
+			update_option( 'jp_customer_form_fields', $settings );
 		}
 
 		if(ine($_POST, 'disconnect')) {
@@ -309,5 +374,6 @@ class JobProgress extends JP_Request {
 	public function get_connected_user() {
 
 		return get_option('jp_connected_user');
+		return get_option('jp_customer_form_fields');
 	}
 }
