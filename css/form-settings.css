@@ -162,3 +162,28 @@
     width: 44px;
     height: 44px;
 }
+/* theme usage setting */
+.theme-setting h2 {
+    font-size: 23px;
+    margin-top: 40px;
+    margin-bottom: 10px;
+    font-weight: 400;
+}
+.use-theme-option {
+    height: 32px;
+    cursor: unset;
+}
+.use-theme-option .field-name {
+    padding-left: 12px;
+}
+.use-theme-option .checkbox-style:before {
+    background-color: transparent;
+    border-color: #cdced1;
+}
+.use-theme-option .field-visiblity-checkbox input[type="checkbox"]:checked + .checkbox-style:before {
+    border-color: #428BCA;
+    background-color: #428BCA;
+}
+.use-theme-option .field-visiblity-checkbox input[type="checkbox"]:checked + .checkbox-style:after {
+    opacity: 1;
+}

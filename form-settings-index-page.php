@@ -69,6 +69,19 @@
 						<?php } ?>
 				<?php $count++; } ?>
 			</div>
+			<div class="theme-setting">
+				<h2>Form Theme</h2>
+				<p class="settings-desc">Select the following option if you want to use your site's theme on the form.</p>
+				<div class="sortable-field-item use-theme-option">
+					<span class="field-name">Use custom theme</span>
+					<div class="field-visibility">
+						<div class="field-visiblity-checkbox">
+							<input type="checkbox" name="jp_use_custom_theme" value="1" <?php echo checked( 1, $options, false ) ?>  />
+							<span class="checkbox-style"></span>
+						</div>
+					</div>
+				</div>
+			</div>
 			<div class="form-settings-submit">
 				<?php 
 				submit_button();

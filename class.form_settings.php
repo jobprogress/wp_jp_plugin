@@ -42,6 +42,7 @@
 
         function form_register_settings(){
             register_setting( 'jp_form_settings', 'jp_customer_form_fields', 'sd_callback_function' );
+            register_setting( 'jp_form_settings', 'jp_use_custom_theme', 'sd_callback_function' );
         }
 
         /**
@@ -50,6 +51,7 @@
          */
         public function index() {
             $settings 	= get_option( 'jp_customer_form_fields' );
+            $options = get_option( 'jp_use_custom_theme' );
 
             // hide/show and sorting of form fields form
             return require_once(JP_PLUGIN_DIR. 'form-settings-index-page.php');
