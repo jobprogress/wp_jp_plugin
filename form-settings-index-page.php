@@ -1,6 +1,7 @@
 <div class="wrap settings-form-screen">
 	<h1>Form Settings</h1>
-	<p class="settings-desc">Here you can arrange order of form fields and also hide/show fields for form.</p>
+	<p class="settings-desc">Drag &amp; Drop to reorder the sections according to your preference. The saved settings will reflect on customer form. You can also hide or show the fields.
+	<span style="display: block;"><span style="color: #444;">Note:</span> Required fields cannot be hidden.</span></p>
 	<form method="post" action="options.php">
 		<div class="form-settings-wrap" id="form-sortable">
 			<div id="sortable_fields" class="sortable-fields-wrap">
