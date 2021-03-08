@@ -1,4 +1,3 @@
-
 <script type="text/javascript">
 	var plugin_dir_url = "<?php echo plugin_dir_url( __FILE__ ); ?>";
 </script>
@@ -33,16 +32,16 @@ if($this->customer_form_wpdb_error): ?>
 					<div class="jps-standard-fieldset jps-field-wrap jps-field-required jps-field--customer-type">
 						<label>Customer Type</label>
 						<div>
-							<div class="jps-selection-col jps-radio-col">
-								<input id="res" class="jobprogress-customer-type jps-field--customer-type-res" type="checkbox" value="0" name="jp_customer_type1" checked/>
+							<div class="jps-selection-col jps-radio-col jps-field--customer-type-res">
+								<input id="res" class="jobprogress-customer-type" type="checkbox" value="0" name="jp_customer_type1" checked/>
 								<label for="res">Residential</label>
 							</div>
-							<div class="jps-selection-col jps-radio-col">
-								<input id="com" class="jobprogress-customer-type jps-field--customer-type-comm" type="checkbox" value="1" name="jp_customer_type2"/>
+							<div class="jps-selection-col jps-radio-col jps-field--customer-type-comm">
+								<input id="com" class="jobprogress-customer-type" type="checkbox" value="1" name="jp_customer_type2"/>
 								<label for="com">Commercial</label>
 							</div>
+							<?php echo $this->get_error_wrapper('customer_type'); ?>
 						</div>
-						<?php echo $this->get_error_wrapper('customer_type'); ?>
 					</div>
 				<?php 
 					break;
