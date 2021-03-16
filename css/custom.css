@@ -440,3 +440,14 @@
         flex: 0 0 calc(100% - 30px);
     }
 }
+.jps-form-ui .select-multi-trades {
+    display: none;
+}
+.select-multi-trades {
+    display: block;
+    margin-top: 5px;
+    color: #999;
+    font-size: 12px;
+    font-style: italic;
+    text-align: right;
+}

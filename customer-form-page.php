@@ -18,7 +18,9 @@ if($this->customer_form_wpdb_error): ?>
 	$currentURL = $_SERVER['REQUEST_URI'];
 	$referSrcParam = 'ref-source';
 	$parts = parse_url($currentURL);
-	parse_str($parts['query'], $query);
+	if(isset($parts['query'])) {
+		parse_str($parts['query'], $query);
+	}
 	if(isset($query[$referSrcParam])) {
 		$referSrc = $query[$referSrcParam];
 	}
@@ -319,6 +321,7 @@ if($this->customer_form_wpdb_error): ?>
 							<?php endforeach; ?>
 							<?php endif; ?>
 						</select>
+						<span class="select-multi-trades">Press `Ctrl + Select` to select multiple trades together.</span>
 						<?php echo $this->get_error_wrapper('job_trades'); ?>
 					</div>
 					<div class="jps-standard-fieldset jps-field-wrap jps-field-required other-trade-note-container" style="display:none;">
