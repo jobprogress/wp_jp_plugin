@@ -300,6 +300,7 @@ if($this->customer_form_wpdb_error): ?>
 										<?php }
 									}
 								?>
+								<option value="other">Other (Enter here)</option>
 							</select>
 							<?php echo $this->get_error_wrapper('referred_by_id'); ?>
 						</div>
