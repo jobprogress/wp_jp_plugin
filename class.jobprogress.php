@@ -282,7 +282,7 @@ class JobProgress extends JP_Request {
 		  customer_id int(10) DEFAULT NULL,
 		  PRIMARY KEY (id)
 		)";
-        $sql = "ALTER TABLE ".$this->wpdb->prefix."customers ADD referred_by_id int(12) NULL, ADD referred_source varchar(255) DEFAULT NULL, ADD referred_by_type varchar(255) DEFAULT NULL, ADD referred_by_note text DEFAULT NULL;";
+        $sql = "ALTER TABLE ".$this->wpdb->prefix."customers ADD referred_by_id int(12) NULL, ADD referred_by_type varchar(255) DEFAULT NULL, ADD referred_by_note text DEFAULT NULL;";
 
         $addContactField = "ALTER TABLE ". $this->wpdb->prefix."customers ADD contact text DEFAULT NULL;";
 		$this->wpdb->show_errors = false;

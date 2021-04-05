@@ -42,7 +42,6 @@ class Customer_Data_Map {
 		$data['created_at'] = current_time('mysql');
 		$job = $this->map_job_input();
 		$data['job'] = json_encode($job, true);
-		$data['referred_source'] = $this->input['referred_source'];
 		if($this->input['referred_by_id'] === 'other') {
 			$data['referred_by_note'] = $this->input['referred_by_note'];
 			$data['referred_by_type'] = 'other';

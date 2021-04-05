@@ -282,32 +282,32 @@ if($this->customer_form_wpdb_error): ?>
 
 				case 'referred_by' : 
 					if($field['isHide'] != 1) { ?>
-						<?php if(isset($query[$referSrcParam])) { ?>
-							<div class="jps-standard-fieldset jps-field-wrap referred-src-col jps-field--ref">
-								<label>Referred By</label>
-								<input type="hidden" placeholder="Referred Source" name="referred_source" value="<?php echo $referSrc; ?>" />
-								<input type="text" disabled class="form-control jps-field--ref-src" placeholder="Referred Source" name="referred_source_value" value="<?php echo $referSrc; ?>" />
-							</div>
-						<?php } ?>
-						<?php if(!isset($query[$referSrcParam])) { ?>
-							<div class="jps-standard-fieldset jps-field-wrap jp-referral-container jps-field--ref">
-								<label>Referred By</label>
-								<select name="referred_by_id" class="jp-referral form-control jps-field--ref-by">
-									<option></option>
-									<?php if($referrals): ?>
-									<?php foreach ($referrals as $key => $referral): ?>
-									<option value="<?php echo $referral['id'] ?>"><?php echo $referral['name']; ?></option>
-									<?php endforeach; ?>
-									<?php endif; ?>
-								</select>
-								<?php echo $this->get_error_wrapper('referred_by_id'); ?>
-							</div>
-							<div class="jps-standard-fieldset jps-field-wrap jps-field-required referred-by-note-block" style="display:none;">
-								<label>Note</label>
-								<input type="text" class="form-control jps-field--ref-other" name="referred_by_note" placeholder="Note" required/>
-								<?php echo $this->get_error_wrapper('referred_by_note'); ?>
-							</div>
-						<?php } ?>
+						<div class="jps-standard-fieldset jps-field-wrap jp-referral-container jps-field--ref">
+							<label>Referred By</label>
+							<select
+								name="referred_by_id" 
+								class="jp-referral form-control jps-field--ref-by">
+								<?php 
+									$jpReferrals = $this->get(JP_REFERRALS_URL);
+									foreach ($jpReferrals as $jpReferral) {
+										if(isset($referSrc)) {
+											if($referSrc == strtolower($jpReferral['name'])) { ?>
+												<option value="<?php echo $jpReferral['id'] ?>" selected ><?php echo $jpReferral['name']; ?></option>
+											<?php }
+										}
+										else { ?>
+											<option value="<?php echo $jpReferral['id'] ?>" name="<?php echo $jpReferral['name']; ?>"><?php echo $jpReferral['name']; ?></option>
+										<?php }
+									}
+								?>
+							</select>
+							<?php echo $this->get_error_wrapper('referred_by_id'); ?>
+						</div>
+						<div class="jps-standard-fieldset jps-field-wrap jps-field-required referred-by-note-block" style="display:none;">
+							<label>Note</label>
+							<input type="text" class="form-control jps-field--ref-other" name="referred_by_note" placeholder="Note" required/>
+							<?php echo $this->get_error_wrapper('referred_by_note'); ?>
+						</div>
 					<?php } 
 					break;
 

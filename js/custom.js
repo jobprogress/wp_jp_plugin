@@ -292,4 +292,10 @@ jQuery(function($) {
 	$('.refresh-captcha').click(function() {
 		createCaptcha();
 	})
+	/* disable select if referral matched */
+	$('select.jp-referral option').each(function() {
+		if($(this).attr('selected')) {
+			$('select.jp-referral').addClass('jps-field-disabled');
+		}
+	})
 });
