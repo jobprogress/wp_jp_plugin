@@ -67,7 +67,7 @@ if($this->customer_form_wpdb_error): ?>
 							</div>
 						</div>
 					</div>
-					<?php if($field['isCommercial']['isHide'] != 1) { ?>
+					<?php if(!$field['isCommercial']['isHide']) { ?>
 						<div class="jobprogress-commercial-type jps-field--customer-name-comm" style="display:none;">
 							<div class="jps-fxrow">
 								<div class="jps-fxcol-6">
@@ -90,7 +90,7 @@ if($this->customer_form_wpdb_error): ?>
 					break;
 
 				case 'company_name' : 
-					if($field['isHide'] != 1) { ?>
+					if(!$field['isHide']) { ?>
 						<div class="jps-standard-fieldset jps-field-wrap jobprogress-residential-type jps-field--company-res">
 							<label>Company Name</label>
 							<input type="text" class="form-control jps-field--company-name-res" name="company_name"  placeholder="Company Name" placeholder="Company Name">
@@ -141,7 +141,7 @@ if($this->customer_form_wpdb_error): ?>
 					break;
 
 				case 'customer_email' : 
-					if($field['isHide'] != 1) { ?>
+					if(!$field['isHide']) { ?>
 						<div class="jps-field-wrap jps-field--email">
 							<div class="jps-standard-fieldset additional-emails">
 								<label>Email</label>
@@ -160,7 +160,7 @@ if($this->customer_form_wpdb_error): ?>
 					break;
 
 				case 'customer_address' : 
-					if($field['isHide'] != 1) { ?>
+					if(!$field['isHide']) { ?>
 						<div class="jps-field--address">
 							<div class="jps-standard-fieldset jps-field-wrap">
 								<label>Address</label>
@@ -221,7 +221,7 @@ if($this->customer_form_wpdb_error): ?>
 					break;
 
 				case 'billing_address' : 
-					if($field['isHide'] != 1) { ?>
+					if(!$field['isHide']) { ?>
 						<div class="jps-standard-fieldset jps-field-wrap billing-address-field jps-field--billing">
 							<label>Billing Address: </label>
 							<div class="jps-selection-col jps-checkbox-col">
@@ -281,7 +281,7 @@ if($this->customer_form_wpdb_error): ?>
 					break;
 
 				case 'referred_by' : 
-					if($field['isHide'] != 1) { ?>
+					if(!$field['isHide']) { ?>
 						<div class="jps-standard-fieldset jps-field-wrap jp-referral-container jps-field--ref">
 							<label>Referred By</label>
 							<select
