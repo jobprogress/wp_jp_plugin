@@ -290,11 +290,9 @@ if($this->customer_form_wpdb_error): ?>
 								<?php 
 									$jpReferrals = $this->get(JP_REFERRALS_URL);
 									foreach ($jpReferrals as $jpReferral) {
-										if(isset($referSrc)) {
-											if($referSrc == strtolower($jpReferral['name'])) { ?>
-												<option value="<?php echo $jpReferral['id'] ?>" selected ><?php echo $jpReferral['name']; ?></option>
+										if(isset($referSrc) && $referSrc == strtolower($jpReferral['name'])) { ?>
+											<option value="<?php echo $jpReferral['id'] ?>" selected ><?php echo $jpReferral['name']; ?></option>
 											<?php }
-										}
 										else { ?>
 											<option value="<?php echo $jpReferral['id'] ?>" name="<?php echo $jpReferral['name']; ?>"><?php echo $jpReferral['name']; ?></option>
 										<?php }
