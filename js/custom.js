@@ -53,7 +53,7 @@ jQuery(function($) {
 			cpatchaTextBox: "Correct captcha is required. Click the refresh icon to generate a new one"
 		},
 		errorPlacement: function(error, element) {
-			error.insertAfter( element.parent());
+			error.insertAfter( element);
 		},
 		onkeyup: false
 	});
@@ -91,76 +91,90 @@ jQuery(function($) {
 		$(this).prop("checked", true);
 	});
 
-	$(".select2").select2({
-		minimumResultsForSearch: Infinity
-	}).on('change', function (e) {
-		var input = $(this).parent().find('.extension-field');
-	});
-
-	$(".main-phone").select2({
-		minimumResultsForSearch: Infinity,
-		dropdownParent: $(".main-phone-container")
-	}).on('change', function (e) {
-		var input = $(this).parent().find('.extension-field');
-	});
-
-	$(".billing-state").select2({
-		minimumResultsForSearch: Infinity,
-		dropdownParent: $(".billing-state-container")
-	}).on('change', function (e) {
-		var input = $(this).parent().find('.extension-field');
-	});
-
-	$(".billing-country").select2({
-		minimumResultsForSearch: Infinity,
-		dropdownParent: $(".billing-country-container")
-	}).on('change', function (e) {
-		var input = $(this).parent().find('.extension-field');
-	});
-
-	$(".state-list").select2({
-		minimumResultsForSearch: Infinity,
-		dropdownParent: $(".state-list-container")
-	}).on('change', function (e) {
-		var input = $(this).parent().find('.extension-field');
-	});
-
-	$(".country-list").select2({
-		minimumResultsForSearch: Infinity,
-		dropdownParent: $(".country-list-container")
-	}).on('change', function (e) {
-		var input = $(this).parent().find('.extension-field');
-	});
-
-	$(".jp-trade").select2({
-		placeholder: "Select Trade Type",
-		dropdownParent: $(".jp-trade-container")
-	}).on('change', function (e) {
-		var input = $(this).parent().find('.extension-field');
-// 		if (e.currentTarget.value == "cell") {
-// 			input.attr('disabled', true);
-// 		} else {
-// 			input.attr('disabled', false);	
-// 		}
-
-		if($.inArray('24', $(this).val()) > -1 ) {
-			$('.other-trade-note-container').show();
-		} else {
-			$('.other-trade-note-container').hide();
-		} 
-		
-	});
+	if($('.jps-customer-form-wrap').hasClass('jps-form-ui')) {
+		$(".select2").select2({
+			minimumResultsForSearch: Infinity
+		}).on('change', function (e) {
+			var input = $(this).parent().find('.extension-field');
+		});
 	
-	$(".jp-referral").select2({
-		placeholder: "Select Referral",
-		dropdownParent: $(".jp-referral-container")
-	}).on("select2:select", function(e) {
-		if($(this).val() == 'other') {
-			$('.referred-by-note-block').show();
-		} else {
-			$('.referred-by-note-block').hide();
-		}
-	});
+		$(".main-phone").select2({
+			minimumResultsForSearch: Infinity,
+			dropdownParent: $(".main-phone-container")
+		}).on('change', function (e) {
+			var input = $(this).parent().find('.extension-field');
+		});
+	
+		$(".billing-state").select2({
+			minimumResultsForSearch: Infinity,
+			dropdownParent: $(".billing-state-container")
+		}).on('change', function (e) {
+			var input = $(this).parent().find('.extension-field');
+		});
+	
+		$(".billing-country").select2({
+			minimumResultsForSearch: Infinity,
+			dropdownParent: $(".billing-country-container")
+		}).on('change', function (e) {
+			var input = $(this).parent().find('.extension-field');
+		});
+	
+		$(".state-list").select2({
+			minimumResultsForSearch: Infinity,
+			dropdownParent: $(".state-list-container")
+		}).on('change', function (e) {
+			var input = $(this).parent().find('.extension-field');
+		});
+	
+		$(".country-list").select2({
+			minimumResultsForSearch: Infinity,
+			dropdownParent: $(".country-list-container")
+		}).on('change', function (e) {
+			var input = $(this).parent().find('.extension-field');
+		});
+	
+		$(".jp-trade").select2({
+			placeholder: "Select Trade Type",
+			dropdownParent: $(".jp-trade-container")
+		}).on('change', function (e) {
+			var input = $(this).parent().find('.extension-field');
+	
+			if($.inArray('24', $(this).val()) > -1 ) {
+				$('.other-trade-note-container').show();
+			} else {
+				$('.other-trade-note-container').hide();
+			}
+			
+		});
+		
+		$(".jp-referral").select2({
+			placeholder: "Select Referral",
+			dropdownParent: $(".jp-referral-container")
+		}).on("select2:select", function(e) {
+			if($(this).val() == 'other') {
+				$('.referred-by-note-block').show();
+			} else {
+				$('.referred-by-note-block').hide();
+			}
+		});
+	}
+	if(!$('.jps-customer-form-wrap').hasClass('jps-form-ui')) {
+		$(".jp-trade").on('change', function (e) {
+			if($.inArray('24', $(this).val()) > -1 ) {
+				$('.other-trade-note-container').show();
+			} else {
+				$('.other-trade-note-container').hide();
+			}
+			
+		});
+		$(".jp-referral").on("change", function(e) {
+			if($(this).val() == 'other') {
+				$('.referred-by-note-block').show();
+			} else {
+				$('.referred-by-note-block').hide();
+			}
+		});
+	}
 
 	$('.mask-select').mask("(000) 000-0000", {placeholder: "(xxx) xxx-xxxx"});
 	$('.form-combine-select input').focus(function(){
@@ -179,23 +193,25 @@ jQuery(function($) {
 	// $("input:checkbox[name='same_as_customer_address']").after(template);
 
 	var y = 1;
-	// add first additional email
-	$('.start-additional-emails').on('click', function(e) {
-		if($('.additional-emails').length === 4) {
-			$('.start-additional-emails').css('display', 'none');
-		}
+	$('body').delegate('.start-additional-emails', 'click', function(e) {
 		
-		var template = _.template($('.additional-email').html());
-		$('.additional-emails').last().after(template({
-			index : y
-		}));
+		if($('.additional-emails').length <= 4) {
+
+			var template = _.template($('.additional-email').html());
+
+			$('.additional-emails').last().after(template({
+				index : y,
+				className: 'jp-email-' + y
+			}));
+
+			$('.additional-emails').find('.start-additional-emails').addClass('hideAddBtn');
+		}
 		y++;
 	});
 	
 	//remove additional email
 	$('body').delegate('.additional-email-remove', 'click', function(e) {
-		$(this).parent().remove();
-		$('.start-additional-emails').css('display', 'inline-block');
+		$(this).parents('.additional-emails').remove();
 	});
 
 	/**
@@ -203,35 +219,36 @@ jQuery(function($) {
 	 */
 	var x = 1;
 	$('body').delegate('.add-additional-phone', 'click', function(e) {
-		if($('.jobprogress-customer-phone').length === 4) {
-			$('.add-additional-phone').css('display', 'none');
+		if($('.jobprogress-customer-phone').length <= 4) {
+			var template = _.template($('.additional-phone').html());
+	
+			$('.jobprogress-customer-phone')
+				.last()
+				.after(
+					template({
+						index: x,
+						className: 'jp-select-' + x
+					})
+				);
+			
+			if($('.jps-customer-form-wrap').hasClass('jps-form-ui')) {
+				$('.jp-select-' + x).find('.select-input').select2({
+					minimumResultsForSearch: Infinity,
+					dropdownParent: $('.jp-select-' + x)
+				}).on('change', function (e) {
+					var input = $(this).parent().find('.extension-field');
+				});
+			}
+			
+			$('.jp-select-' + x).find('.add-additional-phone').addClass('hideAddBtn');
+
 		}
-		
-		var template = _.template($('.additional-phone').html());
-
-		$('.jobprogress-customer-phone')
-			.last()
-			.after(
-				template({
-					index: x,
-					className: 'jp-select-' + x
-				})
-			);
-
-		$('.jp-select-' + x).find('.select-input').select2({
-			minimumResultsForSearch: Infinity,
-			dropdownParent: $('.jp-select-' + x)
-		}).on('change', function (e) {
-			var input = $(this).parent().find('.extension-field');
-		});
-
 		x++;
 
 	});
 
 	$('body').delegate('.remove-additional-phone', 'click', function(e) {
-		$(this).parent().remove();
-		$('.add-additional-phone').css('display', 'inline-block');
+		$(this).parents('.jobprogress-customer-phone').remove();
 	});
 
 	$("input:checkbox[name='same_as_customer_address']").on('change', function(){
@@ -274,5 +291,11 @@ jQuery(function($) {
 
 	$('.refresh-captcha').click(function() {
 		createCaptcha();
+	})
+	/* disable select if referral matched */
+	$('select.jp-referral option').each(function() {
+		if($(this).attr('selected')) {
+			$('select.jp-referral').addClass('jps-field-disabled');
+		}
 	})
 });

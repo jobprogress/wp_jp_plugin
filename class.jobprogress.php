@@ -98,6 +98,71 @@ class JobProgress extends JP_Request {
 				$referrals = $this->get(JP_REFERRALS_URL);
 				set_transient("jp_referrals", $referrals, 86400);
 			}
+
+			// customer form settings
+			$settings = array(
+				'field1' => array(
+					'name' => 'customer_type',
+					'title' => 'Customer Type',
+					'isHide' => '0'
+				),
+				'field2' => array(
+					'name' => 'customer_name',
+					'title' => 'Customer Name',
+					'isHide' => '0',
+					'isCommercial' => array(
+						'name' => 'customer_name_commercial',
+						'title' => 'Commercial',
+						'isHide' => '0'
+					)
+				),
+				'field3' => array(
+					'name' => 'company_name',
+					'title' => 'Company Name',
+					'isHide' => '0',
+					'isCommercial' => array(
+						'name' => 'company_name_commercial',
+						'title' => 'Commercial',
+						'isHide' => '0'
+					)
+				),
+				'field4' => array(
+					'name' => 'customer_phone',
+					'title' => 'Customer Phone',
+					'isHide' => '0'
+				),
+				'field5' => array(
+					'name' => 'customer_email',
+					'title' => 'Customer Email',
+					'isHide' => '0'
+				),
+				'field6' => array(
+					'name' => 'customer_address',
+					'title' => 'Customer address',
+					'isHide' => '0'
+				),
+				'field7' => array(
+					'name' => 'billing_address',
+					'title' => 'Billing address',
+					'isHide' => '0'
+				),
+				'field8' => array(
+					'name' => 'referred_by',
+					'title' => 'Referred By',
+					'isHide' => '0'
+				),
+				'field9' => array(
+					'name' => 'trades',
+					'title' => 'Trades',
+					'isHide' => '0'
+				),
+				'field10' => array(
+					'name' => 'description',
+					'title' => 'Description',
+					'isHide' => '0'
+				)
+			);
+			update_option( 'jp_customer_form_fields', $settings );
 		}
 
 		if(ine($_POST, 'disconnect')) {
@@ -185,8 +250,14 @@ class JobProgress extends JP_Request {
 			wp_enqueue_script('custom-admin-side', plugin_dir_url( __FILE__ ) .'js/custom-admin-side.js');
 		}
 		if((string)$hook === 'toplevel_page_jp_admin_page'
-			|| (string)$hook === 'jobprogress_page_jp_customer_page' ) {
+		|| (string)$hook === 'jobprogress_page_jp_customer_page' ) {
 			wp_enqueue_style('custom', plugin_dir_url( __FILE__ ) . 'css/admin-style.css');
+		}
+		if((string)$hook === 'jobprogress_page_jp_settings_page' ) {
+			wp_enqueue_style('custom-ui', '//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css');
+			wp_enqueue_style('form-settings', plugin_dir_url( __FILE__ ) . 'css/form-settings.css');
+			wp_enqueue_script('form-settings', plugin_dir_url( __FILE__ ) .'js/form-settings.js');
+			wp_enqueue_script('jquery-sort', plugin_dir_url( __FILE__ ) .'js/jquery-ui.min.js');
 		}
 	}
 
@@ -278,6 +349,7 @@ class JobProgress extends JP_Request {
 		delete_transient('jp_countries');
 		delete_transient('jp_referrals');
 		delete_option('jp_token_options');
+		delete_option('jp_customer_form_fields');
 		delete_option('jp_connected_user');
 		wp_clear_scheduled_hook('jp_token_refresh_hook');
 		wp_clear_scheduled_hook('jp_customer_sync_hook');
@@ -302,5 +374,6 @@ class JobProgress extends JP_Request {
 	public function get_connected_user() {
 
 		return get_option('jp_connected_user');
+		return get_option('jp_customer_form_fields');
 	}
 }
