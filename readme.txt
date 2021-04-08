@@ -3,7 +3,7 @@ Contributors: jobprogress
 Donate link: http://www.jobprogress.com/
 Requires at least: 3.0.1
 Tested up to: 5.7
-Stable tag: 3.0.6
+Stable tag: 3.0.7
 Tags: customer-manager
 License: GPLv2 or later
 
@@ -20,9 +20,12 @@ Customer Management Service through the plugin for JobProgress.
 
 == Changelog ==
 
+= 3.0.7 =
+1. Set default Customer Form setting if the setting is not saved yet.
+
 = 3.0.6 =
 1. Add ability to user to change the display order of customer fields from Plugin
-2. Add ability to user to disable default JobProgress Customer form CSS
+2. Add ability to user to disable default JobProgress Customer form UI/UX.
 3. Minor Changes
    - Show real-time referrals in the customer form
 
