@@ -1,9 +1,9 @@
 === Contractor Contact Form Website to Workflow Tool ===
 Contributors: jobprogress
 Donate link: http://www.jobprogress.com/
-Requires at least: 3.0.5
+Requires at least: 3.0.1
 Tested up to: 5.7
-Stable tag: 3.0.5
+Stable tag: 3.0.6
 Tags: customer-manager
 License: GPLv2 or later
 
@@ -21,16 +21,16 @@ Customer Management Service through the plugin for JobProgress.
 == Changelog ==
 
 = 3.0.6 =
-Add ability to user to change the display order of customer fields from Plugin
-Add ability to user to disable default JobProgress Customer form CSS
-Minor Changes
+1. Add ability to user to change the display order of customer fields from Plugin
+2. Add ability to user to disable default JobProgress Customer form CSS
+3. Minor Changes
    - Show real-time referrals in the customer form
 
 = 3.0.5 =
-Remove Extra Spaces from Customer Email
+1. Remove Extra Spaces from Customer Email
 
 = 3.0.4 =
-Captcha Bug fixes
+1. Captcha Bug fixes
 
 = 3.0.3 =
 1. Enable Canadian Zip Code
@@ -39,11 +39,9 @@ Captcha Bug fixes
 = 3.0.2 =
 1. UI/UX Improvements
 
-== Changelog ==
 = 3.0.1 =
 1. Compatibility Upto 5.1
 
-== Changelog ==
 = 3.0.0 =
 1. Compatibility Upto 5.0.3
 
