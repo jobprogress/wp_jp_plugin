@@ -10,7 +10,7 @@
 					settings_fields( 'jp_form_settings' ); 
 					$count = 1;
 					if(empty($settings)) {
-						$settings = get_form_settings();
+						$settings = get_form_default_settings();
 					}
 
 					foreach($settings as $setting) {

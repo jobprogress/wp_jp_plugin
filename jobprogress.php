@@ -46,7 +46,7 @@ function ine($haystack,$needle){
 	return (isset($haystack[$needle]) && !empty($haystack[$needle]));
 }
 
-function get_form_settings()
+function get_form_default_settings()
 {
     // customer form settings
     $settings = array(
