@@ -11,7 +11,11 @@ endif;
 if($this->customer_form_wpdb_error): ?>
 <div class="alert alert-danger alert-msg alert-msg-danger text-center"><?php echo $this->customer_form_wpdb_error; ?></div>
 <?php endif; 
-	$jp_customer_form_fields = get_option('jp_customer_form_fields');
+	if(!get_option('jp_customer_form_fields')) {
+		$jp_customer_form_fields = get_form_default_settings();
+	} else {
+		$jp_customer_form_fields = get_option('jp_customer_form_fields');
+	}
 	$jp_form_theme = get_option('jp_use_custom_theme');
 
 	// Referred Source query string
