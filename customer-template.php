@@ -4,7 +4,13 @@
 <span>{{NAME}}  </span>
 </div>
 </script>
-
+<?php 
+	if(!get_option('jp_customer_form_fields')) {
+		$jp_customer_form_fields = get_form_default_settings();
+	} else {
+		$jp_customer_form_fields = get_option('jp_customer_form_fields');
+	}
+?>
 <script type="text/template" class="additional-phone">
 	<div class="jps-standard-fieldset jps-field-wrap jps-field-required jobprogress-customer-phone {{className}}">
 		<label>Phone</label>
@@ -39,11 +45,27 @@
 </script>
 
 <script type="text/template" class="additional-email">
-	<div class="jps-standard-fieldset jps-field-wrap additional-emails {{className}}">
+
+	<?php
+		$requireAddEmail;
+		foreach($jp_customer_form_fields as $addfield) {
+			switch($addfield['name']) {
+				case 'customer_email' : 
+					if(!$addfield['isHide']) {
+						if(!$addfield['isRequired']) {
+							$requireAddEmail = 'required';
+						} else {
+							$requireAddEmail = '';
+						}
+					}
+			}
+		}
+	?>
+	<div class="jps-standard-fieldset jps-field-wrap additional-emails {{className}} <?php echo($requireAddEmail == 'required' ? 'jps-field-required' : ''); ?>">
 		<label>Additional Email</label>
 		<div class="jps-additional-field">
 			<div class="jps-field-left">
-				<input type="text" class="email form-control" placeholder="Additional Email" name="additional_emails[{{index}}]" required />
+				<input type="text" class="email form-control <?php echo($requireAddEmail == 'required' ? 'jps-required-input' : ''); ?>" placeholder="Additional Email" name="additional_emails[{{index}}]" />
 			</div>
 			<a class="jps-field-add add-item-repeat start-additional-emails" title="Add Additional Email">
 				<svg viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
@@ -51,6 +73,7 @@
 			<a title="Remove Additional Email" class="jps-field-remove remove additional-email-remove">
 				<svg viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
 			</a>
+			<?php echo $this->get_error_wrapper('additional_emails.{{ index }}'); ?>
 		</div>
 	</div>
 </script>

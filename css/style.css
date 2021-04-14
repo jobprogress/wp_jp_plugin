@@ -145,16 +145,16 @@
 .customer-page .form-group span {
     position: relative;
 }
-// .customer-page .form-group label.error, .customer-page .form-group span label.error  {
-//     bottom: 0;
-//     color: #c81b1b;
-//     left: 0;
-//     position: absolute;
-//     right: 0;
-//     top: 32px;
-//     width: auto;
-//     text-align: left;
-// }
+.customer-page .form-group label.error, .customer-page .form-group span label.error  {
+   bottom: 0;
+   color: #c81b1b;
+   left: 0;
+   position: absolute;
+   right: 0;
+   top: 32px;
+   width: auto;
+   text-align: left;
+}
 .customer-page label.error {
     color: #c81b1b;
     margin: 5px 0;
