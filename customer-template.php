@@ -47,25 +47,21 @@
 <script type="text/template" class="additional-email">
 
 	<?php
-		$requireAddEmail;
+		$isRequiredAdditionalEmail = false;
 		foreach($jp_customer_form_fields as $addfield) {
 			switch($addfield['name']) {
 				case 'customer_email' : 
-					if(!$addfield['isHide']) {
-						if(!$addfield['isRequired']) {
-							$requireAddEmail = 'required';
-						} else {
-							$requireAddEmail = '';
-						}
+					if(!$addfield['isHide'] && ine($addfield, 'isRequired')) {
+						$isRequiredAdditionalEmail = true;
 					}
 			}
 		}
 	?>
-	<div class="jps-standard-fieldset jps-field-wrap additional-emails {{className}} <?php echo($requireAddEmail == 'required' ? 'jps-field-required' : ''); ?>">
+	<div class="jps-standard-fieldset jps-field-wrap additional-emails {{className}} <?php echo(!$isRequiredAdditionalEmail ? 'jps-field-required' : ''); ?>">
 		<label>Additional Email</label>
 		<div class="jps-additional-field">
 			<div class="jps-field-left">
-				<input type="text" class="email form-control <?php echo($requireAddEmail == 'required' ? 'jps-required-input' : ''); ?>" placeholder="Additional Email" name="additional_emails[{{index}}]" />
+				<input type="text" class="email form-control <?php echo(!$isRequiredAdditionalEmail ? 'jps-required-input' : ''); ?>" placeholder="Additional Email" name="additional_emails[{{index}}]" />
 			</div>
 			<a class="jps-field-add add-item-repeat start-additional-emails" title="Add Additional Email">
 				<svg viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>

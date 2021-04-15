@@ -34,9 +34,8 @@ if($this->customer_form_wpdb_error): ?>
 	<div class="jps-customer-form-wrap <?php echo (($jp_form_theme == '1') ? '' : 'jps-form-ui') ?>">
 		<?php 
 			foreach($jp_customer_form_fields as $field) {
-				
-				$requireFieldWrap = (!$field['isRequired'] ? 'jps-field-required' : '');
-				$requireFieldInput = (!$field['isRequired'] ? 'jps-required-input' : '');
+				$requireFieldWrap =  ine($field, 'isRequired') ?  '' : 'jps-field-required';
+				$requireFieldInput = ine($field, 'isRequired') ? '' : 'jps-required-input';
 				
 				switch($field['name']) {
 				case 'customer_type' : ?>
