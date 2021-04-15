@@ -207,3 +207,6 @@
 .use-theme-option .field-visiblity-checkbox input[type="checkbox"]:checked + .checkbox-style:after {
     opacity: 1;
 }
+.hide-required-field {
+    display: none !important;
+}

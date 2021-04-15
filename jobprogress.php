@@ -54,73 +54,73 @@ function get_form_default_settings()
             'name' => 'customer_type',
             'title' => 'Customer Type',
             'isHide' => '0',
-            'isRequired' => '0'
+            'isRequired' => '1'
         ),
         'field2' => array(
             'name' => 'customer_name',
             'title' => 'Customer Name',
             'isHide' => '0',
-            'isRequired' => '0',
+            'isRequired' => '1',
             'isCommercial' => array(
                 'name' => 'customer_name_commercial',
                 'title' => 'Commercial',
                 'isHide' => '0',
-                'isRequired' => '0'
+                'isRequired' => '1'
             )
         ),
         'field3' => array(
             'name' => 'company_name',
             'title' => 'Company Name',
             'isHide' => '0',
-            'isRequired' => '0',
+            'isRequired' => '1',
             'isCommercial' => array(
                 'name' => 'company_name_commercial',
                 'title' => 'Commercial',
                 'isHide' => '0',
-                'isRequired' => '0'
+                'isRequired' => '1'
             )
         ),
         'field4' => array(
             'name' => 'customer_phone',
             'title' => 'Customer Phone',
             'isHide' => '0',
-            'isRequired' => '0'
+            'isRequired' => '1'
         ),
         'field5' => array(
             'name' => 'customer_email',
             'title' => 'Customer Email',
             'isHide' => '0',
-            'isRequired' => '0'
+            'isRequired' => '1'
         ),
         'field6' => array(
             'name' => 'customer_address',
             'title' => 'Customer address',
             'isHide' => '0',
-            'isRequired' => '0'
+            'isRequired' => '1'
         ),
         'field7' => array(
             'name' => 'billing_address',
             'title' => 'Billing address',
             'isHide' => '0',
-            'isRequired' => '0'
+            'isRequired' => '1'
         ),
         'field8' => array(
             'name' => 'referred_by',
             'title' => 'Referred By',
             'isHide' => '0',
-            'isRequired' => '0'
+            'isRequired' => '1'
         ),
         'field9' => array(
             'name' => 'trades',
             'title' => 'Trades',
             'isHide' => '0',
-            'isRequired' => '0'
+            'isRequired' => '1'
         ),
         'field10' => array(
             'name' => 'description',
             'title' => 'Description',
             'isHide' => '0',
-            'isRequired' => '0'
+            'isRequired' => '1'
         )
     );
 

@@ -7,13 +7,11 @@ jQuery(function($) {
     // show/hide required field 
     $('.field-hide-setting .field-visiblity-checkbox input').change(function() {
         if(this.checked) {
-            console.log(1);
-           $(this).parents('.sortable-field-item').next('.field-required-setting').find('input[type=checkbox]').attr('disabled', 'disabled');
+           $(this).parents('.ui-state-default').find('.field-required-setting').find('input[type=checkbox]').attr('disabled', 'disabled');
         }
         if(!this.checked) {
-            console.log(0);
-            $(this).parents('.sortable-field-item').next('.field-required-setting').find('input[type=checkbox]').prop('disabled', false);
-         }
+            $(this).parents('.ui-state-default').find('.field-required-setting').find('input[type=checkbox]').prop('disabled', false);
+        }
     });
 
     $('.form-settings-submit #submit').click(function() {

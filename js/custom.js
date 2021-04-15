@@ -27,16 +27,6 @@ jQuery(function($) {
 			'last_name': {
 				'required': true
 			},
-			'contact[0][last_name]': {
-			    required: function(element) {
-					return $("input[name='contact[0][first_name]']").val()!="" && $('input[name="jp_customer_type2"]').is(':checked');
-				}
-			},
-			'contact[0][first_name]': {
-			    required: function(element) {
-					return $("input[name='contact[0][last_name]']").val()!="" && $('input[name="jp_customer_type2"]').is(':checked') ;
-				}
-			},
 			'address[zip]': {
                 alphanumeric: true
 			},
@@ -60,7 +50,29 @@ jQuery(function($) {
 	$.validator.addClassRules("jps-required-input", {
 		required: true
   	});
-	  if($('contact[0][first_name]').hasClass(''))
+	if($('.jps-comm-name .jps-comm-fname').hasClass('jps-required-input')) {
+		$.validator.addClassRules("jps-comm-fname", {
+			required: true
+		});
+	} else {
+		$.validator.addClassRules("jps-comm-fname", {
+			required: function(element) {
+				return $("input[name='contact[0][last_name]']").val()!="" && $('input[name="jp_customer_type2"]').is(':checked') ;
+			}
+		});
+	}
+
+	if($('.jps-comm-name .jps-comm-lname').hasClass('jps-required-input')) {
+		$.validator.addClassRules("jps-comm-lname", {
+			required: true
+		});
+	} else {
+		$.validator.addClassRules("jps-comm-lname", {
+			required: function(element) {
+				return $("input[name='contact[0][first_name]']").val()!="" && $('input[name="jp_customer_type2"]').is(':checked');
+			}
+		});
+	}
 	 
 	$('#jobprogrssCustomerSignupForm').on('submit', function() {
 	    // check validation

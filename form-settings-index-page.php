@@ -29,8 +29,8 @@
 										</span>
 										<div class="multi-field-inner">
 											<span class="field-name"><?php echo $setting['title'] ?></span>
-											<!-- Residential Type -->
 											<div class="multi-field-items-wrap">
+												<!-- Residential Type -->
 												<div class="multi-field-item">
 													<div class="field-visibility field-hide-setting">
 														<input value="<?php echo $setting['name'] ?>" name="jp_customer_form_fields[field<?php echo $count ?>][name]" type="hidden">
@@ -57,23 +57,19 @@
 											
 										</div>
 									</div>
-									<?php if(!($disable_name && $disable_company)) { 
-										if($setting['name'] == 'customer_name')	{ ?>
-											<div class="field-required-setting">
-												<input value="0" name="jp_customer_form_fields[field<?php echo $count ?>][isCommercial][isRequired]" type="hidden">
-												<div class="field-visiblity-checkbox"><input <?php echo ($setting['isHide'] == 1) ? 'disabled' : '' ?> type="checkbox" name="jp_customer_form_fields[field<?php echo $count ?>][isCommercial][isRequired]" value="1"<?php echo checked( 1, $setting['isCommercial']['isRequired'], false ) ?> /><span class="checkbox-style"></span></div>
-												<span>Is Required</span>
-											</div>
-											<?php }
-										if($setting['name'] == 'company_name') { ?>
-											<div class="field-required-setting">
-												<input value="0" name="jp_customer_form_fields[field<?php echo $count ?>][isRequired]" type="hidden">
-												<div class="field-visiblity-checkbox"><input <?php echo ($setting['isHide'] == 1) ? 'disabled' : '' ?> type="checkbox" name="jp_customer_form_fields[field<?php echo $count ?>][isRequired]" value="1"<?php echo checked( 1, $setting['isRequired'], false ) ?> /><span class="checkbox-style"></span></div>
-												<span>Is Required</span>
-											</div>
-										<?php }
-									?>										
-									<?php } ?>
+									<!-- Residential Type -->
+									<div class="field-required-setting <?php echo($disable_name ? 'hide-required-field' : ''); ?>" style="margin-top: 18px;">
+										<input value="0" name="jp_customer_form_fields[field<?php echo $count ?>][isRequired]" type="hidden">
+										<div class="field-visiblity-checkbox"><input type="checkbox" <?php echo ($setting['isHide'] == 1) ? 'disabled' : '' ?> name="jp_customer_form_fields[field<?php echo $count ?>][isRequired]" value="1"<?php echo checked( 1, $setting['isRequired'], false ) ?> /><span class="checkbox-style"></span></div>
+										<span>Is Required</span>
+									</div>
+									<!-- Commercial Type -->
+									<div class="field-required-setting <?php echo($disable_company ? 'hide-required-field' : ''); ?>" style="margin-top: 18px;">
+										<input value="0" name="jp_customer_form_fields[field<?php echo $count ?>][isCommercial][isRequired]" type="hidden">
+										<div class="field-visiblity-checkbox"><input type="checkbox" <?php echo ($setting['isCommercial']['isHide'] == 1) ? 'disabled' : '' ?> name="jp_customer_form_fields[field<?php echo $count ?>][isCommercial][isRequired]" value="1"<?php echo checked( 1, $setting['isCommercial']['isRequired'], false ) ?> /><span class="checkbox-style"></span></div>
+										<span>Is Required</span>
+									</div>
+																	
 								</div>
 								<?php break;
 
@@ -93,13 +89,11 @@
 											<div class="field-visiblity-checkbox"><input <?php echo $disable ?> type="checkbox" name="jp_customer_form_fields[field<?php echo $count ?>][isHide]" value="1"<?php echo checked( 1, $setting['isHide'], false ) ?> /><span class="checkbox-style"></span></div>
 										</div>
 									</div>
-									<?php if(!$disable) { ?>
-										<div class="field-required-setting">
-											<input value="0" name="jp_customer_form_fields[field<?php echo $count ?>][isRequired]" type="hidden">
-											<div class="field-visiblity-checkbox"><input <?php echo ($setting['isHide'] == 1) ? 'disabled' : '' ?> type="checkbox" name="jp_customer_form_fields[field<?php echo $count ?>][isRequired]" value="1"<?php echo checked( 1, $setting['isRequired'], false ) ?> /><span class="checkbox-style"></span></div>
-											<span>Is Required: </span>
-										</div>
-									<?php } ?>
+									<div class="field-required-setting <?php echo($disable ? 'hide-required-field' : '') ?>">
+										<input value="0" name="jp_customer_form_fields[field<?php echo $count ?>][isRequired]" type="hidden">
+										<div class="field-visiblity-checkbox"><input <?php echo ($setting['isHide'] == 1) ? 'disabled' : '' ?> type="checkbox" name="jp_customer_form_fields[field<?php echo $count ?>][isRequired]" value="1"<?php echo checked( 1, $setting['isRequired'], false ) ?> /><span class="checkbox-style"></span></div>
+										<span>Is Required: </span>
+									</div>
 								</div>
 							<?php } ?>
 						<?php $count++; 
