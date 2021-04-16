@@ -92,7 +92,7 @@
 									<div class="field-required-setting <?php echo($disable ? 'hide-required-field' : '') ?>">
 										<input value="0" name="jp_customer_form_fields[field<?php echo $count ?>][isRequired]" type="hidden">
 										<div class="field-visiblity-checkbox"><input <?php echo ($setting['isHide'] == 1) ? 'disabled' : '' ?> type="checkbox" name="jp_customer_form_fields[field<?php echo $count ?>][isRequired]" value="1"<?php echo checked( 1, $setting['isRequired'], false ) ?> /><span class="checkbox-style"></span></div>
-										<span>Is Required: </span>
+										<span>Is Required </span>
 									</div>
 								</div>
 							<?php } ?>
