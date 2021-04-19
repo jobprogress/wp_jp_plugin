@@ -226,7 +226,7 @@ if($this->customer_form_wpdb_error): ?>
 							<label>Billing Address: </label>
 							<div class="jps-selection-col jps-checkbox-col">
 								<input type="checkbox" id="address" name="same_as_customer_address" value= "true" checked class="jps-field--billing-check" />
-								<label for="address">Same as above</label>
+								<label for="address">Same as Customer Address</label>
 							</div>
 						</div>
 						<div class="billing-address-container jps-field--billingAdd">
