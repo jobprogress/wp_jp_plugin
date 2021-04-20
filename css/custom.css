@@ -156,6 +156,7 @@
     content: "";
     position: absolute;
     left: 0;
+    top: 2px;
     height: 18px;
     width: 18px;
 }
@@ -268,6 +269,8 @@
 }
 .jps-customer-form-wrap .jps-checkbox-col {
     margin: 0 !important;
+    padding-top: 4px;
+    font-size: 0;
 }
 /* phone field */
 .jps-phone-field {
