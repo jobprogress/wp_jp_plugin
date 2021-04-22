@@ -24,18 +24,8 @@ jQuery(function($) {
 			'first_name': {
 				"required": true	
 			},
-			'last_name':  {
+			'last_name': {
 				'required': true
-			},
-			'contact[0][last_name]': {
-			    required: function(element){
-			            return $("input[name='contact[0][first_name]']").val()!="" && $('input[name="jp_customer_type2"]').is(':checked');
-			        }
-			},
-			'contact[0][first_name]': {
-			    required: function(element){
-			            return $("input[name='contact[0][last_name]']").val()!="" && $('input[name="jp_customer_type2"]').is(':checked') ;
-			        }
 			},
 			'address[zip]': {
                 alphanumeric: true
@@ -57,7 +47,33 @@ jQuery(function($) {
 		},
 		onkeyup: false
 	});
+	$.validator.addClassRules("jps-required-input", {
+		required: true
+  	});
+	if($('.jps-comm-name .jps-comm-fname').hasClass('jps-required-input')) {
+		$.validator.addClassRules("jps-comm-fname", {
+			required: true
+		});
+	} else {
+		$.validator.addClassRules("jps-comm-fname", {
+			required: function(element) {
+				return $("input[name='contact[0][last_name]']").val()!="" && $('input[name="jp_customer_type2"]').is(':checked') ;
+			}
+		});
+	}
 
+	if($('.jps-comm-name .jps-comm-lname').hasClass('jps-required-input')) {
+		$.validator.addClassRules("jps-comm-lname", {
+			required: true
+		});
+	} else {
+		$.validator.addClassRules("jps-comm-lname", {
+			required: function(element) {
+				return $("input[name='contact[0][first_name]']").val()!="" && $('input[name="jp_customer_type2"]').is(':checked');
+			}
+		});
+	}
+	 
 	$('#jobprogrssCustomerSignupForm').on('submit', function() {
 	    // check validation
 	    if ($("#cpatchaTextBox").val() != code) {
@@ -175,8 +191,10 @@ jQuery(function($) {
 			}
 		});
 	}
-
-	$('.mask-select').mask("(000) 000-0000", {placeholder: "(xxx) xxx-xxxx"});
+	function phoneInputMask() {
+		$('.mask-select').mask("(000) 000-0000", {placeholder: "(xxx) xxx-xxxx"});
+	}
+	phoneInputMask();
 	$('.form-combine-select input').focus(function(){
 		$(this).parent().addClass('active');
 	}).focusout(function(){
@@ -221,16 +239,16 @@ jQuery(function($) {
 	$('body').delegate('.add-additional-phone', 'click', function(e) {
 		if($('.jobprogress-customer-phone').length <= 4) {
 			var template = _.template($('.additional-phone').html());
-	
-			$('.jobprogress-customer-phone')
-				.last()
-				.after(
-					template({
-						index: x,
-						className: 'jp-select-' + x
-					})
-				);
 			
+			$('.jobprogress-customer-phone')
+			.last()
+			.after(
+				template({
+					index: x,
+					className: 'jp-select-' + x
+				})
+			);
+				
 			if($('.jps-customer-form-wrap').hasClass('jps-form-ui')) {
 				$('.jp-select-' + x).find('.select-input').select2({
 					minimumResultsForSearch: Infinity,
@@ -241,10 +259,11 @@ jQuery(function($) {
 			}
 			
 			$('.jp-select-' + x).find('.add-additional-phone').addClass('hideAddBtn');
-
+			
 		}
 		x++;
-
+		phoneInputMask();
+			
 	});
 
 	$('body').delegate('.remove-additional-phone', 'click', function(e) {

@@ -11,7 +11,11 @@ endif;
 if($this->customer_form_wpdb_error): ?>
 <div class="alert alert-danger alert-msg alert-msg-danger text-center"><?php echo $this->customer_form_wpdb_error; ?></div>
 <?php endif; 
-	$jp_customer_form_fields = get_option('jp_customer_form_fields');
+	if(!get_option('jp_customer_form_fields')) {
+		$jp_customer_form_fields = get_form_default_settings();
+	} else {
+		$jp_customer_form_fields = get_option('jp_customer_form_fields');
+	}
 	$jp_form_theme = get_option('jp_use_custom_theme');
 
 	// Referred Source query string
@@ -28,8 +32,12 @@ if($this->customer_form_wpdb_error): ?>
 
 <form class="customer-page customer-page-container" method="post" id = "jobprogrssCustomerSignupForm" action="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>">
 	<div class="jps-customer-form-wrap <?php echo (($jp_form_theme == '1') ? '' : 'jps-form-ui') ?>">
-		<?php foreach($jp_customer_form_fields as $field) {
-			switch($field['name']) {
+		<?php 
+			foreach($jp_customer_form_fields as $field) {
+				$requireFieldWrap =  ine($field, 'isRequired') ?  '' : 'jps-field-required';
+				$requireFieldInput = ine($field, 'isRequired') ? '' : 'jps-required-input';
+				
+				switch($field['name']) {
 				case 'customer_type' : ?>
 					<div class="jps-standard-fieldset jps-field-wrap jps-field-required jps-field--customer-type">
 						<label>Customer Type</label>
@@ -71,16 +79,16 @@ if($this->customer_form_wpdb_error): ?>
 						<div class="jobprogress-commercial-type jps-field--customer-name-comm" style="display:none;">
 							<div class="jps-fxrow">
 								<div class="jps-fxcol-6">
-									<div class="jps-field-wrap jps-standard-fieldset">
+									<div class="jps-field-wrap jps-standard-fieldset <?php echo(!$field['isCommercial']['isRequired'] ? 'jps-field-required' : ''); ?>">
 										<label>First Name</label>
-										<input type="text" class="form-control jps-field--first-name-comm" name="contact[0][first_name]" placeholder="First Name"/>
+										<input type="text" class="form-control jps-comm-fname jps-field--first-name-comm <?php echo(!$field['isCommercial']['isRequired'] ? 'jps-required-input' : ''); ?>" name="contact[0][first_name]" placeholder="First Name" <?php echo(!$field['isCommercial']['isRequired'] ? 'required' : ''); ?>/>
 										<?php echo $this->get_error_wrapper('contact_first_name'); ?>
 									</div>
 								</div>
 								<div class="jps-fxcol-6">
-									<div class="jps-field-wrap jps-standard-fieldset">
+									<div class="jps-field-wrap jps-standard-fieldset <?php echo(!$field['isCommercial']['isRequired'] ? 'jps-field-required' : ''); ?>">
 										<label>Last Name</label>
-										<input type="text" class="form-control jps-field--last-name-comm" name="contact[0][last_name]"  placeholder="Last Name"/>
+										<input type="text" class="form-control jps-comm-lname jps-field--last-name-comm <?php echo(!$field['isCommercial']['isRequired'] ? 'jps-required-input' : ''); ?>" name="contact[0][last_name]"  placeholder="Last Name" <?php echo(!$field['isCommercial']['isRequired'] ? 'required' : ''); ?> />
 										<?php echo $this->get_error_wrapper('contact_last_name'); ?>
 									</div>
 								</div>
@@ -91,9 +99,9 @@ if($this->customer_form_wpdb_error): ?>
 
 				case 'company_name' : 
 					if(!$field['isHide']) { ?>
-						<div class="jps-standard-fieldset jps-field-wrap jobprogress-residential-type jps-field--company-res">
+						<div class="jps-standard-fieldset jps-field-wrap jobprogress-residential-type jps-field--company-res <?php echo $requireFieldWrap; ?>">
 							<label>Company Name</label>
-							<input type="text" class="form-control jps-field--company-name-res" name="company_name"  placeholder="Company Name" placeholder="Company Name">
+							<input type="text" class="form-control jps-field--company-name-res <?php echo $requireFieldInput; ?>" name="company_name"  placeholder="Company Name" placeholder="Company Name" />
 						</div>
 					<?php } ?>
 						<div class="jps-standard-fieldset jps-field-wrap jps-field-required jobprogress-commercial-type jps-field--company-comm" style="display:none;">
@@ -143,11 +151,11 @@ if($this->customer_form_wpdb_error): ?>
 				case 'customer_email' : 
 					if(!$field['isHide']) { ?>
 						<div class="jps-field-wrap jps-field--email">
-							<div class="jps-standard-fieldset additional-emails">
+							<div class="jps-standard-fieldset additional-emails <?php echo $requireFieldWrap; ?>">
 								<label>Email</label>
 								<div class="jps-additional-field">
 									<div class="jps-field-left">
-										<input type="text" class="email form-control jps-field--email-text" placeholder="Email" name="email"/>
+										<input type="text" class="email form-control jps-field--email-text <?php echo $requireFieldInput; ?>" placeholder="Email" name="email"/>
 										<?php echo $this->get_error_wrapper('email'); ?>
 									</div>
 									<a class="jps-field-add add-item-repeat start-additional-emails" title="Add Additional Email">
@@ -162,30 +170,30 @@ if($this->customer_form_wpdb_error): ?>
 				case 'customer_address' : 
 					if(!$field['isHide']) { ?>
 						<div class="jps-field--address">
-							<div class="jps-standard-fieldset jps-field-wrap">
+							<div class="jps-standard-fieldset jps-field-wrap <?php echo $requireFieldWrap; ?>">
 								<label>Address</label>
-								<input type="text" class="form-control jps-field--address-1" placeholder="Address" name="address[address]" />
+								<input type="text" class="form-control jps-field--address-1 <?php echo $requireFieldInput; ?>" placeholder="Address" name="address[address]" />
 								<?php echo $this->get_error_wrapper('address'); ?>
 							</div>
-							<div class="jps-standard-fieldset jps-field-wrap">
+							<div class="jps-standard-fieldset jps-field-wrap <?php echo $requireFieldWrap; ?>">
 								<label>Address Line 2</label>
-								<input type="text" class="form-control jps-field--address-2" placeholder="Address Line 2" name="address[address_line_1]"/>
+								<input type="text" class="form-control jps-field--address-2 <?php echo $requireFieldInput; ?>" placeholder="Address Line 2" name="address[address_line_1]"/>
 							</div>
 							<div class="jps-fxrow">
 								<div class="jps-fxcol-6">
-									<div class="jps-standard-fieldset jps-field-wrap">
+									<div class="jps-standard-fieldset jps-field-wrap <?php echo $requireFieldWrap; ?>">
 										<label>City</label>
-										<input type="text" class="form-control jps-field--address-city" placeholder="City" name="address[city]" />
+										<input type="text" class="form-control jps-field--address-city <?php echo $requireFieldInput; ?>" placeholder="City" name="address[city]" />
 										<?php echo $this->get_error_wrapper('city'); ?>
 									</div>
 								</div>
 								<div class="jps-fxcol-6">
-									<div class="jps-standard-fieldset jps-field-wrap state-list-container">
+									<div class="jps-standard-fieldset jps-field-wrap state-list-container <?php echo $requireFieldWrap; ?>">
 										<label class="state">State</label>
 										<div style="position: relative;">
 											<select 
 												placeholder="Select States"
-												name="address[state_id]" id="address-state" class="select2 form-control state-list jps-field--address-state">
+												name="address[state_id]" id="address-state" class="select2 form-control state-list jps-field--address-state <?php echo $requireFieldInput; ?>">
 												<?php foreach ($states as $key => $state) : ?>
 													<option value="<?php echo $state['id'] .'_'.$state['name']; ?>"><?php echo $state['name']; ?></option>
 												<?php endforeach; ?>
@@ -197,16 +205,16 @@ if($this->customer_form_wpdb_error): ?>
 							</div>
 							<div class="jps-fxrow">
 								<div class="jps-fxcol-6">
-									<div class="jps-standard-fieldset jps-field-wrap">
+									<div class="jps-standard-fieldset jps-field-wrap <?php echo $requireFieldWrap; ?>">
 										<label>Zip</label>
-										<input type="text" class="form-control jps-field--address-zip" placeholder="Zip" name="address[zip]" maxLength="10" />
+										<input type="text" class="form-control jps-field--address-zip <?php echo $requireFieldInput; ?>" placeholder="Zip" name="address[zip]" maxLength="10" />
 										<?php echo $this->get_error_wrapper('zip'); ?>
 									</div>
 								</div>
 								<div class="jps-fxcol-6">
-									<div class="jps-standard-fieldset jps-field-wrap country-list-container">
+									<div class="jps-standard-fieldset jps-field-wrap country-list-container <?php echo $requireFieldWrap; ?>">
 										<label class="country">Country</label>
-										<select name="address[country_id]" id="address-country" class="select2 form-control country-list jps-field--address-country">
+										<select name="address[country_id]" id="address-country" class="select2 form-control country-list jps-field--address-country <?php echo $requireFieldInput; ?>">
 											<?php foreach ($countries as $key => $country) : ?>
 												<option value="<?php echo $country['id'] .'_'.$country['name']; ?>"><?php echo $country['name']; ?></option>
 											<?php endforeach; ?>	
@@ -222,7 +230,7 @@ if($this->customer_form_wpdb_error): ?>
 
 				case 'billing_address' : 
 					if(!$field['isHide']) { ?>
-						<div class="jps-standard-fieldset jps-field-wrap billing-address-field jps-field--billing">
+						<div class="jps-standard-fieldset jps-field-wrap billing-address-field jps-field--billing <?php echo $requireFieldWrap; ?>">
 							<label>Billing Address: </label>
 							<div class="jps-selection-col jps-checkbox-col">
 								<input type="checkbox" id="address" name="same_as_customer_address" value= "true" checked class="jps-field--billing-check" />
@@ -230,26 +238,26 @@ if($this->customer_form_wpdb_error): ?>
 							</div>
 						</div>
 						<div class="billing-address-container jps-field--billingAdd">
-							<div class="jps-standard-fieldset jps-field-wrap">
+							<div class="jps-standard-fieldset jps-field-wrap <?php echo $requireFieldWrap; ?>">
 								<label>Address</label>
-								<input type="text" class="form-control jps-field--billingAdd-1" placeholder="Address" name="billing[address]"/>
+								<input type="text" class="form-control jps-field--billingAdd-1 <?php echo $requireFieldInput; ?>" placeholder="Address" name="billing[address]"/>
 							</div>
-							<div class="jps-standard-fieldset jps-field-wrap">
+							<div class="jps-standard-fieldset jps-field-wrap <?php echo $requireFieldWrap; ?>">
 								<label>Address Line 2</label>
-								<input type="text" class="form-control jps-field--billingAdd-2" placeholder="Address" name="billing[address_line_1]"/>
+								<input type="text" class="form-control jps-field--billingAdd-2 <?php echo $requireFieldInput; ?>" placeholder="Address" name="billing[address_line_1]"/>
 							</div>
 							<div class="jps-fxrow">
 								<div class="jps-fxcol-6">
-									<div class="jps-standard-fieldset jps-field-wrap">
+									<div class="jps-standard-fieldset jps-field-wrap <?php echo $requireFieldWrap; ?>">
 										<label>City</label>
-										<input type="text" class="form-control jps-field--billingAdd-city" placeholder="City" name="billing[city]"/ >
+										<input type="text" class="form-control jps-field--billingAdd-city <?php echo $requireFieldInput; ?>" placeholder="City" name="billing[city]" />
 									</div>
 								</div>
 								<div class="jps-fxcol-6">
-									<div class="jps-standard-fieldset jps-field-wrap billing-state-container">
+									<div class="jps-standard-fieldset jps-field-wrap billing-state-container <?php echo $requireFieldWrap; ?>">
 										<label class="state">State</label>
-										<select name="billing[state_id]" id="billing-state" class="select2 form-control billing-state jps-field--billingAdd-state">
-											<option value="0">Select States</option>
+										<select name="billing[state_id]" id="billing-state" class="select2 form-control billing-state jps-field--billingAdd-state <?php echo $requireFieldInput; ?>">
+											<option value="0" disabled>Select States</option>
 											<?php foreach ($states as $key => $state) : ?>
 												<option value="<?php echo $state['id'] .'_'.$state['name']; ?>"><?php echo $state['name']; ?></option>
 											<?php endforeach; ?>	
@@ -259,16 +267,16 @@ if($this->customer_form_wpdb_error): ?>
 							</div>
 							<div class="jps-fxrow">
 								<div class="jps-fxcol-6">
-									<div class="jps-standard-fieldset jps-field-wrap">
+									<div class="jps-standard-fieldset jps-field-wrap <?php echo $requireFieldWrap; ?>">
 										<label>Zip</label>
-										<input type="text" class="form-control jps-field--billingAdd-zip" placeholder="zip code" name="billing[zip]" maxLength="10" />
+										<input type="text" class="form-control jps-field--billingAdd-zip <?php echo $requireFieldInput; ?>" placeholder="zip code" name="billing[zip]" maxLength="10" />
 									</div>
 								</div>
 								<div class="jps-fxcol-6">
-									<div class="jps-standard-fieldset jps-field-wrap billing-country-container">
+									<div class="jps-standard-fieldset jps-field-wrap billing-country-container <?php echo $requireFieldWrap; ?>">
 										<label class="country">Country</label>
-										<select name="billing[country_id]" id="billing-country" class="select2 form-control billing-country jps-field--billingAdd-country">
-											<option value="0">Select Country</option>
+										<select name="billing[country_id]" id="billing-country" class="select2 form-control billing-country jps-field--billingAdd-country <?php echo $requireFieldInput; ?>">
+											<option value="0" disabled>Select Country</option>
 												<?php foreach ($countries as $key => $country) : ?>
 											<option value="<?php echo $country['id'] .'_'.$country['name']; ?>"><?php echo $country['name']; ?></option>
 											<?php endforeach; ?>
@@ -282,11 +290,11 @@ if($this->customer_form_wpdb_error): ?>
 
 				case 'referred_by' : 
 					if(!$field['isHide']) { ?>
-						<div class="jps-standard-fieldset jps-field-wrap jp-referral-container jps-field--ref">
+						<div class="jps-standard-fieldset jps-field-wrap jp-referral-container jps-field--ref <?php echo $requireFieldWrap; ?>">
 							<label>Referred By</label>
 							<select
 								name="referred_by_id" 
-								class="jp-referral form-control jps-field--ref-by">
+								class="jp-referral form-control jps-field--ref-by <?php echo $requireFieldInput; ?>">
 								<?php 
 									$jpReferrals = $this->get(JP_REFERRALS_URL);
 									foreach ($jpReferrals as $jpReferral) {

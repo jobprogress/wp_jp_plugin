@@ -6,6 +6,25 @@
     margin-bottom: 20px;
     background-color: #FCFAF2;
 }
+.sortable-fields-wrap .ui-state-default {
+    border: 0;
+    background-color: transparent;
+    display: flex;
+}
+.field-required-setting {
+    display: flex;
+    flex: 0 0 200px;
+    align-self: flex-start;
+    margin-left: 15px;
+    margin-top: 8px;
+}
+.field-required-setting > span {
+    white-space: nowrap;
+}
+.field-required-setting .field-visiblity-checkbox {
+    width: auto;
+    margin-right: 10px;
+}
 .settings-desc {
     color: #777;
     font-size: 14px;
@@ -187,4 +206,7 @@
 }
 .use-theme-option .field-visiblity-checkbox input[type="checkbox"]:checked + .checkbox-style:after {
     opacity: 1;
+}
+.hide-required-field {
+    display: none !important;
 }
