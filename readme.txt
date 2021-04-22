@@ -3,7 +3,7 @@ Contributors: jobprogress
 Donate link: http://www.jobprogress.com/
 Requires at least: 3.0.1
 Tested up to: 5.7
-Stable tag: 3.0.7
+Stable tag: 3.0.8
 Tags: customer-manager
 License: GPLv2 or later
 
@@ -19,6 +19,9 @@ We have an entire team of dedicated ready to help you.  Ask your questions in th
 Customer Management Service through the plugin for JobProgress.
 
 == Changelog ==
+
+= 3.0.8 =
+1. A new option added to make any of the optional fields mandatory.
 
 = 3.0.7 =
 1. Set default Customer Form setting if the setting is not saved yet.

@@ -3,7 +3,7 @@
 Plugin Name: Contractor Contact Form Website to Workflow Tool
 Description: This useful plugin is a website to workflow tool that allows contractors to drive leads directly from their own website form inquiries directly into their JobProgress workcenters.  JobProgress is  a Cloud based Business Management Platform for Home Improvement Contractors. With this useful plugin, you can drive customers directly from your website into your JobProgress workflow stages and begin to populate both customer and job related leads and prospects for immediate and mistake free follow-up.  This is an automated Customer Relationship Management tool which will save you time and minimize mistakes. For more information about JobProgress, please visit our website.
 Plugin URI: http://example.com
-Version: 3.0.7
+Version: 3.0.8
 Author: JobProgress
 Author URI: http://www.jobprogress.com/
 */
