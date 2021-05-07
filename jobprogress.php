@@ -126,11 +126,12 @@ function get_form_default_settings()
 
     return $settings;
 }
-
-function dd($data = array()) {
-	echo "<pre>";
-	print_r($data);
-	exit;
+if (! function_exists('dd')) {
+    function dd($data = array()) {
+    	echo "<pre>";
+    	print_r($data);
+    	exit;
+    }
 }
 
 function format_number($number = false) {
